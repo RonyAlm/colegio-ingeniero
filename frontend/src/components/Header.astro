@@ -1,0 +1,73 @@
+---
+import Image from "astro/components/Image.astro";
+import logo from "../assets/img/logo.png";
+import BarMenu from "./icons/BarMenu.astro";
+import Close from "./icons/Close.astro";
+---
+
+<header class="bg-green-600 text-white py-4 shadow">
+  <div class="container mx-auto px-4 flex flex-row md:flex-row justify-between items-center">
+    <a href="/" class="w-[60%] md:w-1/4 flex justify-center items-center">
+      <Image src={logo} alt="Logo" class="w-12 h-12 md:w-16 md:h-16" />
+      <span class="text-sm md:text-xl font-bold ml-2">Colegio Público de Ingenieros de Formosa</span>
+    </a>
+    <div class="md:hidden">
+      <label for="menu" class="cursor-pointer relative">
+        <input type="checkbox" name="menu" id="menu" class="absolute opacity-0" />
+        <BarMenu id="menuOpen" class="w-10 h-10" />
+        <Close id="menuClose" class="w-10 h-10 hidden"/>
+      </label>
+    </div>
+    <nav id="navMenu"
+      class="hidden md:block md:static absolute top-20 right-0 bg-gray-100 text-green-600
+             md:bg-transparent bg:text-white backdrop-blur md:text-white w-full md:w-auto py-2 md:py-0">
+      <ul class="flex flex-col md:flex-row md:space-x-4 px-2">
+        <li class="transform hover:scale-105 transition-transform border border-gray-200 p-4
+         md:border-0 md:p-0">
+          <a href="/institucionales">Institucionales</a>
+        </li>
+        <li class="transform hover:scale-105 transition-transform border border-gray-200 p-4
+          md:border-0 md:p-0">
+          <a href="/servicios">Servicios</a>
+        </li>
+        <li class="transform hover:scale-105 transition-transform border border-gray-200 p-4
+          md:border-0 md:p-0">
+          <a href="/novedades">Novedades</a>
+        </li>
+        <li class="transform hover:scale-105 transition-transform border border-gray-200 p-4
+          md:border-0 md:p-0">
+          <a href="/contacto">Contacto</a>
+        </li>
+        <li class="md:hidden transform hover:scale-105 transition-transform border border-gray-200 p-4
+         md:border-0 md:p-0">
+          <a href="/about">Matriculados</a>
+        </li>
+      </ul>
+    </nav>
+    <a href="/matriculado"
+      class="hidden md:block border border-white px-4 py-2 rounded-full hover:bg-white
+       hover:text-green-600 transform hover:scale-105 transition-transform">
+      Matriculados</a>
+  </div>
+</header>
+
+<script>
+  const checkbox = document.getElementById("menu") as HTMLInputElement;
+  const menuMobile = document.querySelector("#navMenu") as HTMLElement;
+  const menuOpen = document.querySelector("#menuOpen") as HTMLElement;
+  const menuClose = document.querySelector("#menuClose") as HTMLElement;
+
+  if (checkbox) {
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        menuMobile.classList.remove("hidden");
+        menuOpen.classList.add("hidden");
+        menuClose.classList.remove("hidden");
+      } else {
+        menuMobile.classList.add("hidden");
+        menuOpen.classList.remove("hidden");
+        menuClose.classList.add("hidden");
+      }
+    });
+  }
+</script>

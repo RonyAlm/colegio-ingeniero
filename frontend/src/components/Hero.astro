@@ -1,0 +1,20 @@
+---
+import { STRAPI_BASE_URL } from "../lib/strapi";
+
+const { data } = Astro.props;
+const { title, description, heading, subHeading, link, image } = data;
+
+const imageUrl = image?.url.startsWith("http") 
+? image?.url :  `${STRAPI_BASE_URL}${image.url}`
+
+
+---
+
+<section class="bg-emerald-600 text-white pb-20">
+    <img src={imageUrl} alt="" class="w-full h-60 object-cover">
+    <div class="container mx-auto px-4 text-center mt-4">
+        <h1 class="text-4xl font-bold mb-4">{heading}</h1>
+        <p class="text-lg">{subHeading}</p>
+        <a href={link.url} class="text-white hover:underline">{link.text}</a>
+    </div>
+</section>
