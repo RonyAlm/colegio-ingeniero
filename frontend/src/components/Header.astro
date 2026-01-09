@@ -1,14 +1,17 @@
 ---
-import Image from "astro/components/Image.astro";
-import logo from "../assets/img/logo.png";
 import BarMenu from "./icons/BarMenu.astro";
 import Close from "./icons/Close.astro";
+import { STRAPI_BASE_URL } from "../lib/strapi";
+
+const { logo, navLink, button} = Astro.props.data
+const logoUrl = logo.url.startsWith("http") ? logo.url : `${STRAPI_BASE_URL}${logo.url}`;
+
 ---
 
 <header class="bg-green-600 text-white py-4 shadow">
   <div class="container mx-auto px-4 flex flex-row md:flex-row justify-between items-center">
     <a href="/" class="w-[60%] md:w-1/4 flex justify-center items-center">
-      <Image src={logo} alt="Logo" class="w-12 h-12 md:w-16 md:h-16" />
+      <img src={logoUrl} alt="Logo" class="w-12 h-12 md:w-16 md:h-16 transform hover:scale-105 transition-transform" />
       <span class="text-sm md:text-xl font-bold ml-2">Colegio Público de Ingenieros de Formosa</span>
     </a>
     <div class="md:hidden">
@@ -22,32 +25,35 @@ import Close from "./icons/Close.astro";
       class="hidden md:block md:static absolute top-20 right-0 bg-gray-100 text-green-600
              md:bg-transparent bg:text-white backdrop-blur md:text-white w-full md:w-auto py-2 md:py-0">
       <ul class="flex flex-col md:flex-row md:space-x-4 px-2">
-        <li class="transform hover:scale-105 transition-transform border border-gray-200 p-4
-         md:border-0 md:p-0">
-          <a href="/institucionales">Institucionales</a>
-        </li>
-        <li class="transform hover:scale-105 transition-transform border border-gray-200 p-4
-          md:border-0 md:p-0">
-          <a href="/servicios">Servicios</a>
-        </li>
-        <li class="transform hover:scale-105 transition-transform border border-gray-200 p-4
-          md:border-0 md:p-0">
-          <a href="/novedades">Novedades</a>
-        </li>
-        <li class="transform hover:scale-105 transition-transform border border-gray-200 p-4
-          md:border-0 md:p-0">
-          <a href="/contacto">Contacto</a>
-        </li>
-        <li class="md:hidden transform hover:scale-105 transition-transform border border-gray-200 p-4
-         md:border-0 md:p-0">
-          <a href="/about">Matriculados</a>
-        </li>
+        {
+          navLink.map((link: any) => (
+            <li class="transform hover:scale-105 transition-transform border border-gray-200 p-4
+             md:border-0 md:p-0 cursor-pointer">
+              <a href={link.href} target={link.isExternal ? "_blank" : "_self"}>{link.label}</a>
+            </li>
+          ))
+        }
+        {
+          button.map((button: any) => (
+            <li class="md:hidden transform hover:scale-105 transition-transform border border-gray-200 p-4
+                md:border-0 md:p-0 cursor-pointer" >
+                 <a href={button.href} target={button.isExternal ? "_blank" : "_self"}>{button.label}</a>
+            </li>
+          ))
+        }     
       </ul>
     </nav>
-    <a href="/matriculado"
-      class="hidden md:block border border-white px-4 py-2 rounded-full hover:bg-white
-       hover:text-green-600 transform hover:scale-105 transition-transform">
-      Matriculados</a>
+    {
+      button.map((button: any) => (
+          <a href={button.href} class="hidden md:block border border-white px-4 py-2 rounded-full hover:bg-white
+            hover:text-green-600 transform hover:scale-105 transition-transform"
+            target={button.isExternal ? "_blank" : "_self"}
+            >
+           {button.label}
+          </a>
+      ))
+    }
+  
   </div>
 </header>
 
