@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_component_menus",
+  "info": {
+    "displayName": "Menu",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "navLink": {
+      "type": "component",
+      "component": "component.link",
+      "repeatable": true,
+      "required": true,
+      "min": 3
+    },
+    "button": {
+      "type": "component",
+      "component": "component.link",
+      "repeatable": true,
+      "min": 1,
+      "max": 2
+    }
+  },
+  "config": {}
+}
