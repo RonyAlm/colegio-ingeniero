@@ -10,10 +10,14 @@ const logoUrl = logo.url.startsWith("http") ? logo.url : `${STRAPI_BASE_URL}${lo
 
 <header class="bg-green-600 text-white py-4 shadow">
   <div class="container mx-auto px-4 flex flex-row md:flex-row justify-between items-center">
+    
+    {/* LOGO */}
     <a href="/" class="w-[60%] md:w-1/4 flex justify-center items-center">
       <img src={logoUrl} alt="Logo" class="w-12 h-12 md:w-16 md:h-16 transform hover:scale-105 transition-transform" />
       <span class="text-sm md:text-xl font-bold ml-2">Colegio Público de Ingenieros de Formosa</span>
     </a>
+
+    {/* MENÚ HAMBURGUESA (MÓVIL) */}
     <div class="md:hidden">
       <label for="menu" class="cursor-pointer relative">
         <input type="checkbox" name="menu" id="menu" class="absolute opacity-0" />
@@ -21,6 +25,8 @@ const logoUrl = logo.url.startsWith("http") ? logo.url : `${STRAPI_BASE_URL}${lo
         <Close id="menuClose" class="w-10 h-10 hidden"/>
       </label>
     </div>
+
+    {/* NAVEGACIÓN PRINCIPAL */}
     <nav id="navMenu"
       class="hidden md:block md:static absolute top-20 right-0 bg-gray-100 text-green-600
              md:bg-transparent bg:text-white backdrop-blur md:text-white w-full md:w-auto py-2 md:py-0">
@@ -33,6 +39,7 @@ const logoUrl = logo.url.startsWith("http") ? logo.url : `${STRAPI_BASE_URL}${lo
             </li>
           ))
         }
+        {/* BOTONES EN MÓVIL (dentro del menú desplegable) */}
         {
           button.map((button: any) => (
             <li class="md:hidden transform hover:scale-105 transition-transform border border-gray-200 p-4
@@ -43,16 +50,21 @@ const logoUrl = logo.url.startsWith("http") ? logo.url : `${STRAPI_BASE_URL}${lo
         }     
       </ul>
     </nav>
-    {
-      button.map((button: any) => (
-          <a href={button.href} class="hidden md:block border border-white px-4 py-2 rounded-full hover:bg-white
-            hover:text-green-600 transform hover:scale-105 transition-transform"
-            target={button.isExternal ? "_blank" : "_self"}
-            >
-           {button.label}
-          </a>
-      ))
-    }
+
+    {/* BOTONES DE ESCRITORIO (AGRUPADOS) */}
+    {/* Aquí es donde hicimos el cambio: un div contenedor flex con gap-2 */}
+    <div class="hidden md:flex flex-row gap-2 items-center">
+      {
+        button.map((button: any) => (
+            <a href={button.href} class="border border-white px-4 py-2 rounded-full hover:bg-white
+              hover:text-green-600 transform hover:scale-105 transition-transform text-center"
+              target={button.isExternal ? "_blank" : "_self"}
+              >
+             {button.label}
+            </a>
+        ))
+      }
+    </div>
   
   </div>
 </header>
