@@ -1,0 +1,109 @@
+---
+import { STRAPI_BASE_URL } from "../lib/strapi";
+import MapPin from "./icons/MapPin.astro";
+import FaceIcon from "./icons/FaceIcon.astro";
+const { data } = Astro.props;
+console.log(data);
+const { logo } = data;
+const logoUrl = logo.url.startsWith("http")
+  ? logo.url
+  : `${STRAPI_BASE_URL}${logo.url}`;
+console.log(logoUrl);
+
+const infoContant = [
+  {
+    icon: "map",
+    title: "Sede Social",
+    description: "Av. 9 de Julio 1234, Formosa, Argentina",
+    link: "#",
+  },
+  {
+    icon: "map",
+    title: "Sede Administrativa",
+    description: "Av. Gutnisky N 1870",
+    link: "#",
+  },
+  {
+    icon: "clock",
+    title: "Horario",
+    description: "Lunes a Viernes de 8:00 a 12:30hs",
+    link: "#",
+  },
+  {
+    icon: "phone",
+    title: "Tel&eacute;fono",
+    description: "+54 9 3705 383748",
+    link: "#",
+  },
+  {
+    icon: "whatsapp",
+    title: "Whatsapp",
+    description: "+54 9 3705 043114",
+    link: "#",
+  },
+  {
+    icon: "mail",
+    title: "Correo electr&oacute;nico",
+    description: "ingenierosformosa@gmail.com",
+    link: "#",
+  }
+];
+
+---
+
+<footer class="bg-green-600 text-white w-full">
+  <section
+    class="container mx-auto px-4 py-10 flex flex-col md:flex-row justify-between items-center"
+  >
+    <a href="/" class="w-[60%] md:w-1/4 flex justify-center items-center">
+      <img
+        src={logoUrl}
+        alt="Logo"
+        class="w-12 h-12 md:w-16 md:h-16 transform hover:scale-105 transition-transform"
+      />
+      <span class="text-sm md:text-xl font-bold ml-2"
+        >Colegio Público de Ingenieros de Formosa</span
+      >
+    </a>
+    <div>
+      <h3 class="mb-4 text-xl text-gray-200">Informaci&oacute;n</h3>
+      <ul class="flex flex-col space-y-4">
+        {
+          infoContant.map((info: any) => (
+            <li class="text-sm md:text-base text-gray-300 hover:text-white transition-colors">
+              <a href="#" class="flex gap-2 items-center">
+                <MapPin class="w-8 h-8" />
+                <span>Sede administrativa: Av. 9 de Julio N 498</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div>
+      <h3 class="mb-4 text-xl text-gray-200">Redes Sociales</h3>
+      <ul class="flex flex-col space-y-4">
+        {
+          infoContant.map((info: any) => (
+            <li class="text-sm md:text-base text-gray-300 hover:text-white transition-colors">
+              <a
+                class="flex gap-2 items-center"
+                href="https://www.facebook.com/IngenierosdeFormosa"
+                target="_blank"
+                rel="noopener noreferrer">
+                <FaceIcon class="w-8 h-8" />
+                <span>Facebook</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+  <section class="w-full px-4 py-4 text-gray-200 bg-green-900">
+    <p class="text-center text-sm md:text-base text-gray-400 mt-4">
+      &copy; 2026 Colegio Público de Ingenieros de Formosa. Todos los derechos
+      reservados.
+    </p>
+  </section>
+</footer>
