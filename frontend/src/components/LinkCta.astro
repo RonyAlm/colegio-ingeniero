@@ -1,0 +1,25 @@
+---
+interface Props {
+  type?: "PRIMARY" | "SECONDARY";
+  href: string;
+  label: string;
+  isExternal?: boolean;
+}
+const { href, label, isExternal = false, type = "primary" } = Astro.props;
+
+let stylesLink = "";
+
+if (type === "SECONDARY") {
+  stylesLink = "text-gray-600 bg-white border border-gray-400";
+} else {
+  stylesLink = "text-white bg-green-600";
+}
+---
+
+<a
+  href={href}
+  target={isExternal ? "_blank" : "_self"}
+  class=`${stylesLink} uppercase px-4 py-2 rounded-full 
+              transform hover:scale-105 transition-transform text-center`>
+  {label}
+</a>

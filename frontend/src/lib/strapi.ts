@@ -1,5 +1,5 @@
 import qs from 'qs';
-export const STRAPI_BASE_URL = process.env.STRAPI_BASE_URL || 'http://localhost:1337';
+export const STRAPI_BASE_URL = import.meta.env.STRAPI_BASE_URL || 'http://localhost:1337';
 
 // http://localhost:1337/api/home-page?populate[hero][on][layout.hero-section][populate][image][fields][0]=url
 //&populate[hero][on][layout.hero-section][populate][link][populate]
@@ -23,6 +23,34 @@ const QUERY_HOME_PAGE = {
     },
 }
 
+// const QUERY_GLOBAL = {
+//     populate: {
+//         favicon: {
+//             fields: ['url', 'alternativeText']
+//         },
+//         defaultSeo: {
+//             populate: true
+//         },
+//         header: {
+//             on: {
+//                 'layout.header': {
+//                     populate: {
+//                         logo: {
+//                             populate: true
+//                         },
+//                         navItems: {
+//                             populate: true
+//                         },
+//                         cta: {
+//                             populate: true
+//                         },
+//                     },
+//                 }
+//             }
+//         }
+//     },
+// }
+
 const QUERY_GLOBAL = {
     populate: {
         favicon: {
@@ -31,20 +59,42 @@ const QUERY_GLOBAL = {
         defaultSeo: {
             populate: true
         },
-        menu: {
-            on: {
-                'component.menu': {
+        header: {
+            populate: {
+                logo: {
                     populate: {
-                        logo: {
-                            fields: ['url', 'alternativeText'],
+                        image: {
+                            fields: ['url', 'alternativeText']
                         },
-                        navLink: {
-                            populate: true
+                    }
+                },
+                navItems: true,
+                cta: true
+            },
+        },
+        footer: {
+            populate: {
+                logo: {
+                    populate: {
+                        image: {
+                            fields: ['url', 'alternativeText']
                         },
-                        button: {
-                            populate: true
+                    }
+                },
+                navItems: true,
+                socialLinks: {
+                    populate: {
+                        image: {
+                            fields: ['url', 'alternativeText']
                         },
-                    },
+                    }
+                },
+                infoLinks: {
+                    populate: {
+                        image: {
+                            fields: ['url', 'alternativeText']
+                        },
+                    }
                 }
             }
         }
