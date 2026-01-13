@@ -5,9 +5,9 @@ import FaceIcon from "./icons/FaceIcon.astro";
 const { data } = Astro.props;
 console.log(data);
 const { logo } = data;
-const logoUrl = logo.url.startsWith("http")
+const logoUrl = logo.image.url.startsWith("http")
   ? logo.url
-  : `${STRAPI_BASE_URL}${logo.url}`;
+  : `${STRAPI_BASE_URL}${logo.image.url}`;
 console.log(logoUrl);
 
 const infoContant = [
