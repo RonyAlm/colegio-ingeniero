@@ -35,11 +35,15 @@
       "component": "shared.seo",
       "repeatable": false
     },
-    "menu": {
-      "type": "dynamiczone",
-      "components": [
-        "component.menu"
-      ]
+    "header": {
+      "type": "component",
+      "component": "layout.header",
+      "repeatable": false
+    },
+    "footer": {
+      "type": "component",
+      "component": "layout.footer",
+      "repeatable": false
     }
   }
 }

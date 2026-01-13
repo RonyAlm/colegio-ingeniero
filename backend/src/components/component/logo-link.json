@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_component_logo_links",
+  "info": {
+    "displayName": "Logo Link",
+    "icon": "alien"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string",
+      "default": "#"
+    },
+    "isExternal": {
+      "type": "boolean",
+      "default": false
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  },
+  "config": {}
+}

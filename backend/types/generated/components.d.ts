@@ -10,7 +10,23 @@ export interface ComponentLink extends Struct.ComponentSchema {
     href: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'#'>;
-    isExternal: Schema.Attribute.Boolean;
+    isButtonLink: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    label: Schema.Attribute.String;
+    type: Schema.Attribute.Enumeration<['PRIMARY', 'SECONDARY']>;
+  };
+}
+
+export interface ComponentLogoLink extends Struct.ComponentSchema {
+  collectionName: 'components_component_logo_links';
+  info: {
+    displayName: 'Logo Link';
+    icon: 'alien';
+  };
+  attributes: {
+    href: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#'>;
+    image: Schema.Attribute.Media<'images'>;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     label: Schema.Attribute.String;
   };
 }
@@ -36,6 +52,46 @@ export interface ComponentMenu extends Struct.ComponentSchema {
       Schema.Attribute.SetMinMax<
         {
           min: 3;
+        },
+        number
+      >;
+  };
+}
+
+export interface LayoutFooter extends Struct.ComponentSchema {
+  collectionName: 'components_layout_footers';
+  info: {
+    displayName: 'Footer';
+    icon: 'chartBubble';
+  };
+  attributes: {
+    infoLinks: Schema.Attribute.Component<'component.logo-link', true>;
+    logo: Schema.Attribute.Component<'component.logo-link', false>;
+    navItems: Schema.Attribute.Component<'component.link', true>;
+    socialLinks: Schema.Attribute.Component<'component.logo-link', true>;
+    text: Schema.Attribute.Text;
+  };
+}
+
+export interface LayoutHeader extends Struct.ComponentSchema {
+  collectionName: 'components_layout_headers';
+  info: {
+    displayName: 'Header';
+    icon: 'bulletList';
+  };
+  attributes: {
+    cta: Schema.Attribute.Component<'component.link', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 2;
+        },
+        number
+      >;
+    logo: Schema.Attribute.Component<'component.logo-link', false>;
+    navItems: Schema.Attribute.Component<'component.link', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 2;
         },
         number
       >;
@@ -122,7 +178,10 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'component.link': ComponentLink;
+      'component.logo-link': ComponentLogoLink;
       'component.menu': ComponentMenu;
+      'layout.footer': LayoutFooter;
+      'layout.header': LayoutHeader;
       'layout.hero-section': LayoutHeroSection;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;

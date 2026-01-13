@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_layout_headers",
+  "info": {
+    "displayName": "Header",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "type": "component",
+      "component": "component.logo-link",
+      "repeatable": false
+    },
+    "navItems": {
+      "type": "component",
+      "component": "component.link",
+      "repeatable": true,
+      "min": 2
+    },
+    "cta": {
+      "type": "component",
+      "component": "component.link",
+      "repeatable": true,
+      "max": 2
+    }
+  },
+  "config": {}
+}

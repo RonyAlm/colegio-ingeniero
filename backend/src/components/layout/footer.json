@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_layout_footers",
+  "info": {
+    "displayName": "Footer",
+    "icon": "chartBubble"
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "type": "component",
+      "component": "component.logo-link",
+      "repeatable": false
+    },
+    "navItems": {
+      "type": "component",
+      "component": "component.link",
+      "repeatable": true
+    },
+    "socialLinks": {
+      "type": "component",
+      "component": "component.logo-link",
+      "repeatable": true
+    },
+    "infoLinks": {
+      "type": "component",
+      "component": "component.logo-link",
+      "repeatable": true
+    },
+    "text": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}
