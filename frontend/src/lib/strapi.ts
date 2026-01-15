@@ -109,8 +109,7 @@ const QUERY_GLOBAL = {
 }
 
 export const getGlobal = async () => {
-    const query = qs.stringify(QUERY_GLOBAL);
-    const res = await getStrapiData(`api/global?${query}`);
+    const res = await getStrapiData(`api/global`);
     return res?.data;
 };
 
