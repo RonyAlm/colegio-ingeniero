@@ -3,7 +3,6 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import { getGlobal, STRAPI_BASE_URL } from "../lib/strapi";
 import Footer from "../components/Footer.astro";
-import { info } from "node:console";
 
 interface Props {
 	title?: string
@@ -11,13 +10,11 @@ interface Props {
 }
 
 const infoSite = await getGlobal()
-console.log(infoSite);
 
 const { siteName, siteDescription } = infoSite
 
 const faviconUrl = infoSite.favicon.url.startsWith("http") ? infoSite.favicon.url : `${STRAPI_BASE_URL}${infoSite.favicon.url}`
 const { title = siteName, description = siteDescription } = Astro.props;
-console.log(infoSite.header);
 
 const { logo, navItems, cta } = infoSite.header;
 
@@ -36,7 +33,7 @@ const { logo, navItems, cta } = infoSite.header;
 	<body>
 		<Header data={{ logo, navItems, cta}} />
 		<slot />
-		<Footer data={ { logo } } />
+		<Footer data={ { ...infoSite.footer } } />
 	</body>
 </html>
 
