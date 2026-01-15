@@ -95,7 +95,14 @@ const QUERY_GLOBAL = {
                             fields: ['url', 'alternativeText']
                         },
                     }
-                }
+                },
+                contactLinks: {
+                    populate: {
+                        image: {
+                            fields: ['url', 'alternativeText']
+                        },
+                    }
+                },
             }
         }
     },
