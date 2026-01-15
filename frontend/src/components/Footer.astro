@@ -1,109 +1,70 @@
 ---
 import { STRAPI_BASE_URL } from "../lib/strapi";
-import MapPin from "./icons/MapPin.astro";
-import FaceIcon from "./icons/FaceIcon.astro";
-const { data } = Astro.props;
-console.log(data);
-const { logo } = data;
-const logoUrl = logo.image.url.startsWith("http")
-  ? logo.url
-  : `${STRAPI_BASE_URL}${logo.image.url}`;
-console.log(logoUrl);
+import LinkIcon from "./icons/LinkIcon.astro";
 
-const infoContant = [
-  {
-    icon: "map",
-    title: "Sede Social",
-    description: "Av. 9 de Julio 1234, Formosa, Argentina",
-    link: "#",
-  },
-  {
-    icon: "map",
-    title: "Sede Administrativa",
-    description: "Av. Gutnisky N 1870",
-    link: "#",
-  },
-  {
-    icon: "clock",
-    title: "Horario",
-    description: "Lunes a Viernes de 8:00 a 12:30hs",
-    link: "#",
-  },
-  {
-    icon: "phone",
-    title: "Tel&eacute;fono",
-    description: "+54 9 3705 383748",
-    link: "#",
-  },
-  {
-    icon: "whatsapp",
-    title: "Whatsapp",
-    description: "+54 9 3705 043114",
-    link: "#",
-  },
-  {
-    icon: "mail",
-    title: "Correo electr&oacute;nico",
-    description: "ingenierosformosa@gmail.com",
-    link: "#",
-  }
-];
+const { data } = Astro.props;
+const { logo, socialLinks, infoLinks, contactLinks } = data;
+
+const logoUrl = logo.image.url.startsWith("http")
+  ? logo.image.url
+  : `${STRAPI_BASE_URL}${logo.image.url}`;
 
 ---
 
 <footer class="bg-green-600 text-white w-full">
   <section
-    class="container mx-auto px-4 py-10 flex flex-col md:flex-row justify-between items-center"
-  >
-    <a href="/" class="w-[60%] md:w-1/4 flex justify-center items-center">
+    class="container mx-auto px-4 py-10 md:py-20 flex flex-col md:flex-row justify-between md:items-center">
+    <a href="/" class="max-w-fit flex justify-center items-center">
       <img
         src={logoUrl}
         alt="Logo"
-        class="w-12 h-12 md:w-16 md:h-16 transform hover:scale-105 transition-transform"
-      />
-      <span class="text-sm md:text-xl font-bold ml-2"
-        >Colegio Público de Ingenieros de Formosa</span
-      >
+        class="w-12 h-12 md:w-16 md:h-16 transform hover:scale-105 transition-transform"/>
+      <span class="text-sm md:text-sm uppercase ml-2 font-bold">Colegio Público de <br> Ingenieros de Formosa</span>
     </a>
-    <div>
-      <h3 class="mb-4 text-xl text-gray-200">Informaci&oacute;n</h3>
+    <article class="mt-8 md:mt-0">
+      <h3 class="mb-4 text-xl text-gray-200">Información</h3>
       <ul class="flex flex-col space-y-4">
         {
-          infoContant.map((info: any) => (
+          infoLinks.map((info: any) => (
             <li class="text-sm md:text-base text-gray-300 hover:text-white transition-colors">
-              <a href="#" class="flex gap-2 items-center">
-                <MapPin class="w-8 h-8" />
-                <span>Sede administrativa: Av. 9 de Julio N 498</span>
-              </a>
+              <LinkIcon href={info.href} title={info.label} icon={info.icon} isExternal={info.isExternal} />
             </li>
           ))
         }
       </ul>
-    </div>
-    <div>
+    </article>
+    <article class="mt-8 md:mt-0">
+      <h3 class="mb-4 text-xl text-gray-200">Contacto</h3>
+      <ul class="flex flex-col space-y-4">
+        {
+          contactLinks.map((info: any) => (
+            <li class="text-sm md:text-base text-gray-300 hover:text-white transition-colors">
+              <LinkIcon href={info.href} title={info.label} icon={info.icon} isExternal={info.isExternal} />
+            </li>
+          ))
+        }
+      </ul>
+    </article>
+    <article class="mt-8 md:mt-0">
       <h3 class="mb-4 text-xl text-gray-200">Redes Sociales</h3>
-      <ul class="flex flex-col space-y-4">
+      <ul class="flex flex-col space-y-4 justify-center md:items-center">
         {
-          infoContant.map((info: any) => (
+          socialLinks.map((info: any) => (
             <li class="text-sm md:text-base text-gray-300 hover:text-white transition-colors">
-              <a
-                class="flex gap-2 items-center"
-                href="https://www.facebook.com/IngenierosdeFormosa"
-                target="_blank"
-                rel="noopener noreferrer">
-                <FaceIcon class="w-8 h-8" />
-                <span>Facebook</span>
-              </a>
+              <LinkIcon variant="secondary" href={info.href} title={info.label} icon={info.icon} isExternal={info.isExternal} />
             </li>
           ))
         }
       </ul>
-    </div>
+    </article>
   </section>
-  <section class="w-full px-4 py-4 text-gray-200 bg-green-900">
-    <p class="text-center text-sm md:text-base text-gray-400 mt-4">
-      &copy; 2026 Colegio Público de Ingenieros de Formosa. Todos los derechos
+  <section class="w-full p-4 text-gray-200 bg-green-900 ">
+    <div class="container mx-auto flex justify-between flex-col items-center md:flex-row">
+       <p class="text-center text-sm md:text-base text-gray-400 mt-4">
+      &copy; {new Date().getFullYear()} Colegio Público de Ingenieros de Formosa. Todos los derechos
       reservados.
     </p>
+    <a class="text-center text-sm md:text-base italic text-gray-400 mt-4" href="https">Desarrollado por: <span class="font-bold font-mono">DEVPA.</span></a>
+    </div>
   </section>
 </footer>
