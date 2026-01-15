@@ -25,6 +25,7 @@ export interface ComponentLogoLink extends Struct.ComponentSchema {
   };
   attributes: {
     href: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#'>;
+    icon: Schema.Attribute.String;
     image: Schema.Attribute.Media<'images'>;
     isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     label: Schema.Attribute.String;
@@ -65,6 +66,7 @@ export interface LayoutFooter extends Struct.ComponentSchema {
     icon: 'chartBubble';
   };
   attributes: {
+    contactLinks: Schema.Attribute.Component<'component.logo-link', true>;
     infoLinks: Schema.Attribute.Component<'component.logo-link', true>;
     logo: Schema.Attribute.Component<'component.logo-link', false>;
     navItems: Schema.Attribute.Component<'component.link', true>;

@@ -16,12 +16,17 @@
       "component": "component.link",
       "repeatable": true
     },
-    "socialLinks": {
+    "infoLinks": {
       "type": "component",
       "component": "component.logo-link",
       "repeatable": true
     },
-    "infoLinks": {
+    "contactLinks": {
+      "type": "component",
+      "component": "component.logo-link",
+      "repeatable": true
+    },
+    "socialLinks": {
       "type": "component",
       "component": "component.logo-link",
       "repeatable": true

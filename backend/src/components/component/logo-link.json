@@ -23,6 +23,9 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "icon": {
+      "type": "string"
     }
   },
   "config": {}
