@@ -9,7 +9,7 @@
     "href": {
       "type": "string",
       "default": "#",
-      "required": true
+      "required": false
     },
     "label": {
       "type": "string"
