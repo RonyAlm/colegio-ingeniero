@@ -8,6 +8,11 @@ const { logo, navItems, cta} = Astro.props.data
 const logoUrl = logo.image.url.startsWith("http") ? logo.image.url : `${STRAPI_BASE_URL}${logo.image.url}`;
 const logoLabel = logo.label
 
+const stylesNavItem = {
+  active: "bg-green-600 text-white",
+  inactive: "bg-transparent text-gray-600 hover:bg-green-600 hover:text-white"
+}
+
 ---
 
 <header class="bg-green-600ssad text-white py-4 shadow">
@@ -32,13 +37,15 @@ const logoLabel = logo.label
       <ul class="flex flex-col md:flex-row md:gap-2 px-0">
         {
           navItems.map((link: any) => (
-            <li class="transform hover:bg-green-600 hover:text-white transition-all border border-gray-200 p-4
-             md:border-0 md:py-2 md:px-4 md:rounded-full cursor-pointer">
+            <li 
+              class={`transform hover:bg-green-600 hover:text-white transition-all border border-gray-200
+                    p-4 md:border-0 md:py-2 md:px-4 md:rounded-full cursor-pointer
+                    ${link.href === Astro.url.pathname ? stylesNavItem.active : stylesNavItem.inactive}`}>
               <a href={link.href} target={link.isExternal ? "_blank" : "_self"}>{link.label}</a>
             </li>
           ))
         }
-        
+      </ul>
         {
           cta.map((cta: any) => (
             <li class="md:hidden transform hover:scale-105 transition-transform border border-gray-200 p-4
