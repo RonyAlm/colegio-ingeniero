@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_blocks_contenido_con_imagens",
+  "info": {
+    "displayName": "Contenido Con Imagen"
+  },
+  "options": {},
+  "attributes": {
+    "reverso": {
+      "type": "boolean",
+      "default": false
+    },
+    "encabezado": {
+      "type": "string"
+    },
+    "contenido": {
+      "type": "richtext"
+    },
+    "link": {
+      "type": "component",
+      "component": "component.link",
+      "repeatable": false
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  },
+  "config": {}
+}

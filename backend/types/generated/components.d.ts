@@ -1,5 +1,101 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface BlocksCardGrid extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_card_grids';
+  info: {
+    displayName: 'Card Grid';
+  };
+  attributes: {
+    cards: Schema.Attribute.Component<'shared.card', true>;
+  };
+}
+
+export interface BlocksContenidoConImagen extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_contenido_con_imagens';
+  info: {
+    displayName: 'Contenido Con Imagen';
+  };
+  attributes: {
+    contenido: Schema.Attribute.RichText;
+    encabezado: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+    link: Schema.Attribute.Component<'component.link', false>;
+    reverso: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+  };
+}
+
+export interface BlocksFaqs extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_faqs';
+  info: {
+    displayName: 'Faqs';
+  };
+  attributes: {
+    faq: Schema.Attribute.Component<'shared.card', true>;
+  };
+}
+
+export interface BlocksHero extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_heroes';
+  info: {
+    displayName: 'Hero';
+  };
+  attributes: {
+    heading: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+    links: Schema.Attribute.Component<'component.link', true>;
+    text: Schema.Attribute.RichText;
+  };
+}
+
+export interface BlocksMarkdown extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_markdowns';
+  info: {
+    displayName: 'Markdown';
+  };
+  attributes: {
+    contenido: Schema.Attribute.RichText;
+  };
+}
+
+export interface BlocksNewsletter extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_newsletters';
+  info: {
+    displayName: 'Newsletter';
+  };
+  attributes: {
+    encabezado: Schema.Attribute.String;
+    formId: Schema.Attribute.String;
+    label: Schema.Attribute.String;
+    placeholder: Schema.Attribute.String;
+    text: Schema.Attribute.Text;
+  };
+}
+
+export interface BlocksPersonaCard extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_persona_cards';
+  info: {
+    displayName: 'Persona Card';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images'>;
+    personaJob: Schema.Attribute.String;
+    personaName: Schema.Attribute.String;
+    text: Schema.Attribute.Text;
+  };
+}
+
+export interface BlocksSectionHeading extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_section_headings';
+  info: {
+    displayName: 'Section Heading';
+  };
+  attributes: {
+    encabezado: Schema.Attribute.String;
+    enlaceLink: Schema.Attribute.String;
+    subtitulo: Schema.Attribute.String;
+  };
+}
+
 export interface ComponentLink extends Struct.ComponentSchema {
   collectionName: 'components_component_links';
   info: {
@@ -7,9 +103,7 @@ export interface ComponentLink extends Struct.ComponentSchema {
     icon: 'apps';
   };
   attributes: {
-    href: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'#'>;
+    href: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#'>;
     isButtonLink: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     label: Schema.Attribute.String;
@@ -114,6 +208,17 @@ export interface LayoutHeroSection extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedCard extends Struct.ComponentSchema {
+  collectionName: 'components_shared_cards';
+  info: {
+    displayName: 'Card';
+  };
+  attributes: {
+    encabezado: Schema.Attribute.String;
+    text: Schema.Attribute.Text;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -179,12 +284,21 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'blocks.card-grid': BlocksCardGrid;
+      'blocks.contenido-con-imagen': BlocksContenidoConImagen;
+      'blocks.faqs': BlocksFaqs;
+      'blocks.hero': BlocksHero;
+      'blocks.markdown': BlocksMarkdown;
+      'blocks.newsletter': BlocksNewsletter;
+      'blocks.persona-card': BlocksPersonaCard;
+      'blocks.section-heading': BlocksSectionHeading;
       'component.link': ComponentLink;
       'component.logo-link': ComponentLogoLink;
       'component.menu': ComponentMenu;
       'layout.footer': LayoutFooter;
       'layout.header': LayoutHeader;
       'layout.hero-section': LayoutHeroSection;
+      'shared.card': SharedCard;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
