@@ -1,48 +1,49 @@
 ---
 import "../styles/global.css";
 import Header from "../components/Header.astro";
-import { getGlobal, STRAPI_BASE_URL } from "../lib/strapi";
+import { getGlobal } from "../lib/strapi";
 import Footer from "../components/Footer.astro";
+import { transformImgUrl } from "../utils";
 
 interface Props {
-	title?: string
-	description?: string
+  title?: string;
+  description?: string;
 }
 
-const infoSite = await getGlobal()
+const globalData = await getGlobal();
 
-const { siteName, siteDescription } = infoSite
+if (globalData.error) console.log(globalData.error);
 
-const faviconUrl = infoSite.favicon.url.startsWith("http") ? infoSite.favicon.url : `${STRAPI_BASE_URL}${infoSite.favicon.url}`
+const { header, footer, favicon, siteName, siteDescription } =
+  globalData?.data || {};
+
+const faviconUrl = transformImgUrl(favicon?.url || "");
 const { title = siteName, description = siteDescription } = Astro.props;
-
-const { logo, navItems, cta } = infoSite.header;
-
 ---
 
 <!doctype html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
-	    <link rel="icon" type="image/png" href={faviconUrl}>
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<Header data={{ logo, navItems, cta}} />
-		<slot />
-		<Footer data={ { ...infoSite.footer } } />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href={faviconUrl} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Header data={header} />
+    <slot />
+    <Footer data={footer} />
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-		font-family: Inter, system-ui, sans-serif;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Inter, system-ui, sans-serif;
+  }
 </style>
