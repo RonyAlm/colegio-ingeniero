@@ -17,10 +17,18 @@
     "description": {
       "type": "text"
     },
-    "sections": {
+    "blocks": {
       "type": "dynamiczone",
       "components": [
-        "layout.hero-section"
+        "blocks.section-heading",
+        "blocks.hero",
+        "blocks.persona-card",
+        "blocks.newsletter",
+        "blocks.markdown",
+        "blocks.featured-articles",
+        "blocks.faqs",
+        "blocks.contenido-con-imagen",
+        "blocks.card-grid"
       ]
     }
   }
