@@ -1,12 +1,16 @@
 ---
+import { marked } from "marked";
 import { STRAPI_BASE_URL } from "../lib/strapi";
 
 const { data } = Astro.props;
-const { title, description, heading, subHeading, link, image } = data;
+const { title, description, heading, text, links, image } = data;
+console.log(data);
 
 const imageUrl = image?.url.startsWith("http") 
 ? image?.url :  `${STRAPI_BASE_URL}${image.url}`
 
+const html = marked.parse(text);
+console.log(text);
 
 ---
 
@@ -14,7 +18,7 @@ const imageUrl = image?.url.startsWith("http")
     <img src={imageUrl} alt="" class="w-full h-60 object-cover">
     <div class="container mx-auto px-4 text-center mt-4">
         <h1 class="text-4xl font-bold mb-4">{heading}</h1>
-        <p class="text-lg">{subHeading}</p>
-        <a href={link.url} class="text-white hover:underline">{link.text}</a>
+        <div class="text-lg" set:html={html} />
+        <a href={links.href} class="text-white hover:underline">{links.label}</a>
     </div>
 </section>
