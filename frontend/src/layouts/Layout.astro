@@ -33,7 +33,9 @@ const { title = siteName, description = siteDescription } = Astro.props;
   </head>
   <body>
     <Header data={header} />
-    <slot />
+    <div class="mt-20 md:mt-0">
+      <slot />
+    </div>
     <Footer data={footer} />
   </body>
 </html>
