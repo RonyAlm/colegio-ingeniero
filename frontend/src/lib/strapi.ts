@@ -1,125 +1,70 @@
-import qs from 'qs';
-export const STRAPI_BASE_URL = import.meta.env.STRAPI_BASE_URL || 'http://localhost:1337';
+import type { THeader, TFooter, TImagen } from "../types";
 
-// http://localhost:1337/api/home-page?populate[hero][on][layout.hero-section][populate][image][fields][0]=url
-//&populate[hero][on][layout.hero-section][populate][link][populate]
+export const STRAPI_BASE_URL =
+  import.meta.env.STRAPI_BASE_URL || "http://localhost:1337";
 
-const QUERY_HOME_PAGE = {
-    populate: {
-        sections: {
-            on: {
-                'layout.hero-section': {
-                    populate: {
-                        image: {
-                            fields: ['url', 'alternativeText'],
-                        },
-                        link: {
-                            populate: true
-                        },
-                    },
-                },
-            }
-        },
-    },
+interface StrapiResponse<T = null> {
+  success: boolean;
+  data?: T;
+  error?: {
+    status: number;
+    name: string;
+    message: string;
+    details: Record<string, string[]>;
+  };
+  meta?: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
 }
 
-// const QUERY_GLOBAL = {
-//     populate: {
-//         favicon: {
-//             fields: ['url', 'alternativeText']
-//         },
-//         defaultSeo: {
-//             populate: true
-//         },
-//         header: {
-//             on: {
-//                 'layout.header': {
-//                     populate: {
-//                         logo: {
-//                             populate: true
-//                         },
-//                         navItems: {
-//                             populate: true
-//                         },
-//                         cta: {
-//                             populate: true
-//                         },
-//                     },
-//                 }
-//             }
-//         }
-//     },
-// }
-
-const QUERY_GLOBAL = {
-    populate: {
-        favicon: {
-            fields: ['url', 'alternativeText']
-        },
-        defaultSeo: {
-            populate: true
-        },
-        header: {
-            populate: {
-                logo: {
-                    populate: {
-                        image: {
-                            fields: ['url', 'alternativeText']
-                        },
-                    }
-                },
-                navItems: true,
-                cta: true
-            },
-        },
-        footer: {
-            populate: {
-                logo: {
-                    populate: {
-                        image: {
-                            fields: ['url', 'alternativeText']
-                        },
-                    }
-                },
-                navItems: true,
-                socialLinks: {
-                    populate: {
-                        image: {
-                            fields: ['url', 'alternativeText']
-                        },
-                    }
-                },
-                infoLinks: {
-                    populate: {
-                        image: {
-                            fields: ['url', 'alternativeText']
-                        },
-                    }
-                },
-                contactLinks: {
-                    populate: {
-                        image: {
-                            fields: ['url', 'alternativeText']
-                        },
-                    }
-                },
-            }
-        }
-    },
+interface GlobalData {
+  id: number;
+  documentId: string;
+  siteName: string;
+  siteDescription: string;
+  createdAt: string;
+  publishedAt: string;
+  favicon: TImagen;
+  header: THeader;
+  footer: TFooter;
+  defaultSeo: {
+    title: string;
+    description: string;
+  };
 }
 
-export const getGlobal = async () => {
-    const res = await getStrapiData(`api/global`);
-    return res?.data;
+export const getGlobal = async (): Promise<StrapiResponse<GlobalData>> => {
+  const data = await getStrapiData(`api/global`);
+  return data;
 };
 
 export const getHomePage = async () => {
-    const query = qs.stringify(QUERY_HOME_PAGE);
-    const res = await getStrapiData(`api/home-page?${query}`);
-    return res?.data;
+  const res = await getStrapiData(`api/home-page`);
+  return res?.data;
 };
 
 export const getStrapiData = async (url: string) => {
-    const res = await fetch(`${STRAPI_BASE_URL}/${url}`);
-    return res.json();
+  const res = await fetch(`${STRAPI_BASE_URL}/${url}`);
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  return res.json();
+};
+
+export const getAllPostsSlugs = async () => {
+  const res = await fetch(`${STRAPI_BASE_URL}/api/articles`);
+  if (!res.ok) throw new Error("Error al obtener los datos");
+
+  const result = await res.json();
+  return result.data.map((post: any) => post.slug);
+}
+
+// http://localhost:1337/api/articles?filters[id][$eq]=7
+export const getPostInfo = async (slug: string) => {
+  const res = await fetch(`${STRAPI_BASE_URL}/api/articles?filters[slug][$eq]=${slug}`);
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  return res.json();
 };
