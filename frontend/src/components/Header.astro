@@ -1,8 +1,10 @@
 ---
-import BarMenu from "./icons/BarMenu.astro";
-import Close from "./icons/Close.astro";
 import { STRAPI_BASE_URL } from "../lib/strapi";
 import LinkCta from "./LinkCta.astro";
+import BarMenu from "./icons/BarMenu.astro";
+import Close from "./icons/Close.astro";
+import ArrowTROnIcon from "./icons/ArrowTROnIcon.astro";
+
 
 const { logo, navItems, cta} = Astro.props.data
 const logoUrl = logo.image.url.startsWith("http") ? logo.image.url : `${STRAPI_BASE_URL}${logo.image.url}`;
@@ -15,7 +17,7 @@ const stylesNavItem = {
 
 ---
 
-<header class="bg-green-600ssad text-white py-4 shadow">
+<header class={`bg-white/90 backdrop:backdrop-blur-xl  text-white fixed top-0 left-0 right-0 z-50 md:static py-4 ${Astro.url.href.includes("post") ? "" : "shadow"}`  }>
   <div class="container mx-auto px-4 flex flex-row md:flex-row justify-between items-center">
     
     <a href="/" class="w-fit flex justify-center items-center">
@@ -60,7 +62,10 @@ const stylesNavItem = {
     <div class="hidden md:flex flex-row gap-2 items-center">
       {
         cta.map((cta: any) => (
-          <LinkCta href={cta.href} label={cta.label} isExternal={cta.isExternal} type={cta.type} />
+          <LinkCta href={cta.href} label={cta.label} isExternal={cta.isExternal} type={cta.type}>
+            <ArrowTROnIcon class="h-4 w-4 ml-2" />
+          </LinkCta>
+          
         ))
       }
     </div>
@@ -69,22 +74,27 @@ const stylesNavItem = {
 </header>
 
 <script>
-  const checkbox = document.getElementById("menu") as HTMLInputElement;
-  const menuMobile = document.querySelector("#navMenu") as HTMLElement;
-  const menuOpen = document.querySelector("#menuOpen") as HTMLElement;
-  const menuClose = document.querySelector("#menuClose") as HTMLElement;
+  document.addEventListener("DOMContentLoaded", () => {
+    const checkbox = document.getElementById("menu") as HTMLInputElement;
+    const menuMobile = document.querySelector("#navMenu") as HTMLElement;
+    const menuOpen = document.querySelector("#menuOpen") as HTMLElement;
+    const menuClose = document.querySelector("#menuClose") as HTMLElement;
+  
+    if (checkbox) {
+      checkbox.addEventListener("change", () => {
+        if (checkbox.checked) {
+          menuMobile.classList.remove("hidden");
+          menuOpen.classList.add("hidden");
+          menuClose.classList.remove("hidden");
+        } else {
+          menuMobile.classList.add("hidden");
+          menuOpen.classList.remove("hidden");
+          menuClose.classList.add("hidden");
+        }
+      });
+    }
 
-  if (checkbox) {
-    checkbox.addEventListener("change", () => {
-      if (checkbox.checked) {
-        menuMobile.classList.remove("hidden");
-        menuOpen.classList.add("hidden");
-        menuClose.classList.remove("hidden");
-      } else {
-        menuMobile.classList.add("hidden");
-        menuOpen.classList.remove("hidden");
-        menuClose.classList.add("hidden");
-      }
-    });
-  }
+    console.log("Header");
+  })
+   
 </script>
