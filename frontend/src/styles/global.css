@@ -3,7 +3,7 @@
 
 @font-face {
     font-family: 'Inter';
-    src: url('./src/assets/fonts/inter.woff2') format('woff2');
+    src: url('/fonts/inter.woff2') format('woff2');
     font-style: normal;
     font-weight: 100 700;
     font-display: swap;
@@ -13,5 +13,5 @@
     /* --color-primary: #125187bf; */
 
     /* Fuentes */
-   --font-display: 'Inter', system-ui, sans-serif;
+    --font-display: 'Inter', system-ui, sans-serif;
 }
