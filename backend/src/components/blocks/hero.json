@@ -11,10 +11,10 @@
     "text": {
       "type": "richtext"
     },
-    "links": {
+    "cta": {
       "type": "component",
       "component": "component.link",
-      "repeatable": true
+      "repeatable": false
     },
     "image": {
       "type": "media",

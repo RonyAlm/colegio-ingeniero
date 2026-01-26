@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_blocks_hero_sliders",
+  "info": {
+    "displayName": "HeroSlider"
+  },
+  "options": {},
+  "attributes": {
+    "HeroSlider": {
+      "type": "component",
+      "component": "blocks.hero",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

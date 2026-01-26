@@ -16,8 +16,7 @@
       "type": "string"
     },
     "description": {
-      "type": "text",
-      "maxLength": 80
+      "type": "text"
     },
     "slug": {
       "type": "uid",
@@ -51,7 +50,18 @@
         "shared.media",
         "shared.quote",
         "shared.rich-text",
-        "shared.slider"
+        "shared.slider",
+        "blocks.section-heading",
+        "blocks.persona-card",
+        "blocks.newsletter",
+        "blocks.markdown",
+        "blocks.hero",
+        "blocks.hero-slider",
+        "blocks.featured-articles",
+        "blocks.faqs",
+        "blocks.contenido-con-imagen",
+        "blocks.card-grid",
+        "shared.gallery"
       ]
     }
   }

@@ -50,10 +50,20 @@ export interface BlocksHero extends Struct.ComponentSchema {
     displayName: 'Hero';
   };
   attributes: {
+    cta: Schema.Attribute.Component<'component.link', false>;
     heading: Schema.Attribute.String;
     image: Schema.Attribute.Media<'images'>;
-    links: Schema.Attribute.Component<'component.link', true>;
     text: Schema.Attribute.RichText;
+  };
+}
+
+export interface BlocksHeroSlider extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_hero_sliders';
+  info: {
+    displayName: 'HeroSlider';
+  };
+  attributes: {
+    HeroSlider: Schema.Attribute.Component<'blocks.hero', true>;
   };
 }
 
@@ -229,6 +239,26 @@ export interface SharedCard extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedGallery extends Struct.ComponentSchema {
+  collectionName: 'components_shared_galleries';
+  info: {
+    displayName: 'Gallery';
+    icon: 'apps';
+  };
+  attributes: {
+    columns: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 4;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<1>;
+    image: Schema.Attribute.Media<'images', true> & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -299,6 +329,7 @@ declare module '@strapi/strapi' {
       'blocks.faqs': BlocksFaqs;
       'blocks.featured-articles': BlocksFeaturedArticles;
       'blocks.hero': BlocksHero;
+      'blocks.hero-slider': BlocksHeroSlider;
       'blocks.markdown': BlocksMarkdown;
       'blocks.newsletter': BlocksNewsletter;
       'blocks.persona-card': BlocksPersonaCard;
@@ -310,6 +341,7 @@ declare module '@strapi/strapi' {
       'layout.header': LayoutHeader;
       'layout.hero-section': LayoutHeroSection;
       'shared.card': SharedCard;
+      'shared.gallery': SharedGallery;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
