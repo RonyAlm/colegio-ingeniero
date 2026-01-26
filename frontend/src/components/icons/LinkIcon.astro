@@ -8,7 +8,7 @@ const { href, title, icon, isExternal } = Astro.props;
   class="flex gap-2 items-center transform hover:scale-100 transition-transform">
   <figure class="p-3 bg-green-800/20 rounded-full">
     <svg class="w-6 h-6" fill="currentColor">
-      <use xlink:href=`./icons.svg#${icon}` />
+      <use xlink:href=`/icons.svg#${icon}` />
     </svg>
   </figure>
   <span>{title}</span>
