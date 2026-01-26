@@ -1,0 +1,40 @@
+---
+
+const { image, title, description, slug, category, date } = Astro.props;
+const link = `/post/${slug}`
+
+import ArrowTop from "../components/icons/ArrowTop.astro";
+
+const dateString = new Date(date).toLocaleDateString("es-AR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<article
+  class="bg-gray-50 rounded-2xl overflow-hidden p-4
+   border-2 border-gray-200 hover:border-green-600 transition-colors">
+  <a href={link}>
+    <img
+      class="w-full h-48 rounded-xl object-cover  cursor-pointer"
+      src={image}
+      alt={title}
+      />
+      
+  </a>
+  <div class="p-4 pb-0 prose">
+    <h3 class="text-lg font-bold">{title}</h3>
+    <p class="text-sm text-gray-600">
+      {description}
+    </p>
+    <div class="flex justify-between items-center">
+      <span class="text-sm text-gray-400">{dateString}</span>
+      <a href={link} 
+        class="bg-gray-300 text-white p-2 rounded-full flex items-center
+        hover:bg-green-700 transition-colors" title="Leer más">
+        <ArrowTop class="h-4 w-4" />
+      </a>
+    </div>
+  </div>
+</article>

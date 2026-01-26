@@ -1,0 +1,132 @@
+---
+import type { GetStaticPaths } from "astro";
+import { marked } from "marked";
+import Layout from "../../layouts/Layout.astro";
+import { getPostInfo, getAllPostsSlugs } from "../../lib/strapi";
+import TagIcon from "../../components/icons/TagIcon.astro";
+import ArrowRightIcon from "../../components/icons/ArrowRightIcon.astro";
+import CardArticle from "../../components/CardArticle.astro";
+import LinkIcon from "../../components/icons/LinkIcon.astro";
+import LinkCta from "../../components/LinkCta.astro";
+
+const slug = Astro.params.slug;
+if (!slug) return Astro.redirect("/404");
+
+export const getStaticPaths = (async () => {
+  const slugs = await getAllPostsSlugs();
+  return slugs.map((data: any) => {
+    return {
+      params: {
+        slug: data,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const dataPost = await getPostInfo(slug);
+const post = dataPost.data[0];
+
+const date = new Date(post.publishedAt).toLocaleDateString("es-AR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "America/Argentina/Buenos_Aires",
+  localeMatcher: "best fit",
+  weekday: "long",
+});
+
+const contentText = post.blocks.filter(
+  (block: any) => block.__component === "shared.rich-text",
+)[0].body;
+
+const text = marked.parse(contentText);
+
+const featuredArticles = post.blocks.filter(
+  (block: any) => block.__component === "blocks.featured-articles",
+)[0].articles;
+
+const gallerys = post.blocks.filter(
+  (block: any) => block.__component === "shared.gallery",
+) || [];
+
+const galleryImg = gallerys.length > 0 && gallerys[0].image;
+
+// console.dir(post, { depth: null });
+---
+
+<Layout title={post.title}>
+  <div class="container mx-auto bg-gray-50 rounded-2xl py-10 my-4">
+    <article class="px-8 md:px-0 py-8 max-w-3xl mx-auto prose">
+      <div class="flex flex-col items-center justify-center">
+        <div
+          class="bg-green-200 text-green-900 px-4 py-1 rounded-xl w-fit mb-8 flex items-center"
+        >
+          <TagIcon class="h-4 w-4 mr-2" />
+          <span class="text-sm uppercase">{post.category.name}</span>
+        </div>
+        <span class="text-sm text-gray-400">{date}</span>
+        <h2 class="text-center text-3xl md:text-5xl font-bold text-gray-800 mt-4">
+          {post.title}
+        </h2>
+        <p class="text-center text-sm md:text-base text-gray-600">
+          {post.description}
+        </p>
+
+        <figure
+          class="w-full md:p-6 flex justify-center md:border-2 border-gray-200 mb-0"
+        >
+          <img
+            transition:name={`blog-cover-${post.slug}`}
+            class="bg-cover bg-center rounded-2xl shadow prose-figure:my-0"
+            src={post.cover.url}
+            alt={post.title}
+            loading="lazy"
+          />
+        </figure>
+      </div>
+      <div
+        class="flex gap-4 items-center mt-0 text-green-600 prose-a:text-green-600"
+      >
+        <LinkIcon href={"#"} icon="instagram" isExternal />
+        <LinkIcon href={"#"} icon="facebook" isExternal />
+        <LinkIcon href={"#"} icon="youtube" isExternal />
+      </div>
+      {contentText && <div class="prose" set:html={text} />}
+      <div class="mt-10 w-full grid grid-cols-1 md:grid-cols-2 gap-2 prose-img:my-0">
+        {
+          galleryImg && galleryImg.map((image: any) => (
+            <img
+              class="bg-cover bg-center rounded shadow cursor-pointer hover:scale-102 transition-all"
+              src={image.url}
+              alt={post.title}
+            />
+          ))
+        }
+      </div>
+    </article>
+  </div>
+  <section class="container mx-auto py-10 pb-20 px-8 md:px-0">
+    <div class="flex flex-col md:flex-row justify-between items-center py-10">
+      <h2 class="text-2xl md:text-4xl text-center md:text-left  font-bold text-green-950 mb-6 md:mb-0">
+        Noticias y Novedades Destacadas
+      </h2>
+      <LinkCta href="/novedades" label="Ver más" type="SECONDARY">
+        <ArrowRightIcon class="h-4 w-4 ml-2" />
+      </LinkCta>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {
+        featuredArticles.map((post: any) => (
+          <CardArticle
+            title={post.title}
+            description={post.description}
+            image={post.cover.url}
+            category={"Novedades"}
+            slug={post.slug}
+            date={post.publishedAt}
+          />
+        ))
+      }
+    </div>
+  </section>
+</Layout>

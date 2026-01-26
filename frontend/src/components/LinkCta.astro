@@ -20,6 +20,7 @@ if (type === "SECONDARY") {
   href={href}
   target={isExternal ? "_blank" : "_self"}
   class=`${stylesLink} uppercase px-4 py-2 rounded-full 
-              transform hover:scale-105 transition-transform text-center`>
-  {label}
+              transform hover:scale-105 transition-transform text-center flex items-center`>
+  <span>{label}</span>
+  <slot />
 </a>
