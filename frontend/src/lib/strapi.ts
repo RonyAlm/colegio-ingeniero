@@ -54,6 +54,13 @@ export const getStrapiData = async (url: string) => {
   return res.json();
 };
 
+export const getAllPosts = async () => {
+  const res = await fetch(`${STRAPI_BASE_URL}/api/articles`);
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result.data;
+}
+
 export const getAllPostsSlugs = async () => {
   const res = await fetch(`${STRAPI_BASE_URL}/api/articles`);
   if (!res.ok) throw new Error("Error al obtener los datos");

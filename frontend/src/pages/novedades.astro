@@ -2,12 +2,30 @@
 import HeaderPage from "../components/HeaderPage.astro";
 import Layout from "../layouts/Layout.astro";
 import HeroSlider from "../components/HeroSlider.astro";
+import CardArticle from "../components/CardArticle.astro";
+import { getAllPosts } from "../lib/strapi";
+
+const articles = await getAllPosts();
+console.dir(articles, { depth: null });
 ---
 
 <Layout title="Novedades" description="Novedades de Colegio Público de Ingenieros de Formosa">
     <HeaderPage title="Novedades" slug="novedades"></HeaderPage>
-    <section class="md:pt-20 container mx-auto px-4 h-[800px]">
-        <h1 class="text-2xl font-bold text-green-600 text-center">Novedades</h1>
+    <section class="md:pt-20 container mx-auto px-4 py-20">
+        <h1 class="text-4xl font-bold text-green-950 text-center mb-8">Todas las Novedades</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+           {
+            articles.map((article: any) => (
+              <CardArticle
+                title={article.title}
+                description={article.description}
+                image={article.cover.url}
+                slug={article.slug}
+                category={"Novedades"}
+                date={article.publishedAt}
+              />
+            ))
+           }
+        </div>
     </section>
-    <HeroSlider></HeroSlider>
 </Layout>
