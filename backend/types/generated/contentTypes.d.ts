@@ -455,7 +455,6 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
         'blocks.markdown',
         'blocks.hero',
         'blocks.hero-slider',
-        'blocks.featured-articles',
         'blocks.faqs',
         'blocks.contenido-con-imagen',
         'blocks.card-grid',
@@ -467,7 +466,12 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    featured: Schema.Attribute.Component<'blocks.featured-articles', false> &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

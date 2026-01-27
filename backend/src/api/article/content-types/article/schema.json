@@ -16,7 +16,8 @@
       "type": "string"
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "maxLength": 200
     },
     "slug": {
       "type": "uid",
@@ -44,6 +45,12 @@
       "target": "api::category.category",
       "inversedBy": "articles"
     },
+    "featured": {
+      "type": "component",
+      "component": "blocks.featured-articles",
+      "repeatable": false,
+      "required": true
+    },
     "blocks": {
       "type": "dynamiczone",
       "components": [
@@ -57,7 +64,6 @@
         "blocks.markdown",
         "blocks.hero",
         "blocks.hero-slider",
-        "blocks.featured-articles",
         "blocks.faqs",
         "blocks.contenido-con-imagen",
         "blocks.card-grid",
