@@ -468,7 +468,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.Text &
       Schema.Attribute.SetMinMaxLength<{
-        maxLength: 200;
+        maxLength: 400;
       }>;
     featured: Schema.Attribute.Component<'blocks.featured-articles', false> &
       Schema.Attribute.Required;
