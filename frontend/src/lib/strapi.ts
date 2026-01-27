@@ -64,7 +64,11 @@ export const getAllPostsSlugs = async () => {
 
 // http://localhost:1337/api/articles?filters[id][$eq]=7
 export const getPostInfo = async (slug: string) => {
-  const res = await fetch(`${STRAPI_BASE_URL}/api/articles?filters[slug][$eq]=${slug}`);
+  const res = await fetch(`${STRAPI_BASE_URL}/api/articles`);
   if (!res.ok) throw new Error("Error al obtener los datos");
-  return res.json();
+  const result = await res.json();
+  const post = result.data.find((post: any) => post.slug === slug);
+  if(!post) return null
+  // console.log("post. ",post);
+  return post;
 };

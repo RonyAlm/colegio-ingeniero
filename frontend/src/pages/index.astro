@@ -5,34 +5,44 @@ import Slider from "../components/HeroSlider.astro";
 import CardArticle from "../components/CardArticle.astro";
 
 const infoPage = await getHomePage();
-// console.log(infoPage);
-const [HeroSlider, articles] = infoPage.blocks;
-const dataSlider = HeroSlider.HeroSlider;
-const dataArticles = articles.articles;
-// console.log(articles.articles);
+const heroSlider = infoPage.blocks.find(
+  (block: any) => block.__component === "blocks.hero-slider",
+);
+const slider = heroSlider ? heroSlider.HeroSlider : null;
+
+const featuredArticles = infoPage.blocks.find(
+  (block: any) => block.__component === "blocks.featured-articles",
+);
+const articles = featuredArticles
+  ? featuredArticles?.articles.map((article: any) => article)
+  : [];
+
 ---
 
 <Layout title={infoPage.title}>
-  <Slider data={dataSlider} />
+  {slider && <Slider data={slider} />}
+
   <main class="">
-    <section class="md:pt-20 container mx-auto px-4 py-20">
-      <h2 class="text-3xl font-bold text-green-600 text-center mb-8">
-        Noticias y Novedades Destacadas
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {
-          dataArticles.map((article: any) => (
-            <CardArticle
-              title={article.title}
-              description={article.description}
-              image={article.cover.url}
-              slug={article.slug}
-              category={"Novedades"}
-              date={article.publishedAt}
-            />
-          ))
-        }
-      </div>
-    </section>
+    {
+      articles.length > 0 && (
+        <section class="md:pt-20 container mx-auto px-4 py-20">
+          <h2 class="text-3xl font-bold text-green-600 text-center mb-8">
+            Noticias y Novedades Destacadas
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {articles.map((article: any) => (
+              <CardArticle
+                title={article.title}
+                description={article.description}
+                image={article.cover.url}
+                slug={article.slug}
+                category={"Novedades"}
+                date={article.publishedAt}
+              />
+            ))}
+          </div>
+        </section>
+      )
+    }
   </main>
 </Layout>
