@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_shared_resolucions",
+  "info": {
+    "displayName": "resolucion"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "document": {
+      "type": "component",
+      "component": "shared.media",
+      "repeatable": false
+    },
+    "download": {
+      "type": "component",
+      "component": "component.link",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_blocks_resoluciones",
+  "info": {
+    "displayName": "Resoluciones"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "resolucionComponent": {
+      "type": "component",
+      "component": "shared.resolucion",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

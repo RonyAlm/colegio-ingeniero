@@ -29,7 +29,8 @@
         "blocks.faqs",
         "blocks.contenido-con-imagen",
         "blocks.card-grid",
-        "blocks.hero-slider"
+        "blocks.hero-slider",
+        "blocks.resoluciones"
       ]
     }
   }
