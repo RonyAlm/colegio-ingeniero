@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_blocks_autoridades",
+  "info": {
+    "displayName": "Autoridades"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "autoridadesComponent": {
+      "type": "component",
+      "component": "shared.autoridad",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

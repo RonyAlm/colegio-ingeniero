@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_shared_autoridads",
+  "info": {
+    "displayName": "Autoridad"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "cargo": {
+      "type": "string"
+    },
+    "profesion": {
+      "type": "text"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  },
+  "config": {}
+}

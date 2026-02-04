@@ -1,5 +1,16 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface BlocksAutoridades extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_autoridades';
+  info: {
+    displayName: 'Autoridades';
+  };
+  attributes: {
+    autoridadesComponent: Schema.Attribute.Component<'shared.autoridad', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksCardGrid extends Struct.ComponentSchema {
   collectionName: 'components_blocks_card_grids';
   info: {
@@ -240,6 +251,20 @@ export interface LayoutHeroSection extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedAutoridad extends Struct.ComponentSchema {
+  collectionName: 'components_shared_autoridads';
+  info: {
+    displayName: 'Autoridad';
+  };
+  attributes: {
+    cargo: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String;
+    profesion: Schema.Attribute.Text;
+  };
+}
+
 export interface SharedCard extends Struct.ComponentSchema {
   collectionName: 'components_shared_cards';
   info: {
@@ -346,9 +371,22 @@ export interface SharedSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedYoutube extends Struct.ComponentSchema {
+  collectionName: 'components_shared_youtubes';
+  info: {
+    displayName: 'Youtube';
+  };
+  attributes: {
+    link: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+    videoId: Schema.Attribute.String;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'blocks.autoridades': BlocksAutoridades;
       'blocks.card-grid': BlocksCardGrid;
       'blocks.contenido-con-imagen': BlocksContenidoConImagen;
       'blocks.faqs': BlocksFaqs;
@@ -366,6 +404,7 @@ declare module '@strapi/strapi' {
       'layout.footer': LayoutFooter;
       'layout.header': LayoutHeader;
       'layout.hero-section': LayoutHeroSection;
+      'shared.autoridad': SharedAutoridad;
       'shared.card': SharedCard;
       'shared.gallery': SharedGallery;
       'shared.media': SharedMedia;
@@ -374,6 +413,7 @@ declare module '@strapi/strapi' {
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'shared.youtube': SharedYoutube;
     }
   }
 }
