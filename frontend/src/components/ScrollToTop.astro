@@ -1,0 +1,29 @@
+---
+import ArrowTop from "./icons/ArrowTop.astro";
+---
+
+<button
+  id="scrollTop"
+  title="subir"
+  class="hidden fixed bottom-4 right-4 z-50 cursor-pointer
+     bg-green-600 text-white p-4 rounded-full border-2 border-white shadow-2xl
+     hover:bg-green-800 hover:-rotate-45 hover:scale-110 transition-all"
+>
+  <ArrowTop class="h-4 w-4" />
+</button>
+
+<script>
+  const scrollTop = document.getElementById("scrollTop") as HTMLElement;
+
+  scrollTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 500) {
+      scrollTop.classList.remove("hidden");
+    } else {
+      scrollTop.classList.add("hidden");
+    }
+  })
+</script>
