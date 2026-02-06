@@ -459,6 +459,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
         'blocks.contenido-con-imagen',
         'blocks.card-grid',
         'shared.gallery',
+        'shared.youtube',
       ]
     >;
     category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
