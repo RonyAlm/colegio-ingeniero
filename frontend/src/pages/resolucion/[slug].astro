@@ -1,0 +1,76 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "../../layouts/Layout.astro";
+import { getAllResolutionsSlugs, getResolutionInfo } from "../../lib/strapi";
+import TagIcon from "../../components/icons/TagIcon.astro";
+import LinkCta from "../../components/LinkCta.astro";
+import DownIcon from "../../components/icons/DownIcon.astro";
+
+const slug = Astro.params.slug;
+// console.log(slug);
+if (!slug) return Astro.redirect("/404");
+
+export const getStaticPaths = (async () => {
+  const slugs = await getAllResolutionsSlugs();
+  // console.log(slugs);
+  return slugs.map((data: any) => {
+    return {
+      params: {
+        slug: data,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const resolution = await getResolutionInfo(slug);
+
+const date = new Date(resolution.publishedAt).toLocaleDateString("es-AR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "America/Argentina/Buenos_Aires",
+  localeMatcher: "best fit",
+  weekday: "long",
+});
+
+
+// console.dir(gallerys, { depth: null });
+
+
+
+console.dir(resolution, { depth: null });
+---
+
+<Layout title={resolution.title}>
+  <div class="container mx-auto bg-gray-100 rounded-2xl py-10 my-4">
+    <article class="px-8 md:px-0 py-8 max-w-3xl mx-auto ">
+      <div class="flex flex-col gap-4 items-center justify-center">
+        <div
+          class="bg-green-200 text-green-900 px-4 py-1 rounded-xl w-fit mb-8 flex items-center"
+        >
+          <TagIcon class="h-4 w-4 mr-2" />
+          <span class="text-sm uppercase">resolucion</span>
+        </div>
+        <span class="text-sm text-gray-400">{date}</span>
+        <h2 class="text-center text-3xl md:text-5xl font-bold text-gray-800 mt-4">
+          {resolution.title}
+        </h2>
+        <p class="text-center text-sm md:text-base text-gray-600">
+          {resolution.description}
+        </p>
+          <iframe
+            src={`https://docs.google.com/gview?url=${resolution.document.url}&embedded=true`}
+            class="w-full h-screen rounded-xl border border-green-600"></iframe>
+      </div>
+      
+      <div class="flex items-center justify-center py-10">
+          <LinkCta href={resolution.document.url} isDownload isExternal label="Descargar">
+             <DownIcon class="h-6 w-6 ml-2"/>
+          </LinkCta>
+      </div>
+
+  
+    </article>
+  </div>
+ 
+</Layout>
