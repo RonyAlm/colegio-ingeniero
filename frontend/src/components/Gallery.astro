@@ -1,0 +1,66 @@
+---
+import 'photoswipe/style.css';
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
+
+export interface GalleryImage {
+  src?: string;
+  url?: string;
+  width: number;
+  height: number;
+  alt?: string;
+}
+
+interface Props {
+  images: GalleryImage[];
+  columns?: string; // clases Tailwind
+}
+
+const {
+  images,
+  columns = 'grid-cols-1 md:grid-cols-2',
+} = Astro.props;
+---
+
+<div
+  id="pswp-gallery"
+  class={`grid ${columns} gap-2 md:gap-4 not-prose`}
+>
+  {images.map((img, index) => (
+    <a
+      href={img.url}
+      data-pswp-width= { img.width }
+      data-pswp-height= { img.height }
+      class="group relative block overflow-hidden rounded-xl"
+      aria-label={img.alt ?? `Imagen ${index + 1}`}
+    >
+      <img
+        src={img.url}
+        alt={img.alt ?? ''}
+        loading="lazy"
+        class="w-full object-cover rounded transition-transform duration-300 group-hover:scale-105 cursor-zoom-in"
+      />
+
+      <!-- Overlay -->
+      <div
+        class="absolute p-0 inset-0 bg-black/30 opacity-0 group-hover:opacity-100
+         transition flex items-center justify-center"
+      >
+        <span class="text-white text-sm font-medium">
+          Ver imagen
+        </span>
+      </div>
+    </a>
+  ))}
+</div>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#pswp-gallery',
+    children: 'a',
+    pswpModule: () => import('photoswipe'),
+  });
+
+  lightbox.init();
+</script>
