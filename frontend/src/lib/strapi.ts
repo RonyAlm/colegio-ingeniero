@@ -56,7 +56,11 @@ export const getStrapiData = async (url: string) => {
 };
 
 export const getAllPosts = async () => {
-  const result = await getStrapiData(`${STRAPI_BASE_URL}/api/articles`);
+  // const result = await getStrapiData(`${STRAPI_BASE_URL}/api/articles`);
+  const res = await fetch(`${STRAPI_BASE_URL}/api/articles`);
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  // console.log(result);
   return result.data;
 }
 
@@ -65,7 +69,7 @@ export const getAllPostsSlugs = async () => {
   if (!res.ok) throw new Error("Error al obtener los datos");
 
   const result = await res.json();
-  console.log(result);
+  // console.log(result);
   return result.data.map((post: any) => post.slug);
 }
 
@@ -78,4 +82,23 @@ export const getPostInfo = async (slug: string) => {
   if(!post) return null
   // console.log("post. ",post);
   return post;
+};
+
+export const getAllResolutionsSlugs = async () => {
+  const res = await fetch(`${STRAPI_BASE_URL}/api/resolutions`);
+  if (!res.ok) throw new Error("Error al obtener los datos");
+
+  const result = await res.json();
+  // console.log(result);
+  return result.data.map((resolution: any) => resolution.slug);
+}
+
+export const getResolutionInfo = async (slug: string) => {
+  const res = await fetch(`${STRAPI_BASE_URL}/api/resolutions`);
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  const resolution = result.data.find((resolution: any) => resolution.slug === slug);
+  if(!resolution) return null
+  // console.log("post. ",post);
+  return resolution;
 };
