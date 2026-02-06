@@ -36,7 +36,7 @@ const populate = {
         "shared.gallery": {
           populate: {
             image: {
-              fields: ["alternativeText", "url"],
+              fields: ["alternativeText", "url", "ext", "width", "height"],
 
             }
           }
