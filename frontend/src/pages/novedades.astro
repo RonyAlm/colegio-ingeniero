@@ -1,12 +1,11 @@
 ---
 import HeaderPage from "../components/HeaderPage.astro";
 import Layout from "../layouts/Layout.astro";
-import HeroSlider from "../components/HeroSlider.astro";
 import CardArticle from "../components/CardArticle.astro";
 import { getAllPosts } from "../lib/strapi";
 
 const articles = await getAllPosts();
-console.dir(articles, { depth: null });
+// console.dir(articles, { depth: null });
 ---
 
 <Layout title="Novedades" description="Novedades de Colegio Público de Ingenieros de Formosa">

@@ -1,3 +1,4 @@
+import { get } from "node:http";
 import type { THeader, TFooter, TImagen } from "../types";
 
 export const STRAPI_BASE_URL =
@@ -55,9 +56,7 @@ export const getStrapiData = async (url: string) => {
 };
 
 export const getAllPosts = async () => {
-  const res = await fetch(`${STRAPI_BASE_URL}/api/articles`);
-  if (!res.ok) throw new Error("Error al obtener los datos");
-  const result = await res.json();
+  const result = await getStrapiData(`${STRAPI_BASE_URL}/api/articles`);
   return result.data;
 }
 
@@ -66,6 +65,7 @@ export const getAllPostsSlugs = async () => {
   if (!res.ok) throw new Error("Error al obtener los datos");
 
   const result = await res.json();
+  console.log(result);
   return result.data.map((post: any) => post.slug);
 }
 
