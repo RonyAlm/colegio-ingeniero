@@ -67,7 +67,8 @@
         "blocks.faqs",
         "blocks.contenido-con-imagen",
         "blocks.card-grid",
-        "shared.gallery"
+        "shared.gallery",
+        "shared.youtube"
       ]
     }
   }
