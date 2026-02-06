@@ -545,6 +545,10 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    resolutions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::resolution.resolution'
+    >;
     slug: Schema.Attribute.UID;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -677,6 +681,54 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     descripcion: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'>;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiResolutionResolution extends Struct.CollectionTypeSchema {
+  collectionName: 'resolutions';
+  info: {
+    displayName: 'Resolution';
+    pluralName: 'resolutions';
+    singularName: 'resolution';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    blocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.section-heading',
+        'blocks.resoluciones',
+        'blocks.persona-card',
+        'blocks.newsletter',
+        'blocks.markdown',
+        'blocks.hero',
+        'blocks.hero-slider',
+        'blocks.featured-articles',
+        'blocks.faqs',
+        'blocks.contenido-con-imagen',
+        'blocks.card-grid',
+        'blocks.autoridades',
+      ]
+    >;
+    category: Schema.Attribute.Relation<'manyToOne', 'api::category.category'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    document: Schema.Attribute.Media<'files'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::resolution.resolution'
+    > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'>;
@@ -1203,6 +1255,7 @@ declare module '@strapi/strapi' {
       'api::global.global': ApiGlobalGlobal;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::page.page': ApiPagePage;
+      'api::resolution.resolution': ApiResolutionResolution;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

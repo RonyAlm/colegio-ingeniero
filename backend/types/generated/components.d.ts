@@ -122,7 +122,10 @@ export interface BlocksResoluciones extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.Text;
-    resolucionComponent: Schema.Attribute.Component<'shared.resolucion', true>;
+    resolutions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::resolution.resolution'
+    >;
     title: Schema.Attribute.String;
   };
 }

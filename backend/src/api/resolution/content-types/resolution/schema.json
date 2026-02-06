@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "resolutions",
+  "info": {
+    "singularName": "resolution",
+    "pluralName": "resolutions",
+    "displayName": "Resolution"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "document": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.section-heading",
+        "blocks.resoluciones",
+        "blocks.persona-card",
+        "blocks.newsletter",
+        "blocks.markdown",
+        "blocks.hero",
+        "blocks.hero-slider",
+        "blocks.featured-articles",
+        "blocks.faqs",
+        "blocks.contenido-con-imagen",
+        "blocks.card-grid",
+        "blocks.autoridades"
+      ]
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "resolutions"
+    }
+  }
+}

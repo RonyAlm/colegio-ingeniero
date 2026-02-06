@@ -26,6 +26,12 @@
     },
     "description": {
       "type": "text"
+    },
+    "resolutions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::resolution.resolution",
+      "mappedBy": "category"
     }
   }
 }

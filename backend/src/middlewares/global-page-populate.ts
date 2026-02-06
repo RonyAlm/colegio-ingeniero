@@ -3,6 +3,7 @@
  */
 
 import type { Core } from "@strapi/strapi";
+import resolution from "../api/resolution/controllers/resolution";
 
 const populate = {
   blocks: {
@@ -30,6 +31,18 @@ const populate = {
           }
         }
       },
+      "blocks.resoluciones": {
+        populate: {
+          resolutions: {
+            populate: {
+              document: {
+                fields: ["alternativeText", "url", "ext"],
+              }
+            }
+          }
+        }
+      },
+      "blocks.autoridades": true,
       "blocks.section-heading": true,
       "blocks.hero": true,
       "blocks.persona-card": true,

@@ -11,10 +11,10 @@
     "description": {
       "type": "text"
     },
-    "resolucionComponent": {
-      "type": "component",
-      "component": "shared.resolucion",
-      "repeatable": true
+    "resolutions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::resolution.resolution"
     }
   },
   "config": {}
