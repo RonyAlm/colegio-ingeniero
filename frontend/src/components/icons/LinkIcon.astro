@@ -1,14 +1,29 @@
 ---
-const { href, title, icon, isExternal } = Astro.props;
+interface Props {
+  href: string;
+  title?: string;
+  icon?: string;
+  isExternal: boolean;
+  columns?: string;
+}
+
+const {
+  href,
+  title,
+  icon,
+  isExternal,
+  columns = "bg-green-800/20",
+} = Astro.props;
 ---
 
 <a
   href={href}
   target={isExternal ? "_blank" : "_self"}
-  class="flex gap-2 items-center transform hover:scale-100 transition-transform">
-  <figure class="p-3 bg-green-800/20 rounded-full">
+  class="flex gap-2 items-center transform hover:scale-100 transition-transform"
+>
+  <figure class={columns + " p-3 rounded-full"}>
     <svg class="w-6 h-6" fill="currentColor">
-      <use xlink:href=`/icons.svg#${icon}` />
+      <use xlink:href=`/icons.svg#${icon}`></use>
     </svg>
   </figure>
   <span>{title}</span>
