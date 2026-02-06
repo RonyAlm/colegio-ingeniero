@@ -13,6 +13,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.7",
     "marked": "^17.0.1",
+    "photoswipe": "^5.4.4",
     "qs": "^6.14.1",
     "tailwindcss": "^4.1.18"
   },
