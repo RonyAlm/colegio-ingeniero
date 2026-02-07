@@ -36,8 +36,9 @@ const populate = {
           resolutions: {
             populate: {
               document: {
-                fields: ["alternativeText", "url", "ext"],
-              }
+                fields: ["alternativeText", "url", "name", "ext", "mime"],
+              },
+              category: true,
             }
           }
         }

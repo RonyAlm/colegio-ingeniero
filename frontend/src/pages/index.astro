@@ -24,13 +24,12 @@ const articles = featuredArticles
 
 // console.log(infoPage);
 
-const resolutionsSection =
-  infoPage.blocks.find(
-    (block: any) => block.__component === "blocks.resoluciones",
-  ) || [];
+const resolutionsSection = infoPage.blocks.find(
+  (block: any) => block.__component === "blocks.resoluciones",
+) || null;
 
-const resolutions = resolutionsSection
-  ? resolutionsSection?.resolutions.map((resolucion: any) => resolucion)
+const resolutions = resolutionsSection?.resolutions
+  ? resolutionsSection.resolutions.map((resolucion: any) => resolucion)
   : [];
 
 console.dir(resolutions, { depth: null });
