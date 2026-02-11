@@ -55,50 +55,84 @@ export const getStrapiData = async (url: string) => {
   return res.json();
 };
 
+// Obtiene todos los artículos paginando automáticamente (Strapi devuelve max 25 por defecto)
 export const getAllPosts = async () => {
-  // const result = await getStrapiData(`${STRAPI_BASE_URL}/api/articles`);
-  const res = await fetch(`${STRAPI_BASE_URL}/api/articles`);
-  if (!res.ok) throw new Error("Error al obtener los datos");
-  const result = await res.json();
-  // console.log(result);
-  return result.data;
+  let allData: any[] = [];
+  let page = 1;
+  let pageCount = 1;
+
+  do {
+    const res = await fetch(
+      `${STRAPI_BASE_URL}/api/articles?pagination[page]=${page}&pagination[pageSize]=100`
+    );
+    if (!res.ok) throw new Error("Error al obtener los datos");
+    const result = await res.json();
+    allData = allData.concat(result.data);
+    pageCount = result.meta.pagination.pageCount;
+    page++;
+  } while (page <= pageCount);
+
+  return allData;
 }
 
+// Obtiene todos los slugs de artículos paginando (para getStaticPaths)
 export const getAllPostsSlugs = async () => {
-  const res = await fetch(`${STRAPI_BASE_URL}/api/articles`);
-  if (!res.ok) throw new Error("Error al obtener los datos");
+  let allSlugs: string[] = [];
+  let page = 1;
+  let pageCount = 1;
 
-  const result = await res.json();
-  // console.log(result);
-  return result.data.map((post: any) => post.slug);
+  do {
+    const res = await fetch(
+      `${STRAPI_BASE_URL}/api/articles?fields[0]=slug&pagination[page]=${page}&pagination[pageSize]=100`
+    );
+    if (!res.ok) throw new Error("Error al obtener los datos");
+    const result = await res.json();
+    allSlugs = allSlugs.concat(result.data.map((post: any) => post.slug));
+    pageCount = result.meta.pagination.pageCount;
+    page++;
+  } while (page <= pageCount);
+
+  return allSlugs;
 }
 
-// http://localhost:1337/api/articles?filters[id][$eq]=7
+// Obtiene un artículo filtrando por slug directamente en la API de Strapi
 export const getPostInfo = async (slug: string) => {
-  const res = await fetch(`${STRAPI_BASE_URL}/api/articles`);
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/articles?filters[slug][$eq]=${encodeURIComponent(slug)}`
+  );
   if (!res.ok) throw new Error("Error al obtener los datos");
   const result = await res.json();
-  const post = result.data.find((post: any) => post.slug === slug);
-  if(!post) return null
-  // console.log("post. ",post);
-  return post;
+  if (!result.data || result.data.length === 0) return null;
+  return result.data[0];
 };
 
+// Obtiene todos los slugs de resoluciones paginando (para getStaticPaths)
 export const getAllResolutionsSlugs = async () => {
-  const res = await fetch(`${STRAPI_BASE_URL}/api/resolutions`);
-  if (!res.ok) throw new Error("Error al obtener los datos");
+  let allSlugs: string[] = [];
+  let page = 1;
+  let pageCount = 1;
 
-  const result = await res.json();
-  // console.log(result);
-  return result.data.map((resolution: any) => resolution.slug);
+  do {
+    const res = await fetch(
+      `${STRAPI_BASE_URL}/api/resolutions?fields[0]=slug&pagination[page]=${page}&pagination[pageSize]=100`
+    );
+    if (!res.ok) throw new Error("Error al obtener los datos");
+    const result = await res.json();
+    allSlugs = allSlugs.concat(result.data.map((resolution: any) => resolution.slug));
+    pageCount = result.meta.pagination.pageCount;
+    page++;
+  } while (page <= pageCount);
+
+  return allSlugs;
 }
 
+// Obtiene una resolución filtrando por slug directamente en la API de Strapi
 export const getResolutionInfo = async (slug: string) => {
-  const res = await fetch(`${STRAPI_BASE_URL}/api/resolutions`);
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/resolutions?filters[slug][$eq]=${encodeURIComponent(slug)}`
+  );
   if (!res.ok) throw new Error("Error al obtener los datos");
   const result = await res.json();
-  const resolution = result.data.find((resolution: any) => resolution.slug === slug);
-  if(!resolution) return null
-  // console.log("post. ",post);
-  return resolution;
+  if (!result.data || result.data.length === 0) return null;
+  return result.data[0];
 };
