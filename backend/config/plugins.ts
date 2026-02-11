@@ -9,4 +9,12 @@ export default ({ env }) => ({
       },
     },
   },
+  mcp: {
+    enabled: false,
+    config: {
+      session: {
+        type: "memory",
+      },
+    },
+  },
 });
