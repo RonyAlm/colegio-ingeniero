@@ -51,11 +51,15 @@ const populate = {
 
 
 export default (config, { strapi }: { strapi: Core.Strapi }) => {
-  // Add your own logic here.
   return async (ctx, next) => {
     strapi.log.info("In article-populate middleware.");
-    ctx.query = populate;
-    // console.dir(ctx.query, { depth: null });
+    // Preservar parámetros de paginación y filtros del request original
+    ctx.query = {
+      ...populate,
+      ...(ctx.query.pagination && { pagination: ctx.query.pagination }),
+      ...(ctx.query.filters && { filters: ctx.query.filters }),
+      ...(ctx.query.fields && { fields: ctx.query.fields }),
+    };
     await next();
   };
 };
