@@ -2,17 +2,17 @@
 import HeaderPage from "../components/HeaderPage.astro";
 import Layout from "../layouts/Layout.astro";
 import CardArticle from "../components/CardArticle.astro";
-import { getAllPosts } from "../lib/strapi";
+import { getPostsPage, STRAPI_BASE_URL } from "../lib/strapi";
 
-const articles = await getAllPosts();
-console.dir(articles, { depth: null });
+const PAGE_SIZE = 12;
+const { data: articles, pagination } = await getPostsPage(1, PAGE_SIZE);
 ---
 
 <Layout title="Novedades" description="Novedades de Colegio Público de Ingenieros de Formosa">
     <HeaderPage title="Novedades" slug="novedades"></HeaderPage>
     <section class="md:pt-20 container mx-auto px-4 py-20">
         <h1 class="text-4xl font-bold text-green-950 text-center mb-8">Todas las Novedades</h1>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
            {
             articles.map((article: any) => (
               <CardArticle
@@ -20,11 +20,129 @@ console.dir(articles, { depth: null });
                 description={article.description}
                 image={article.cover?.url}
                 slug={article.slug}
-                category={"Novedades"}
+                category={article.category?.name || "Novedades"}
                 date={article.publishedAt}
               />
             ))
            }
         </div>
+
+        {pagination.pageCount > 1 && (
+          <div id="load-more-container" class="flex flex-col items-center mt-10 gap-3">
+            <p id="articles-count" class="text-sm text-gray-500">
+              Mostrando {PAGE_SIZE} de {pagination.total} artículos
+            </p>
+            <button
+              id="load-more-btn"
+              class="bg-green-700 text-white px-8 py-3 rounded-full font-semibold
+                hover:bg-green-800 transition-colors cursor-pointer"
+            >
+              Cargar más novedades
+            </button>
+            <div id="loading-spinner" class="hidden">
+              <svg class="animate-spin h-8 w-8 text-green-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+            </div>
+          </div>
+        )}
     </section>
 </Layout>
+
+<script define:vars={{ strapiBaseUrl: STRAPI_BASE_URL, pageSize: PAGE_SIZE, totalPages: pagination.pageCount, totalArticles: pagination.total }}>
+  let currentPage = 1;
+
+  function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("es-AR", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  }
+
+  function createArticleCard(article) {
+    const link = `/post/${article.slug}`;
+    const imageHtml = article.cover?.url
+      ? `<img class="w-full h-48 rounded-xl object-cover cursor-pointer" src="${article.cover.url}" alt="${article.title}" />`
+      : `<div class="w-full h-48 rounded-xl bg-gray-300 flex items-center justify-center"><span class="text-gray-500 text-sm">Sin imagen</span></div>`;
+
+    const card = document.createElement("article");
+    card.className = "bg-gray-100 rounded-2xl overflow-hidden p-4 border-2 border-gray-200 hover:border-green-600 transition-colors opacity-0 translate-y-4";
+    card.innerHTML = `
+      <a href="${link}">${imageHtml}</a>
+      <div class="p-4 pb-0 prose">
+        <h3 class="text-lg font-bold">${article.title}</h3>
+        <p class="text-sm text-gray-600">${article.description || ""}</p>
+        <div class="flex justify-between items-center">
+          <span class="text-sm text-gray-400">${formatDate(article.publishedAt)}</span>
+          <a href="${link}" class="bg-gray-300 text-white p-2 rounded-full flex items-center hover:bg-green-700 transition-colors" title="Leer más">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </div>
+    `;
+    // Animación de entrada
+    requestAnimationFrame(() => {
+      card.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+      card.style.opacity = "1";
+      card.style.transform = "translateY(0)";
+    });
+    return card;
+  }
+
+  async function loadMoreArticles() {
+    const btn = document.getElementById("load-more-btn");
+    const spinner = document.getElementById("loading-spinner");
+    const grid = document.getElementById("articles-grid");
+    const countEl = document.getElementById("articles-count");
+
+    if (!btn || !grid || currentPage >= totalPages) return;
+
+    btn.classList.add("hidden");
+    spinner?.classList.remove("hidden");
+
+    try {
+      currentPage++;
+      const res = await fetch(
+        `${strapiBaseUrl}/api/articles?pagination[page]=${currentPage}&pagination[pageSize]=${pageSize}`
+      );
+      if (!res.ok) throw new Error("Error al cargar artículos");
+      const result = await res.json();
+
+      result.data.forEach((article) => {
+        grid.appendChild(createArticleCard(article));
+      });
+
+      const shown = Math.min(currentPage * pageSize, totalArticles);
+      if (countEl) countEl.textContent = `Mostrando ${shown} de ${totalArticles} artículos`;
+
+      if (currentPage >= totalPages) {
+        document.getElementById("load-more-container")?.remove();
+      } else {
+        btn.classList.remove("hidden");
+      }
+    } catch (err) {
+      console.error("Error cargando artículos:", err);
+      btn.classList.remove("hidden");
+      btn.textContent = "Error, intentar de nuevo";
+    } finally {
+      spinner?.classList.add("hidden");
+    }
+  }
+
+  document.getElementById("load-more-btn")?.addEventListener("click", loadMoreArticles);
+
+  // Infinite scroll: cargar automáticamente al acercarse al final
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting && currentPage < totalPages) {
+        loadMoreArticles();
+      }
+    },
+    { rootMargin: "200px" }
+  );
+  const loadMoreContainer = document.getElementById("load-more-container");
+  if (loadMoreContainer) observer.observe(loadMoreContainer);
+</script>
