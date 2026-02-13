@@ -55,6 +55,16 @@ export const getStrapiData = async (url: string) => {
   return res.json();
 };
 
+// Obtiene una página de artículos (para carga inicial en /novedades)
+export const getPostsPage = async (page: number = 1, pageSize: number = 12) => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/articles?pagination[page]=${page}&pagination[pageSize]=${pageSize}`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return { data: result.data, pagination: result.meta.pagination };
+};
+
 // Obtiene todos los artículos paginando automáticamente (Strapi devuelve max 25 por defecto)
 export const getAllPosts = async () => {
   let allData: any[] = [];
