@@ -2,17 +2,17 @@
 import type { GetStaticPaths } from "astro";
 import { marked } from "marked";
 import { Image } from "astro:assets";
+import { YouTube } from '@astro-community/astro-embed-youtube';
 import Layout from "../../layouts/Layout.astro";
 import { getPostInfo, getAllPostsSlugs } from "../../lib/strapi";
 import TagIcon from "../../components/icons/TagIcon.astro";
 import ArrowRightIcon from "../../components/icons/ArrowRightIcon.astro";
-import CardArticle from "../../components/CardArticle.astro";
 import LinkIcon from "../../components/icons/LinkIcon.astro";
+import CardArticle from "../../components/CardArticle.astro";
 import LinkCta from "../../components/LinkCta.astro";
 import Gallery from "../../components/Gallery.astro";
 
 const slug = Astro.params.slug;
-// console.log(slug);
 if (!slug) return Astro.redirect("/404");
 
 export const getStaticPaths = (async () => {
@@ -28,6 +28,7 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const post = await getPostInfo(slug);
+console.dir(post, { depth: null });
 
 const date = new Date(post.publishedAt).toLocaleDateString("es-AR", {
   day: "numeric",
@@ -52,7 +53,6 @@ const gallerys = post.blocks.filter(
 ) || [];
 
 const galleryImg = gallerys.length > 0 && gallerys[0].image;
-// console.dir(gallerys, { depth: null });
 
 const links = post.blocks.filter(
   (block: any) => block.__component === "shared.link",
@@ -64,11 +64,8 @@ const videoYoutube = post.blocks.filter(
   (block: any) => block.__component === "shared.youtube",
 ) || []; 
 
-const video = videoYoutube.length > 0 && videoYoutube[0].video;
-console.log(videoYoutube, video);
+const video = videoYoutube.length > 0 && videoYoutube[0];
 
-
-// console.dir(featuredArticles, { depth: null });
 ---
 
 <Layout title={post.title}>
@@ -91,8 +88,7 @@ console.log(videoYoutube, video);
 
         {post.cover?.url && (
           <figure
-            class="w-full md:p-6 flex justify-center md:border-2 border-gray-200 mb-0"
-          >
+            class="w-full md:p-6 flex justify-center md:border-2 border-gray-200 mb-0">
             <Image
               class="bg-cover bg-center rounded-2xl shadow prose-figure:my-0"
               inferSize
@@ -111,6 +107,9 @@ console.log(videoYoutube, video);
       {text && <div class="prose" set:html={text} />}
       {
         galleryImg && <Gallery columns="mt-10 md:grid-cols-2" images={galleryImg}/>
+      }
+      {
+        video && <YouTube id={video?.videoId} class="mt-10 rounded-xl" />
       }
     </article>
   </div>
