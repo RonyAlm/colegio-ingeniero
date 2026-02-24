@@ -1,13 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getHomePage } from "../lib/strapi";
+import { YouTube } from '@astro-community/astro-embed-youtube';
 import Slider from "../components/HeroSlider.astro";
-import CardArticle from "../components/CardArticle.astro";
 import LinkCta from "../components/LinkCta.astro";
-import LinkIcon from "../components/icons/LinkIcon.astro";
 import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
-import DownIcon from "../components/icons/DownIcon.astro";
-import ArrowTROnIcon from "../components/icons/ArrowTROnIcon.astro";
+import FeaturedArticles from "../components/FeaturedArticles.astro";
+import ResolutionItem from "../components/ResolutionItem.astro";
 
 const infoPage = await getHomePage();
 const heroSlider = infoPage.blocks.find(
@@ -22,105 +21,61 @@ const articles = featuredArticles
   ? featuredArticles?.articles.map((article: any) => article)
   : [];
 
-// console.log(infoPage);
-
-const resolutionsSection = infoPage.blocks.find(
-  (block: any) => block.__component === "blocks.resoluciones",
-) || null;
+const resolutionsSection =
+  infoPage.blocks.find(
+    (block: any) => block.__component === "blocks.resoluciones",
+  ) || null;
 
 const resolutions = resolutionsSection?.resolutions
   ? resolutionsSection.resolutions.map((resolucion: any) => resolucion)
   : [];
 
-console.dir(resolutions, { depth: null });
 ---
 
 <Layout title={infoPage.title}>
   {slider && <Slider data={slider} />}
-
-  <main class="bg-gray-200">
-    {
-      articles.length > 0 && (
-        <section class="md:pt-20 container mx-auto px-4 py-20">
-          <h2 class="text-3xl font-bold text-green-600 text-center mb-8">
-            Noticias y Novedades Destacadas
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {articles.map((article: any) => (
-              <CardArticle
-                title={article.title}
-                description={article.description}
-                image={article.cover?.url}
-                slug={article.slug}
-                category={"Novedades"}
-                date={article.publishedAt}
-              />
-            ))}
-          </div>
-        </section>
-      )
-    }
+  <main class="bg-gray-300/50">
+    {articles.length > 0 && <FeaturedArticles articles={articles} />}
 
     {
       resolutionsSection && (
-        <section class="bg-gray-100 px-4 py-10 
-        bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]">
-          <div class="container mx-auto px-4 py-20">
-              <h2 class="text-4xl font-bold text-green-950 text-center mb-8">
-                {resolutionsSection.title}
-              </h2>
-              {
-                resolutionsSection.description && (
-                  <p class="text-center text-sm md:text-base text-gray-600">
-                    {resolutionsSection.description}
-                  </p>
-                )
-              }
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-20">
-                {resolutions.map((resolucion: any) => (
-                  <article class="bg-transparent rounded p-8 border-2 border-gray-400">
-                      <a class="flex flex-col items-center justify-center" href={"/resolucion/" + resolucion.slug}>
-                          <span class="bg-green-200 text-green-900 px-4 py-1 rounded-xl w-fit mb-8 flex items-center">Leyes y Resoluciones</span>
-                          <span class="text-sm text-gray-400">12/12/2025</span>
-                          <h3 class="text-center text-2xl md:text-3xl font-bold text-gray-800 mt-4">{resolucion.title}</h3>
-                      </a>
-                      
-                      <div class="flex flex-col md:flex-row gap-4 justify-center items-center mt-6">
-                          <LinkCta href={resolucion.document.url} type="SECONDARY" 
-                            isDownload isExternal label="Descargar">
-                              <DownIcon class="h-6 w-6 ml-2"/>
-                          </LinkCta>
-                          <LinkCta href={"/resolucion/" + resolucion.slug} label="Ver Documento">
-                              <ArrowRightIcon class="h-6 w-6 ml-2"/>
-                          </LinkCta>
-                      </div>
-                      
-                  </article>
-                ))}
-              </div>
+        <section class="bg-green-800 px-4 py-20">
+          <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-green-100 text-center my-4">
+              {resolutionsSection.title}
+            </h2>
+            {resolutionsSection.description && (
+              <p class="text-center text-sm md:text-base text-gray-600">
+                {resolutionsSection.description}
+              </p>
+            )}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-10">
+              {resolutions.map((resolucion: any) => (
+                <ResolutionItem resolucion={resolucion} />
+              ))}
+            </div>
+            <div class="flex items-center justify-center">
+              <LinkCta href={"/resoluciones"} type="TERTIARY" label="Ver más">
+                <ArrowRightIcon class="h-6 w-6 ml-2" />
+              </LinkCta>
+            </div>
           </div>
-
-          
         </section>
       )
     }
     <section class="md:pt-20 container mx-auto px-4 py-20">
-      <h2 class="text-4xl font-bold text-green-600 text-center mb-12">
-        Instructivos
+      <h2 class="text-4xl text-green-950 text-center mb-12">
+        Videos <span class="text-green-600 font-bold">Instructivos</span> 
       </h2>
-      <div class="aspect-video max-w-4xl mx-auto rounded-xl overflow-hidden">
-        <iframe
-          src="https://www.youtube.com/embed/2Dkwjg3wRiQ"
-          title="Video Instructivo"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          class="w-full h-full"
-        ></iframe>
+      <div class="flex items-center justify-center gap-4 flex-wrap">
+          <YouTube id="AfSoQORGMFA" class="aspect-video mx-auto w-full rounded-2xl" 
+           title={"Módulo de Reserva Sede Social"} />
+           <YouTube id="2Dkwjg3wRiQ" class="aspect-video mx-auto w-full rounded-2xl" poster="" 
+           title={"Plataforma Digital de Gestión - Intructivo"} />
       </div>
-      <div class="flex items-center justify-center py-10">
-        <LinkCta href="/instructivo" type="SECONDARY" label="Ver Más">
-          <ArrowRightIcon  class="h-6 w-6 ml-2" />
+      <div class="flex items-center justify-center mt-10">
+        <LinkCta href="/instructivo" type="QUATERNARY" label="Ver Más">
+          <ArrowRightIcon class="h-6 w-6 ml-2" />
         </LinkCta>
       </div>
     </section>
