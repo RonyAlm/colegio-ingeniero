@@ -27,6 +27,8 @@ const populate = {
               cover: {
                 fields: ["alternativeText", "url"],
               },
+              author: true,
+              category: true,
             }
           }
         }

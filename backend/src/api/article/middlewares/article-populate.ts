@@ -42,6 +42,7 @@ const populate = {
           }
         },
         "shared.slider": true,
+        "shared.youtube": true
       }
     }
   },

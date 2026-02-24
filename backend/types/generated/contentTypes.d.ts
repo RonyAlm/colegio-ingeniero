@@ -614,6 +614,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         'blocks.card-grid',
         'blocks.hero-slider',
         'blocks.resoluciones',
+        'blocks.autoridades',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

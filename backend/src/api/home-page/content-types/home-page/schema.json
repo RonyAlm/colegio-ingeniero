@@ -30,7 +30,8 @@
         "blocks.contenido-con-imagen",
         "blocks.card-grid",
         "blocks.hero-slider",
-        "blocks.resoluciones"
+        "blocks.resoluciones",
+        "blocks.autoridades"
       ]
     }
   }
