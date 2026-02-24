@@ -1,0 +1,35 @@
+---
+import CardArticle from "./CardArticle.astro";
+import LinkCta from "./LinkCta.astro";
+import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
+const { articles = [] } = Astro.props
+
+
+---
+
+<section class="md:pt-40 container mx-auto px-4 py-20">
+  <h2 class="text-4xl text-green-950 text-center mb-10">
+    Noticias y <strong class="font-bold text-green-600"
+      >Novedades Destacadas</strong
+    >
+  </h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {
+      articles.map((article: any) => (
+        <CardArticle
+          title={article.title}
+          description={article.description}
+          image={article.cover?.url}
+          slug={article.slug}
+          category={article.category?.name || "Novedades"}
+          date={article.publishedAt}
+        />
+      ))
+    }
+  </div>
+  <div class="flex items-center justify-center mt-8">
+    <LinkCta href={"/novedades"} type="QUATERNARY" label="Ver más">
+      <ArrowRightIcon class="h-6 w-6 ml-2" />
+    </LinkCta>
+  </div>
+</section>
