@@ -11,9 +11,18 @@
 
 @theme {
     /* --color-primary: #125187bf; */
+    --color-primary: "#1E9C3F",
+    --color-primaryDark: "#146B2D",
+    --color-deepGreen: "#0F3F23",
+    --color-darkBg: "#1F252B",
+    --color-darkSection: "#2B3138",
+    --color-lightText: "#E4E7E6",
+    --color-mutedText: "#AEB6B1",
+    --color-accentRed: "#C62828",
+    --color-ba: "#e5e7eb"
 
-    /* Fuentes */
-    --font-display: 'Inter', system-ui, sans-serif;
+        /* Fuentes */
+        --font-display: 'Inter', system-ui, sans-serif;
 }
 
 html,
