@@ -14,7 +14,8 @@ const dateString = new Date(date).toLocaleDateString("es-AR", {
 
 <article
   class="bg-gray-100 rounded-2xl overflow-hidden p-4
-   border-2 border-gray-200 hover:border-green-600 transition-colors">
+   border-2 border-gray-200 hover:border-green-600 transition-colors relative">
+
   <a href={link}>
     {image ? (
       <img
@@ -28,12 +29,16 @@ const dateString = new Date(date).toLocaleDateString("es-AR", {
       </div>
     )}
   </a>
-  <div class="p-4 pb-0 prose">
+
+  <span class="text-sm w-fit not-prose bg-green-800 text-white px-4 py-1
+   rounded-xl absolute top-6 left-6">{category}</span>
+
+  <div class="p-4 pb-0 prose flex flex-col min-h-[190px]">
     <h3 class="text-lg font-bold">{title}</h3>
-    <p class="text-sm text-gray-600">
+    <p class="text-sm text-gray-600 line-clamp-3">
       {description}
     </p>
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center mt-auto">
       <span class="text-sm text-gray-400">{dateString}</span>
       <a href={link} 
         class="bg-gray-300 text-white p-2 rounded-full flex items-center
@@ -42,4 +47,5 @@ const dateString = new Date(date).toLocaleDateString("es-AR", {
       </a>
     </div>
   </div>
+  
 </article>
