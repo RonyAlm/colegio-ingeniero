@@ -1,6 +1,7 @@
 ---
 import "@splidejs/splide/dist/css/splide.min.css";
 import LinkCta from "./LinkCta.astro";
+import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
 
 const infoHero = Astro.props.data;
 if(!infoHero || infoHero.length === 0) return null  
@@ -23,7 +24,9 @@ if(!infoHero || infoHero.length === 0) return null
                   </p>
                    {
                      info.cta &&
-                     <LinkCta href={info.cta.href} label={info.cta.label}/>
+                     <LinkCta href={info.cta.href} label={info.cta.label}>
+                       <ArrowRightIcon class="h-6 w-6 ml-2" />
+                     </LinkCta>
                    }
                 </div>
               </div>
