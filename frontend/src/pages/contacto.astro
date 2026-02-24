@@ -6,131 +6,92 @@ import HeaderPage from "../components/HeaderPage.astro";
 ---
 
 <Layout title="Contacto" description="Contacto">
-  <HeaderPage title="Contacto" slug="contacto" />
-  <main class="md:mt-20">
-    <section class="container mx-auto flex flex-col md:flex-row gap-8">
-      <article class="w-full md:w-1/2 bg-green-600 text-white  p-8 py-20 md:py-10  md:rounded-2xl">
-        <h2 class="text-2xl font-bold mb-8 text-center">
-          Información de contacto
+  <HeaderPage title="Contacto" slug="contacto" cover="https://res.cloudinary.com/du86bx5o0/image/upload/v1771945702/portada_ingeniero_reunion_0e5593c405.jpg" />
+  <main class="my-8">
+    <section class="container mx-auto flex flex-col md:flex-row justify-between gap-4 px-2 md:px-4 py-4 md:py-10">
+      <article class="w-full md:w-1/2 p-6 md:p-10">
+        <h2 class="text-4xl md:text-5xl text-green-950 mb-6">
+          Formulario de <span class="text-green-600 font-bold">Contacto</span> 
         </h2>
-        <ul class="space-y-6">
-          <li>
-            <LinkIcon
-              href="https://goo.gl/maps/9zYV6Y7Y7Y7Y7Y7Y7"
-              title="Sede Social: Av. Gutnisky N 1870, Formosa"
-              icon="map"
-              isExternal
-            />
-          </li>
-          <li>
-            <LinkIcon
-              href="https://goo.gl/maps/9zYV6Y7Y7Y7Y7Y7Y7"
-              title="Sede Administrativa: Av. 9 de Julio N 498, Formosa"
-              icon="map"
-              isExternal
-            />
-          </li>
-          <li>
-            <LinkIcon
-              href="https://goo.gl/maps/9zYV6Y7Y7Y7Y7Y7Y7"
-              title="Hora de atencion: Lunes a Viernes de 8 a 12:30hs"
-              icon="hours"
-              isExternal
-            />
-          </li>
-          <li>
-            <LinkIcon
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=7iZ2o@example.com"
-              title="Correo: 7iZ2o@example.com"
-              icon="email"
-              isExternal
-            />
-          </li>
-          <li>
-            <LinkIcon
-              href="https://tel://456 123 45"
-              title="Telefono: 456 123 456"
-              icon="phone"
-              isExternal
-            />
-          </li>
-          <li>
-            <LinkIcon
-              href="#"
-              title="Whatsapp: 456 123 456"
-              icon="whatsapp"
-              isExternal
-            />
-          </li>
-        </ul>
-        <div class="flex gap-4 mt-10 items-center justify-center">
-          <LinkIcon href="#" title="" icon="facebook" isExternal />
-          <LinkIcon href="#" title="" icon="instagram" isExternal />
-          <LinkIcon href="#" title="" icon="youtube" isExternal />
-        </div>
-      </article>
-      <article class="w-full md:w-1/2 p-8 prose">
-        <h2 class="text-2xl font-bold text-green-600">
-          Formulario de contacto
-        </h2>
-        <p class="text-gray-600">
+        <p class="italic text-xl md:text-2xl text-green-700">
           Buzón para empresas que requieran Ingenieros
         </p>
-        <p class="text-gray-600">
+        <p class="text-gray-600 text-lg md:text-xl mt-2 mb-6">
           Deja tu mensaje aquí para solicitar Ingenieros. Te acompañaremos a
           buscar el indicado.
         </p>
         <form>
-          <div class="mb-4">
-            <label for="name" class="block text-gray-500 font-bold mb-2">Nombre:</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              class="w-full p-2 border border-gray-300 rounded"/>
+          <div class="mb-4 flex flex-col md:flex-row justify-between md:items-center gap-4">
+            <label for="name" class="block text-green-950  mb-2"> 
+              <span class="font-bold text-gray-700 after:ml-0.5 after:text-gray-500 after:content-['*']">Nombre</span>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="text-gray-600 w-full p-2 bg-gray-100 border border-gray-200 rounded
+                focus:outline-none focus:border-green-600 mt-2"/>
+            </label>
+            <label for="email" class="block text-green-950 font-bold mb-2">
+              <span class="text-gray-700 after:ml-0.5 after:text-gray-500 after:content-['*']">Correo Electrónico</span>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="text-gray-600 w-full p-2 bg-gray-100 border border-gray-200 rounded
+                focus:outline-none focus:border-green-600 mt-2"/>
+            </label>  
           </div>
-          <div class="mb-4">
-            <label for="email" class="block text-gray-500 font-bold mb-2">Correo:</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="w-full p-2 border border-gray-300 rounded"/>
-          </div>
-          <div class="mb-4">
-            <label for="phone" class="block text-gray-500 font-bold mb-2">Telefono:</label>
-            <input
+          <div class="mb-4 flex flex-col md:flex-row justify-between md:items-center gap-4">
+            <label for="phone" class="block text-green-950 font-bold mb-2">
+              <span class="text-gray-700 after:ml-0.5 after:text-gray-500 after:content-['*']"> Teléfono</span>
+             <input
               type="tel"
               id="phone"
               name="phone"
-              class="w-full p-2 border border-gray-300 rounded"/>
+              class="text-gray-600 w-full p-2 bg-gray-100 border border-gray-200 rounded
+                focus:outline-none focus:border-green-600 mt-2"/> 
+            </label>
+            <label for="subject" class="block text-green-950 font-bold mb-2">
+              <span class="text-gray-700 after:ml-0.5 after:text-gray-500 after:content-['*']">Asunto</span>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                class="text-gray-600 w-full p-2 bg-gray-100 border border-gray-200 rounded
+                focus:outline-none focus:border-green-600 mt-2"/>
+            </label>
           </div>
           <div class="mb-4">
-            <label for="message" class="block text-gray-500 font-bold mb-2">Mensaje:</label>
-            <textarea
-              id="message"
-              name="message"
-              class="w-full p-2 border border-gray-300 rounded">
-            </textarea>
+             <label class="block text-green-950" for="menssage">
+               <span class="text-green-950 font-bold mb-2">Mensaje</span>
+               <textarea
+                 id="menssage"
+                 name="menssage"
+                 class="text-gray-600 w-full p-2 bg-gray-100 border border-gray-200 rounded
+                 focus:outline-none focus:border-green-600 mt-2"></textarea>
+             </label>
           </div>
           <button
             type="submit"
-            class="w-fit flex items-center bg-green-600 text-white py-4 px-6 rounded-full cursor-pointer hover:bg-green-700 transition-colors">
-            Enviar
-            <SendIcon class="w-6 h-6 ml-2" />
+            class="w-fit flex items-center bg-green-600 text-white px-4 py-3 
+            rounded-full cursor-pointer hover:bg-green-700 transition-colors">
+            <span class="ml-2">Enviar Mensaje</span>
+            <i class="ml-2 bg-white p-2 rounded-full">
+              <SendIcon class="w-6 h-6 text-green-600" />
+            </i>
           </button>
         </form>
       </article>
-    </section>
-    <section class="w-full md:pt-20">
-      <iframe
+      <article class="w-full h-80 md:w-1/2 md:rounded-2xl p-6 md:p-10">
+        <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7160.844530603817!2d-58.17985089240549!3d-26.182938632917292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945ca5e57369222b%3A0x397105d62f1efa2d!2sColegio%20P%C3%BAblico%20de%20Ingenieros%20de%20Formosa!5e0!3m2!1ses-419!2sar!4v1768574248478!5m2!1ses-419!2sar"
         width="100%"
-        height="450"
-        style="border:0;"
+        height="100%"
+        style="border:2px solid #10af52;border-radius: 2rem;"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
+      </article>
     </section>
   </main>
 </Layout>
