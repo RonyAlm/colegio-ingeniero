@@ -74,7 +74,7 @@ const { data: articles, pagination } = await getPostsPage(1, PAGE_SIZE);
       <a href="${link}">${imageHtml}</a>
       <div class="p-4 pb-0 prose">
         <h3 class="text-lg font-bold">${article.title}</h3>
-        <p class="text-sm text-gray-600">${article.description || ""}</p>
+        <p class="text-sm text-gray-600 line-clamp-3">${article.description || ""}</p>
         <div class="flex justify-between items-center">
           <span class="text-sm text-gray-400">${formatDate(article.publishedAt)}</span>
           <a href="${link}" class="bg-gray-300 text-white p-2 rounded-full flex items-center hover:bg-green-700 transition-colors" title="Leer más">
