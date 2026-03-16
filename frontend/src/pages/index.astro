@@ -1,14 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getHomePage } from "../lib/strapi";
+import { getAllPages, getHomePage } from "../lib/strapi";
 import { YouTube } from '@astro-community/astro-embed-youtube';
 import Slider from "../components/HeroSlider.astro";
 import LinkCta from "../components/LinkCta.astro";
 import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
 import FeaturedArticles from "../components/FeaturedArticles.astro";
 import ResolutionItem from "../components/ResolutionItem.astro";
+import CardAutoridad from "../components/CardAutoridad.astro";
 
 const infoPage = await getHomePage();
+// console.dir(infoPage, { depth: null });
+
 const heroSlider = infoPage.blocks.find(
   (block: any) => block.__component === "blocks.hero-slider",
 );
@@ -30,11 +33,20 @@ const resolutions = resolutionsSection?.resolutions
   ? resolutionsSection.resolutions.map((resolucion: any) => resolucion)
   : [];
 
+const autoridades = infoPage.blocks.find(
+  (block: any) => block.__component === "blocks.autoridades",
+);
+const autoridadesComponent = autoridades?.autoridadesComponent
+  ? autoridades?.autoridadesComponent.map((card: any) => card)
+  : [];
+
+
+
 ---
 
 <Layout title={infoPage.title}>
   {slider && <Slider data={slider} />}
-  <main class="bg-gray-300/50">
+  <main class="bg-gray-300/90">
     {articles.length > 0 && <FeaturedArticles articles={articles} />}
 
     {
@@ -63,6 +75,7 @@ const resolutions = resolutionsSection?.resolutions
         </section>
       )
     }
+
     <section class="md:pt-20 container mx-auto px-4 py-20">
       <h2 class="text-4xl text-green-950 text-center mb-12">
         Videos <span class="text-green-600 font-bold">Instructivos</span> 
@@ -75,10 +88,35 @@ const resolutions = resolutionsSection?.resolutions
            title={"Plataforma Digital de Gestión - Intructivo"} />
       </div>
       <div class="flex items-center justify-center mt-10">
-        <LinkCta href="/instructivo" type="QUATERNARY" label="Ver Más">
+        <LinkCta href="/instructivos" type="QUATERNARY" label="Ver Más">
           <ArrowRightIcon class="h-6 w-6 ml-2" />
         </LinkCta>
       </div>
     </section>
+    
+    {
+      autoridades && (
+          <section class="px-4 py-20 bg-linear-to-t from-green-600 to-green-800">
+            <div class="container mx-auto md:pt-20 h-fit">
+              <h2 class="text-4xl text-green-100 text-center mb-2">
+                {autoridades.title}
+              </h2>
+              <p class="text-center text-2xl text-green-100 mb-4">{autoridades.description}</p>
+              <hr class="border-green-100 w-1/12 mx-auto mb-6">
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+                {autoridadesComponent.map((autoridad: any) => (
+                  <CardAutoridad autoridad={autoridad} type="primary" />
+                ))}
+              </div>
+              <div class="flex items-center justify-center mt-10">
+                  <LinkCta href="/autoridades" type="TERTIARY" label="Ver más">
+                    <ArrowRightIcon class="h-6 w-6 ml-2" />
+                  </LinkCta>
+              </div>
+            </div>
+          </section>
+      )
+    }
+  
   </main>
 </Layout>
