@@ -45,7 +45,17 @@ const populate = {
           }
         }
       },
-      "blocks.autoridades": true,
+      "blocks.autoridades": {
+        populate: {
+          autoridadesComponent: {
+            populate: {
+              image: {
+                fields: ["alternativeText", "url", "name", "caption"],
+              },
+            },
+          },
+        }
+      },
       "blocks.section-heading": true,
       "blocks.hero": true,
       "blocks.persona-card": true,

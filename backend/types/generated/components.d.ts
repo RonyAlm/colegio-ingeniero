@@ -7,6 +7,7 @@ export interface BlocksAutoridades extends Struct.ComponentSchema {
   };
   attributes: {
     autoridadesComponent: Schema.Attribute.Component<'shared.autoridad', true>;
+    description: Schema.Attribute.Text;
     title: Schema.Attribute.String;
   };
 }
@@ -136,9 +137,10 @@ export interface BlocksSectionHeading extends Struct.ComponentSchema {
     displayName: 'Section Heading';
   };
   attributes: {
-    encabezado: Schema.Attribute.String;
-    enlaceLink: Schema.Attribute.String;
-    subtitulo: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+    link: Schema.Attribute.String;
+    subtitle: Schema.Attribute.String;
   };
 }
 
@@ -279,6 +281,19 @@ export interface SharedCard extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedDocs extends Struct.ComponentSchema {
+  collectionName: 'components_shared_docs';
+  info: {
+    displayName: 'Docs';
+  };
+  attributes: {
+    document: Schema.Attribute.Component<'shared.media', false>;
+    links: Schema.Attribute.Component<'component.link', true>;
+    subtitle: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SharedGallery extends Struct.ComponentSchema {
   collectionName: 'components_shared_galleries';
   info: {
@@ -409,6 +424,7 @@ declare module '@strapi/strapi' {
       'layout.hero-section': LayoutHeroSection;
       'shared.autoridad': SharedAutoridad;
       'shared.card': SharedCard;
+      'shared.docs': SharedDocs;
       'shared.gallery': SharedGallery;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;

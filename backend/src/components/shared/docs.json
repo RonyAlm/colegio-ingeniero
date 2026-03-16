@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_shared_docs",
+  "info": {
+    "displayName": "Docs"
+  },
+  "options": {},
+  "attributes": {
+    "document": {
+      "type": "component",
+      "component": "shared.media",
+      "repeatable": false
+    },
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "links": {
+      "type": "component",
+      "component": "component.link",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

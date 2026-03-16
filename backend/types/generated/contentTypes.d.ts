@@ -707,8 +707,12 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.resoluciones',
         'blocks.hero-slider',
         'blocks.featured-articles',
+        'shared.autoridad',
+        'blocks.autoridades',
+        'shared.docs',
       ]
     >;
+    cover: Schema.Attribute.Media<'images' | 'videos'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

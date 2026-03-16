@@ -5,13 +5,16 @@
   },
   "options": {},
   "attributes": {
-    "subtitulo": {
+    "heading": {
       "type": "string"
     },
-    "encabezado": {
+    "subtitle": {
       "type": "string"
     },
-    "enlaceLink": {
+    "description": {
+      "type": "text"
+    },
+    "link": {
       "type": "string"
     }
   },

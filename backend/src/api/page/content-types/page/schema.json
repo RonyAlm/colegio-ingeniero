@@ -17,6 +17,14 @@
     "descripcion": {
       "type": "text"
     },
+    "cover": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
     "slug": {
       "type": "uid",
       "targetField": "title"
@@ -49,7 +57,10 @@
         "component.link",
         "blocks.resoluciones",
         "blocks.hero-slider",
-        "blocks.featured-articles"
+        "blocks.featured-articles",
+        "shared.autoridad",
+        "blocks.autoridades",
+        "shared.docs"
       ]
     }
   }
