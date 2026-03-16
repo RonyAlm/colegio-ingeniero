@@ -146,3 +146,23 @@ export const getResolutionInfo = async (slug: string) => {
   if (!result.data || result.data.length === 0) return null;
   return result.data[0];
 };
+
+
+export const getAllPages = async () => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/pages`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result.data;
+}
+
+export const getPageInfo = async (slug: string) => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/pages?filters[slug][$eq]=${encodeURIComponent(slug)}`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  if (!result.data || result.data.length === 0) return null;
+  return result.data[0];
+} 

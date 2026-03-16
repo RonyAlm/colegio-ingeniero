@@ -1,0 +1,108 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CardArticle from "../components/CardArticle.astro";
+import { getAllPages, getPageInfo } from "../lib/strapi";
+import type { GetStaticPaths } from "astro";
+import HeaderPage from "../components/HeaderPage.astro";
+import CardAutoridad from "../components/CardAutoridad.astro";
+import LinkCta from "../components/LinkCta.astro";
+import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
+import SectionAutoridades from "../components/SectionAutoridades.astro";
+import { YouTube } from "@astro-community/astro-embed-youtube";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
+
+export const getStaticPaths = (async () => {
+  const slugs = await getAllPages();
+
+  return slugs.map((data: any) => {
+    return {
+      params: {
+        slug: data.slug,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const infoPage = await getPageInfo(slug);
+
+const coverImg = infoPage.cover ? infoPage.cover.url : null;
+
+const autoridades = infoPage.blocks.filter(
+  (block: any) => block.__component === "blocks.autoridades",
+) || null;
+
+
+const sectionHeading = infoPage.blocks.find(
+  (block: any) => block.__component === "blocks.section-heading",
+) || null;
+
+const sectionYoutube = infoPage.blocks.filter(
+  (block: any) => block.__component === "shared.youtube",
+) || null;
+
+
+const sectionDocs = infoPage.blocks.find(
+  (block: any) => block.__component === "shared.docs",
+) || null;
+
+
+---
+
+<Layout title={infoPage.title} description={infoPage.description}>
+  <HeaderPage title={infoPage.title} slug={infoPage.slug} cover={coverImg} />
+  <main class="bg-gray-200">
+
+    { 
+      sectionHeading && (
+        <section class="container mx-auto px-4 py-10 md:py-20 flex flex-col items-center">
+          <h3 class="text-2xl font-bold md:text-4xl text-green-700 mb-4 uppercase">
+            {sectionHeading.heading}
+          </h3>
+        
+          <p class="text-lg text-green-950/70 max-w-3xl text-center">{sectionHeading.description}</p>
+        </section>
+      )
+    }
+
+    { autoridades && (
+        autoridades.map((data: any) => (
+            <SectionAutoridades data={data} />
+        ))
+      )
+    }
+
+    {
+      sectionYoutube.length > 0 && (
+            <section class="md:pt-20 container mx-auto px-4 py-40">
+              <h2 class="text-4xl text-green-950 text-center mb-12">
+                Videos <span class="text-green-600 font-bold">Instructivos</span> 
+              </h2>
+              <div class="flex items-center justify-center gap-4 flex-wrap">
+                   {
+                     sectionYoutube.map((data: any) => (
+                       <YouTube id={data.videoId} class="aspect-video mx-auto w-full rounded-2xl" 
+                       title={data.title} />
+                     ))
+                   }
+              </div>
+              
+            </section>
+      )
+    }
+
+    {
+      sectionDocs && (
+        <section class="md:pt-10 container mx-auto px-4 py-40">
+          <div class="flex items-center justify-center gap-4 flex-wrap max-w-3xl mx-auto">
+            <iframe
+            src={`https://docs.google.com/gview?url=${sectionDocs.document.file.url}&embedded=true`}
+            class="w-full h-screen rounded-xl border border-green-600"></iframe>
+          </div>
+        </section>
+      )
+    }
+
+  </main>
+</Layout>
