@@ -9,7 +9,11 @@ const { data: articles, pagination } = await getPostsPage(1, PAGE_SIZE);
 ---
 
 <Layout title="Novedades" description="Novedades de Colegio Público de Ingenieros de Formosa">
-    <HeaderPage title="Novedades" slug="novedades"></HeaderPage>
+    <HeaderPage 
+     title="Novedades" 
+     slug="novedades" 
+     cover="https://res.cloudinary.com/du86bx5o0/image/upload/v1773192769/Gemini_Generated_Image_kfx8l5kfx8l5kfx8_4f63abf5e8.png"
+    />
     <section class="md:pt-20 container mx-auto px-4 py-20">
         <h1 class="text-4xl font-bold text-green-950 text-center mb-8">Todas las Novedades</h1>
         <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
