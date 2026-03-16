@@ -44,15 +44,15 @@ export default async function handler(req, res) {
     try {
 
         await resend.emails.send({
-            from: "contacto@tudominio.com",
-            to: "tuemail@gmail.com",
+            from: "onboarding@resend.dev",
+            to: "onboarding@resend.dev",
             subject: "Nuevo contacto",
             html: `
-        <h3>Nuevo mensaje</h3>
-        <p><b>Nombre:</b> ${name}</p>
-        <p><b>Email:</b> ${email}</p>
-        <p>${message}</p>
-      `
+                <h3>Nuevo mensaje</h3>
+                <p><b>Nombre:</b> ${name}</p>
+                <p><b>Email:</b> ${email}</p>
+                <p>${message}</p>
+            `
         })
 
         res.status(200).json({ success: true })
