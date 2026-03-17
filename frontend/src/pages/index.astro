@@ -8,6 +8,7 @@ import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
 import FeaturedArticles from "../components/FeaturedArticles.astro";
 import ResolutionItem from "../components/ResolutionItem.astro";
 import CardAutoridad from "../components/CardAutoridad.astro";
+import InstagramFeed from "../components/InstagramFeed.astro";
 
 const infoPage = await getHomePage();
 // console.dir(infoPage, { depth: null });
@@ -118,13 +119,13 @@ const autoridadesComponent = autoridades?.autoridadesComponent
       )
     }
 
-    <section>
-      <div class="container mx-auto px-4 py-20">
-        <h2 class="text-4xl text-green-950 text-center mb-10">
-          <strong class="font-bold text-green-600">Redes Sociales</strong>
-        </h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        </div>
+    <section class="py-10">
+      <InstagramFeed limit={3} showTitle={true} />
+      <div class="flex items-center justify-center mt-4 mb-10">
+        <LinkCta href="/redes-sociales" type="QUATERNARY" label="Ver más publicaciones">
+          <ArrowRightIcon class="h-6 w-6 ml-2" />
+        </LinkCta>
+      </div>
     </section>
   
   </main>
