@@ -1,0 +1,12 @@
+@baseUrl = http://localhost:3000/api
+
+### POST - CreateUser - User 1  const { name, email, message, company } = req.body
+POST https://colegio-ingeniero-api.vercel.app/api/send
+Content-Type: application/json
+
+{
+  "name": "Rony Almiron",
+  "email": "rony.almiron.020@gmail.com",
+  "message": "Nuevo mensaje",
+  "company": ""
+}
