@@ -1,6 +1,11 @@
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const EMAIL_FROM = process.env.EMAIL_FROM
+const EMAIL_REPLY_TO = process.env.EMAIL_REPLY_TO
+const RESEND_API_KEY = process.env.RESEND_API_KEY
+const URL_FRONTEND = process.env.URL_FRONTEND
+
+const resend = new Resend(RESEND_API_KEY)
 
 const rateLimit = new Map()
 
@@ -34,7 +39,7 @@ export default async function handler(req, res) {
 
     // rateLimit.set(ip, now)
 
-    const { name, email, message, company } = req.body
+    const { name, email, phone, subject, message, company } = req.body
 
     // honeypot anti bots
     if (company) {
@@ -44,18 +49,21 @@ export default async function handler(req, res) {
     try {
 
         await resend.emails.send({
-            from: "onboarding@resend.dev",
+            from: EMAIL_FROM,
             to: "rony.almiron.020@gmail.com",
-            subject: "Nuevo contacto",
+            subject: subject,
             html: `
                 <h3>Nuevo mensaje</h3>
                 <p><b>Nombre:</b> ${name}</p>
                 <p><b>Email:</b> ${email}</p>
+                <p><b>Telefono:</b> ${phone}</p>
+                <p><b>Asunto:</b> ${subject}</p>
+                <p><b>Mensaje:</b></p>
                 <p>${message}</p>
             `
         })
 
-        res.status(200).json({ success: true })
+        res.status(200).json({ success: true, message: "Email sent" })
 
     } catch (e) {
         res.status(500).json({ error: "Email error" })
