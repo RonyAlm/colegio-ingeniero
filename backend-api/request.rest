@@ -7,6 +7,8 @@ Content-Type: application/json
 {
   "name": "Rony Almiron",
   "email": "rony.almiron.020@gmail.com",
-  "message": "Nuevo mensaje",
+  "phone": "32242424", 
+  "subject" : "Desde VS Code",
+  "message": "Nuevo mensaje 4",
   "company": ""
 }
