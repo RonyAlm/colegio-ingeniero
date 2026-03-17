@@ -79,7 +79,7 @@ const sectionDocs = infoPage.blocks.find(
               <h2 class="text-4xl text-green-950 text-center mb-12">
                 Videos <span class="text-green-600 font-bold">Instructivos</span> 
               </h2>
-              <div class="flex items-center justify-center gap-4 flex-wrap">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                    {
                      sectionYoutube.map((data: any) => (
                        <YouTube id={data.videoId} class="aspect-video mx-auto w-full rounded-2xl" 
