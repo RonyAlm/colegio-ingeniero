@@ -84,8 +84,7 @@ public/uploads/*
 !public/uploads/.gitkeep
 .tsbuildinfo
 .eslintcache
-.insert-articles.js
-.inspect-db.js
+
 
 ############################
 # Node.js
@@ -118,6 +117,8 @@ yarn-error.log
 ############################
 
 coverage
+scripts/insert-articles.js
+scripts/inspect-db.js
 
 ############################
 # Strapi
