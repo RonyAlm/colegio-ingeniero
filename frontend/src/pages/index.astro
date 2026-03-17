@@ -47,7 +47,7 @@ const autoridadesComponent = autoridades?.autoridadesComponent
 <Layout title={infoPage.title}>
   {slider && <Slider data={slider} />}
   <main class="bg-gray-300/90">
-    {articles.length > 0 && <FeaturedArticles articles={articles} />}
+    { articles.length > 0 && <FeaturedArticles articles={articles} />}
 
     {
       resolutionsSection && (
@@ -56,11 +56,12 @@ const autoridadesComponent = autoridades?.autoridadesComponent
             <h2 class="text-4xl font-bold text-green-100 text-center my-4">
               {resolutionsSection.title}
             </h2>
-            {resolutionsSection.description && (
-              <p class="text-center text-sm md:text-base text-gray-600">
-                {resolutionsSection.description}
-              </p>
-            )}
+            { resolutionsSection.description && (
+                <p class="text-center text-sm md:text-base text-gray-600">
+                  {resolutionsSection.description}
+                </p>
+              )
+            }
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-10">
               {resolutions.map((resolucion: any) => (
                 <ResolutionItem resolucion={resolucion} />
@@ -80,8 +81,7 @@ const autoridadesComponent = autoridades?.autoridadesComponent
       <h2 class="text-4xl text-green-950 text-center mb-12">
         Videos <span class="text-green-600 font-bold">Instructivos</span> 
       </h2>
-      <div class="flex items-center justify-center gap-4 flex-wrap">
-
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <YouTube id="AfSoQORGMFA" class="aspect-video mx-auto w-full rounded-2xl" 
            title={"Módulo de Reserva Sede Social"} />
            <YouTube id="2Dkwjg3wRiQ" class="aspect-video mx-auto w-full rounded-2xl" poster="" 
@@ -97,7 +97,7 @@ const autoridadesComponent = autoridades?.autoridadesComponent
     {
       autoridades && (
           <section class="px-4 py-20 bg-linear-to-t from-green-600 to-green-800">
-            <div class="container mx-auto md:pt-20 h-fit">
+            <div class="container mx-auto h-fit">
               <h2 class="text-4xl text-green-100 text-center mb-2">
                 {autoridades.title}
               </h2>
@@ -117,6 +117,15 @@ const autoridadesComponent = autoridades?.autoridadesComponent
           </section>
       )
     }
+
+    <section>
+      <div class="container mx-auto px-4 py-20">
+        <h2 class="text-4xl text-green-950 text-center mb-10">
+          <strong class="font-bold text-green-600">Redes Sociales</strong>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        </div>
+    </section>
   
   </main>
 </Layout>

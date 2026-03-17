@@ -19,12 +19,12 @@ const stylesNavItem = {
 
 <header class={`bg-linear-to-r from-green-600 to-green-800 backdrop:backdrop-blur-xl  text-white 
 fixed top-0 left-0 right-0 z-50
- md:static py-4 ${Astro.url.href.includes("post") ? "" : "shadow"}`  }>
+ md:static py-4 md:py-2 ${Astro.url.href.includes("post") ? "" : "shadow"}`  }>
   <div class="container mx-auto px-4 flex flex-row md:flex-row justify-between items-center">
     
     <a href="/" class="w-fit flex justify-center items-center">
-      <img src={logoUrl} alt="Logo" class="w-12 h-12 md:w-16 md:h-16 transform hover:scale-105 transition-transform" />
-      <span class="text-sm md:text-sm uppercase font-bold ml-2 text-white text-shadow">Colegio Público de 
+      <img src={logoUrl} alt="Logo" class="w-10 h-10 md:w-16 md:h-16 transform hover:scale-105 transition-transform" />
+      <span class="text-sm uppercase font-bold ml-2 text-white text-shadow">Colegio Público de 
         <br>Ingenieros de Formosa</span>
     </a>
 
@@ -37,14 +37,14 @@ fixed top-0 left-0 right-0 z-50
     </div>
 
     <nav id="navMenu"
-      class="hidden md:block md:static absolute top-20 right-0 bg-gray-100 text-green-600
-             md:bg-green-200 bg:text-white md:text-green-950 w-full md:w-fit py-0 md:px-1 md:py-1 md:rounded-full" >
+      class="hidden md:block md:static absolute top-18 right-0 bg-gray-100 text-green-600
+             md:bg-green-100 bg:text-white md:text-green-950 w-full md:w-fit py-0 md:px-1 md:py-1 md:rounded-full" >
       <ul class="flex flex-col md:flex-row md:gap-2 px-0">
         {
           navItems.map((link: any) => (
             <li 
               class={`transform hover:bg-green-600 hover:text-white transition-all border border-gray-200
-                    p-4 md:border-0 md:py-2 md:px-4 md:rounded-full cursor-pointer
+                    p-4 md:border-0 md:py-2 md:px-4 md:rounded-full cursor-pointer text-sm
                     ${link.href === Astro.url.pathname ? stylesNavItem.active : stylesNavItem.inactive}`}>
               <a href={link.href} target={link.isExternal ? "_blank" : "_self"}>{link.label}</a>
             </li>

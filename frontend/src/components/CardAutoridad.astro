@@ -39,20 +39,20 @@ if (type === "primary") {
   class="card group w-full h-full flex flex-col items-center justify-center gap-4
             rounded-2xl p-6 perspective-[1000px]">
   <div
-    class="card-inner rounded-2xl w-full min-h-100 relative duration-500 transform-3d
+    class="card-inner rounded-2xl w-full min-h-90 relative duration-500 transform-3d will-change-transform
         group-hover:transform-[rotateY(180deg)] cursor-pointer">
     <!-- Frente -->
     <div
-      class=`${cardStyles} absolute p-4 w-full h-full inset-0 flex flex-col 
+      class=`${cardStyles} absolute p-4 w-full inset-0 flex flex-col 
       items-center gap-2 rounded-xl backface-hidden overflow-hidden`>
       <figure
-        class="bg-gray-400 flex items-center justify-center w-full h-100 rounded-xl overflow-hidden">
+        class="bg-gray-400 flex items-center w-full aspect-ratio justify-center rounded overflow-hidden">
         <img
           src={imagenIng}
-          class="w-full h-full rounded-xl object-cover aspect-auto"
+          class="w-full h-full rounded object-cover transform-gpu will-change-transform "
           alt="Autoridad 1"/>
       </figure>
-      <div class= { type === "primary" ? `border border-white p-4 rounded w-full` : `border border-green-600 p-4 rounded w-full`}>
+      <div class= { type === "primary" ? `border border-white p-4 rounded w-full h-fit` : `border border-green-600 p-4 rounded w-full h-fit`}>
         <h3 class="text-xl font-bold">{name}</h3>
         <span class="text-sm">{cargo}</span>
       </div>
@@ -60,7 +60,7 @@ if (type === "primary") {
 
     <!-- Dorso -->
     <div
-      class="absolute w-full h-100 inset-0 bg-green-700 text-green-50 border border-green-600 flex flex-col 
+      class="absolute w-full h-full inset-0 bg-green-700 text-green-50 border border-green-600 flex flex-col 
         justify-center rounded-xl transform-[rotateY(180deg)] backface-hidden
         px-6 py-8 prose prose-invert">
       <h3 class="text-xl font-bold uppercase">{name}</h3>
