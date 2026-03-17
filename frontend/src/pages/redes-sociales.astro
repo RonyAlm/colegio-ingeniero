@@ -1,0 +1,31 @@
+---
+import HeaderPage from "../components/HeaderPage.astro";
+import Layout from "../layouts/Layout.astro";
+import InstagramFeed from "../components/InstagramFeed.astro";
+import LinkCta from "../components/LinkCta.astro";
+import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
+import InstagramIcon from "../components/icons/InstagramIcon.astro";
+---
+
+<Layout title="Redes Sociales" description="Redes Sociales del Colegio Público de Ingenieros de Formosa">
+    <HeaderPage title="Redes Sociales" slug="redes-sociales" />
+    <section class="md:pt-20 container mx-auto px-4 py-20">
+
+        <!-- Instagram -->
+        <div class="flex items-center justify-center gap-3 mb-4">
+            <InstagramIcon class="h-8 w-8 text-pink-600" />
+            <h2 class="text-3xl font-bold text-green-950">Instagram</h2>
+        </div>
+        <p class="text-center text-gray-500 mb-10">
+            Últimas publicaciones de nuestro perfil oficial
+        </p>
+
+        <InstagramFeed limit={12} showTitle={false} />
+
+        <div class="flex items-center justify-center mt-10">
+            <LinkCta href="https://www.instagram.com/" type="QUATERNARY" label="Seguinos en Instagram" isExternal={true}>
+                <ArrowRightIcon class="h-6 w-6 ml-2" />
+            </LinkCta>
+        </div>
+    </section>
+</Layout>
