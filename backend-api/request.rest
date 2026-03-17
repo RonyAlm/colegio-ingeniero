@@ -12,3 +12,9 @@ Content-Type: application/json
   "message": "Nuevo mensaje 4",
   "company": ""
 }
+
+### GET - Instagram Feed (3 posts)
+GET https://colegio-ingeniero-api.vercel.app/api/instagram?limit=3
+
+### GET - Instagram Feed (12 posts)
+GET https://colegio-ingeniero-api.vercel.app/api/instagram?limit=12
