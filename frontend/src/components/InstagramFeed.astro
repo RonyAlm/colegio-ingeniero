@@ -1,0 +1,139 @@
+---
+interface Props {
+  limit?: number;
+  showTitle?: boolean;
+}
+
+const { limit = 3, showTitle = true } = Astro.props;
+
+const INSTAGRAM_API_URL = import.meta.env.INSTAGRAM_API_URL || "https://colegio-ingeniero-api.vercel.app";
+const INSTAGRAM_TOKEN = import.meta.env.INSTAGRAM_TOKEN;
+const INSTAGRAM_USER_ID = import.meta.env.INSTAGRAM_USER_ID;
+
+let posts: any[] = [];
+let error = false;
+
+const mapPosts = (items: any[] = []) =>
+  items.map((post: any) => ({
+    id: post.id,
+    caption: post.caption || "",
+    mediaType: post.mediaType || post.media_type,
+    mediaUrl: post.mediaUrl || post.media_url,
+    thumbnailUrl: post.thumbnailUrl || post.thumbnail_url || post.mediaUrl || post.media_url,
+    permalink: post.permalink,
+    timestamp: post.timestamp,
+  }));
+
+const fetchFromGraphApi = async () => {
+  if (!INSTAGRAM_TOKEN || !INSTAGRAM_USER_ID) {
+    return [];
+  }
+
+  const fields = "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp";
+  const res = await fetch(
+    `https://graph.instagram.com/${INSTAGRAM_USER_ID}/media?fields=${fields}&limit=${limit}&access_token=${INSTAGRAM_TOKEN}`
+  );
+
+  if (!res.ok) {
+    throw new Error(`Instagram Graph API error: ${res.status}`);
+  }
+
+  const result = await res.json();
+  return mapPosts(result.data || []);
+};
+
+try {
+  const res = await fetch(`${INSTAGRAM_API_URL}/api/instagram?limit=${limit}`);
+  if (res.ok) {
+    const result = await res.json();
+    posts = mapPosts(result.data || []);
+  } else {
+    posts = await fetchFromGraphApi();
+  }
+} catch (e) {
+  try {
+    posts = await fetchFromGraphApi();
+  } catch (fallbackError) {
+    error = true;
+    console.error("Error fetching Instagram feed:", e);
+    console.error("Error fetching Instagram feed from fallback:", fallbackError);
+  }
+}
+---
+
+<section class="container mx-auto px-4 py-10" id="instagram-feed">
+  {showTitle && (
+    <div class="text-center mb-8">
+      <h2 class="text-4xl text-green-950">
+        <strong class="font-bold text-green-600">Redes Sociales</strong>
+      </h2>
+      <p class="text-gray-500 mt-2">Últimas publicaciones de Instagram</p>
+    </div>
+  )}
+
+  {error && (
+    <p class="text-center text-gray-500 py-10">
+      No se pudieron cargar las publicaciones. Intentá de nuevo más tarde.
+    </p>
+  )}
+
+  {!error && posts.length === 0 && (
+    <p class="text-center text-gray-500 py-10">
+      No hay publicaciones disponibles.
+    </p>
+  )}
+
+  {!error && posts.length > 0 && (
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+      {posts.map((post: any) => (
+        <a
+          href={post.permalink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group relative block overflow-hidden rounded-2xl bg-gray-200 aspect-square
+                 border-2 border-gray-200 hover:border-green-600 transition-all duration-300"
+        >
+          {post.mediaType === "VIDEO" ? (
+            <img
+              src={post.thumbnailUrl}
+              alt={post.caption?.slice(0, 100) || "Video de Instagram"}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+            <div class="absolute top-3 right-3 bg-black/60 text-white rounded-full p-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          ) : (
+            <img
+              src={post.mediaUrl}
+              alt={post.caption?.slice(0, 100) || "Publicación de Instagram"}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+          )}
+
+          {/* Overlay con caption al hacer hover */}
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent
+                      opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                      flex items-end p-3 md:p-4">
+            <p class="text-white text-xs md:text-sm line-clamp-3">
+              {post.caption?.slice(0, 150) || ""}
+            </p>
+          </div>
+
+          {/* Ícono de Instagram */}
+          <div class="absolute top-3 left-3 bg-white/80 backdrop-blur-sm rounded-full p-1.5
+                      opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-pink-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  )}
+</section>
