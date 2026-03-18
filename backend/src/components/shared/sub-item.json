@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_shared_sub_items",
+  "info": {
+    "displayName": "SubItem"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "isExternal": {
+      "type": "boolean",
+      "default": false
+    },
+    "href": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

@@ -28,6 +28,25 @@
         "PRIMARY",
         "SECONDARY"
       ]
+    },
+    "isSubmenu": {
+      "type": "boolean",
+      "default": false
+    },
+    "submenu": {
+      "type": "component",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "isSubmenu"
+            },
+            true
+          ]
+        }
+      },
+      "component": "shared.sub-item",
+      "repeatable": true
     }
   },
   "config": {}

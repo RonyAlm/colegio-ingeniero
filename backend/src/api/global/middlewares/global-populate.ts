@@ -21,7 +21,11 @@ const populate = {
             },
           }
         },
-        navItems: true,
+        navItems: {
+          populate: {
+            submenu: true
+          }
+        },
         cta: true
       },
     },

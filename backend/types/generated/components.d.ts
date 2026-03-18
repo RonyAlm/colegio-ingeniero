@@ -154,7 +154,9 @@ export interface ComponentLink extends Struct.ComponentSchema {
     href: Schema.Attribute.String & Schema.Attribute.DefaultTo<'#'>;
     isButtonLink: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isSubmenu: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     label: Schema.Attribute.String;
+    submenu: Schema.Attribute.Component<'shared.sub-item', true>;
     type: Schema.Attribute.Enumeration<['PRIMARY', 'SECONDARY']>;
   };
 }
@@ -389,6 +391,18 @@ export interface SharedSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedSubItem extends Struct.ComponentSchema {
+  collectionName: 'components_shared_sub_items';
+  info: {
+    displayName: 'SubItem';
+  };
+  attributes: {
+    href: Schema.Attribute.String;
+    isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    label: Schema.Attribute.String;
+  };
+}
+
 export interface SharedYoutube extends Struct.ComponentSchema {
   collectionName: 'components_shared_youtubes';
   info: {
@@ -432,6 +446,7 @@ declare module '@strapi/strapi' {
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'shared.sub-item': SharedSubItem;
       'shared.youtube': SharedYoutube;
     }
   }
