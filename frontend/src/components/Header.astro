@@ -15,17 +15,10 @@ const stylesNavItem = {
   inactive: "bg-transparent text-gray-600 hover:bg-green-600 hover:text-white"
 }
 
-// Submenús estáticos para items del nav
-const subMenus: Record<string, { label: string; href: string }[]> = {
-  "Institucionales": [
-    { label: "Redes Sociales", href: "/redes-sociales" },
-  ],
-}
-
 ---
 
 <header class={`bg-linear-to-r from-green-600 to-green-800 backdrop:backdrop-blur-xl  text-white 
-fixed top-0 left-0 right-0 z-50
+fixed top-0 left-0 right-0 z-50 h-20
  md:static py-4 md:py-2 ${Astro.url.href.includes("post") ? "" : "shadow"}`  }>
   <div class="container mx-auto px-4 flex flex-row md:flex-row justify-between items-center">
     
@@ -49,24 +42,31 @@ fixed top-0 left-0 right-0 z-50
       <ul class="flex flex-col md:flex-row md:gap-2 px-0">
         {
           navItems.map((link: any) => {
-            const subs = subMenus[link.label];
-            return subs && subs.length > 0 ? (
+            return link.isSubmenu && link.submenu.length > 0 ? (
               <li
-                class={`relative group transform hover:bg-green-600 hover:text-white transition-all border border-gray-200
-                      p-4 md:border-0 md:py-2 md:px-4 md:rounded-full cursor-pointer text-sm
-                      ${link.href === Astro.url.pathname || subs.some((s: any) => s.href === Astro.url.pathname) ? stylesNavItem.active : stylesNavItem.inactive}`}>
-                <a href={link.href} target={link.isExternal ? "_blank" : "_self"} class="flex items-center gap-1">
+                class={`relative group transform hover:bg-green-600 hover:text-white transition-all p-4
+                  border border-gray-200 md:border-0 md:py-2 md:px-4 md:rounded-full cursor-pointer text-sm
+                      ${ link.href === Astro.url.pathname 
+                          || link.submenu.some((s: any) => s.href === Astro.url.pathname) 
+                           ? stylesNavItem.active : stylesNavItem.inactive}`}>
+                <button id="submenuBtn" class="flex items-center gap-1 text-base cursor-pointer">
                   {link.label}
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transition-transform group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-                </a>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transition-transform group-hover:rotate-180" 
+                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m6 9 6 6 6-6"/>
+                  </svg>
+                </button>
                 {/* Submenú desktop */}
-                <ul class="hidden group-hover:block md:absolute md:top-full md:left-0 md:mt-1 md:bg-white md:rounded-xl md:shadow-lg md:min-w-48 md:py-2 md:z-50
-                           pl-4 md:pl-0">
-                  {subs.map((sub: any) => (
+                <ul id="submenu" class="hidden group-hover:block md:absolute md:top-full md:left-0 md:mt-2
+                 md:bg-green-50 bg-transparent rounded mt-4 overflow-hidden
+                   md:rounded-xl md:shadow-lg md:min-w-48 md:py-0 md:z-50 pl-0">
+                  { link.submenu.map((sub: any) => (
                     <li>
                       <a href={sub.href}
-                        class={`block px-4 py-2 text-sm hover:bg-green-50 hover:text-green-700 transition-colors
-                                md:text-gray-700 ${sub.href === Astro.url.pathname ? 'text-green-600 font-semibold' : ''}`}>
+                        target={sub.isExternal ? "_blank" : "_self"}
+                        class={`block px-4 py-4 text-sm hover:bg-green-100 hover:text-green-700
+                          transition-colors border border-green-950/20 md:text-gray-600
+                          ${ sub.href == Astro.url.pathname ? 'md:text-white font-bold bg-green-700/50 hover:bg-green-600 hover:text-white md:bg-green-600' : ''}`}>
                         {sub.label}
                       </a>
                     </li>
@@ -78,7 +78,7 @@ fixed top-0 left-0 right-0 z-50
                 class={`transform hover:bg-green-600 hover:text-white transition-all border border-gray-200
                       p-4 md:border-0 md:py-2 md:px-4 md:rounded-full cursor-pointer text-sm
                       ${link.href === Astro.url.pathname ? stylesNavItem.active : stylesNavItem.inactive}`}>
-                <a href={link.href} target={link.isExternal ? "_blank" : "_self"}>{link.label}</a>
+                <a class="flex items-center gap-1 text-base" href={link.href} target={link.isExternal ? "_blank" : "_self"}>{link.label}</a>
               </li>
             );
           })
@@ -115,6 +115,8 @@ fixed top-0 left-0 right-0 z-50
     const menuMobile = document.querySelector("#navMenu") as HTMLElement;
     const menuOpen = document.querySelector("#menuOpen") as HTMLElement;
     const menuClose = document.querySelector("#menuClose") as HTMLElement;
+    const openSubmenu = document.querySelector("#submenuBtn") as HTMLElement;
+    const submenu = document.querySelector("#submenu") as HTMLElement;
   
     if (checkbox) {
       checkbox.addEventListener("change", () => {
@@ -130,7 +132,11 @@ fixed top-0 left-0 right-0 z-50
       });
     }
 
-    console.log("Header");
+    openSubmenu.addEventListener("click", (e) => {
+      e.preventDefault();
+      submenu.classList.toggle("hidden");
+    })
+
   })
    
 </script>
