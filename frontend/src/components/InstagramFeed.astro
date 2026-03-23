@@ -63,22 +63,21 @@ try {
 
 <section class="container mx-auto px-4 py-10" id="instagram-feed">
   { showTitle && (
-    <div class="text-center mb-8">
-      <h2 class="text-4xl text-green-950">
-        <strong class="font-bold text-green-600">Redes Sociales</strong>
-      </h2>
-      <p class="text-gray-500 mt-2">Últimas publicaciones de Instagram</p>
+    <div class="text-center mb-10">
+      <h2 class="text-4xl text-green-50 mb-2">Redes Sociales</h2>
+      <hr class="border-green-50 w-1/12 mx-auto mb-6 rounded-full">
+      <p class="text-green-50/50">Últimas publicaciones de Instagram</p>
     </div>
   )}
 
   {error && (
-    <p class="text-center text-gray-500 py-10">
+    <p class="text-center text-gray-100 py-10">
       No se pudieron cargar las publicaciones. Intentá de nuevo más tarde.
     </p>
   )}
 
   {!error && posts.length === 0 && (
-    <p class="text-center text-gray-500 py-10">
+    <p class="text-center text-gray-100 py-10">
       No hay publicaciones disponibles.
     </p>
   )}

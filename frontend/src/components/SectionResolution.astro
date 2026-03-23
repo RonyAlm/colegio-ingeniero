@@ -22,7 +22,7 @@ console.log(resolutions);
             }
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-10">
               { resolutions.map((resolucion: any) => (
-                <ResolutionItem {...resolucion} />
+                <ResolutionItem data={resolucion} />
               ))}
             </div>
             <div class="flex items-center justify-center">

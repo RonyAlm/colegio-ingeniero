@@ -42,7 +42,13 @@ const autoridadesComponent = autoridades?.autoridadesComponent
   ? autoridades?.autoridadesComponent.map((card: any) => card)
   : [];
 
+const featuredDocuments = infoPage.blocks.find(
+  (block: any) => block.__component === "blocks.featured-documents",
+) || null;
 
+const documents = featuredDocuments?.docs
+  ? featuredDocuments?.docs.map((document: any) => document)
+  : [];
 
 ---
 
@@ -98,10 +104,37 @@ const autoridadesComponent = autoridades?.autoridadesComponent
       )
     }
 
-    <section class="py-10">
+    {
+      featuredDocuments && (
+        <section class="md:pt-20 container mx-auto px-4 py-20">
+          <h2 class="text-4xl text-green-950 text-center mb-2 mt-8">
+            { featuredDocuments.title.split(" ")[0] }
+              <span class="text-green-600 font-bold">{featuredDocuments.title.split(" ")[1]}</span> 
+          </h2>
+          <hr class="border-green-700 w-1/4 mx-auto mb-4 rounded-full">
+          { featuredDocuments.description && (
+            <p class="text-center text-sm md:text-base text-green-950/50 opacity-80 mb-4">
+              {featuredDocuments.description}
+            </p>
+          )}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+            {documents.map((document: any) => (
+              <ResolutionItem data={document} type="SECONDARY" />
+            ))}
+          </div>
+          <div class="flex items-center justify-center mt-10">
+            <LinkCta href="/descargables" type="QUATERNARY" label="Ver más">
+              <ArrowRightIcon class="h-6 w-6 ml-2" />
+            </LinkCta>
+          </div>
+        </section>
+      )
+    }
+
+    <section class="py-10 bg-linear-to-t from-green-600 to-green-800 border-b-2 border-green-700">
       <InstagramFeed limit={3} showTitle={true} />
       <div class="flex items-center justify-center mt-4 mb-10">
-        <LinkCta href="/redes-sociales" type="QUATERNARY" label="Ver más publicaciones">
+        <LinkCta href="/redes-sociales" type="TERTIARY" label="Ver más publicaciones">
           <ArrowRightIcon class="h-6 w-6 ml-2" />
         </LinkCta>
       </div>
