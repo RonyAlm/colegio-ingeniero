@@ -138,13 +138,12 @@ export const getAllResolutionsSlugs = async () => {
 
 // Obtiene una resolución filtrando por slug directamente en la API de Strapi
 export const getResolutionInfo = async (slug: string) => {
-  const res = await fetch(
-    `${STRAPI_BASE_URL}/api/resolutions?filters[slug][$eq]=${encodeURIComponent(slug)}`
-  );
+  const res = await fetch(`${STRAPI_BASE_URL}/api/resolutions`);
   if (!res.ok) throw new Error("Error al obtener los datos");
-  const result = await res.json();
-  if (!result.data || result.data.length === 0) return null;
-  return result.data[0];
+  const info = await res.json();
+  const result = info.data.find((resolution: any) => resolution.slug === slug);
+  if (!result) return null;
+  return result;  
 };
 
 
@@ -166,3 +165,32 @@ export const getPageInfo = async (slug: string) => {
   if (!result.data || result.data.length === 0) return null;
   return result.data[0];
 } 
+
+export const getAllDocuments = async () => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/docs`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result.data;
+}
+
+export const getAllDocumentsSlugs = async () => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/docs`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result.data.map((doc: any) => doc.slug);
+}
+
+export const getDocumentInfo = async (slug: string) => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/docs`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const info = await res.json();
+  const result = info.data.find((doc: any) => doc.slug === slug);
+  if (!result) return null;
+  return result;
+}

@@ -1,0 +1,58 @@
+---
+export interface Props {
+  src: string;
+}
+
+const { src } = Astro.props;
+console.log(src);
+---
+
+<div
+  id="pdf-viewer"
+  data-pdf-src={src}
+  class="w-full h-185 shadow rounded-xl overflow-hidden">
+</div>
+
+<script>
+  import EmbedPDF from "@embedpdf/snippet";
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const container = document.querySelector("#pdf-viewer") as HTMLElement;
+    const src = container.dataset.pdfSrc;
+
+    const nameDoc = src && src.split("/").pop();
+    console.log(nameDoc);
+
+    EmbedPDF.init({
+      theme: {
+        preference: "light",
+        light: {
+          accent: {
+            primary: "#1E9C3F",
+            primaryHover: "#146B2D",
+            primaryActive: "#0F3F23",
+            primaryLight: "#146B2D",
+            primaryForeground: "#FFF",
+          },
+          background: { app: "#dbfce763" },
+        },
+      },
+      type: "container",
+      target: container,
+      src: src,
+      disabledCategories: [
+        "annotation",
+        "redaction",
+        "panel",
+        "comments",
+        "search",
+      ],
+      i18n: {
+        defaultLocale: "es",
+      },
+      export: {
+        defaultFileName: nameDoc,
+      },
+    });
+  });
+</script>

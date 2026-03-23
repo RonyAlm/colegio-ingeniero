@@ -9,6 +9,7 @@ import FeaturedArticles from "../components/FeaturedArticles.astro";
 import ResolutionItem from "../components/ResolutionItem.astro";
 import CardAutoridad from "../components/CardAutoridad.astro";
 import InstagramFeed from "../components/InstagramFeed.astro";
+import SectionResolution from "../components/SectionResolution.astro";
 
 const infoPage = await getHomePage();
 // console.dir(infoPage, { depth: null });
@@ -47,34 +48,12 @@ const autoridadesComponent = autoridades?.autoridadesComponent
 
 <Layout title={infoPage.title}>
   {slider && <Slider data={slider} />}
-  <main class="bg-gray-300/90">
+  <main class="bg-gray-200/90">
     { articles.length > 0 && <FeaturedArticles articles={articles} />}
 
     {
       resolutionsSection && (
-        <section class="bg-green-800 px-4 py-20">
-          <div class="container mx-auto">
-            <h2 class="text-4xl font-bold text-green-100 text-center my-4">
-              {resolutionsSection.title}
-            </h2>
-            { resolutionsSection.description && (
-                <p class="text-center text-sm md:text-base text-gray-600">
-                  {resolutionsSection.description}
-                </p>
-              )
-            }
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-10">
-              {resolutions.map((resolucion: any) => (
-                <ResolutionItem resolucion={resolucion} />
-              ))}
-            </div>
-            <div class="flex items-center justify-center">
-              <LinkCta href={"/resoluciones"} type="TERTIARY" label="Ver más">
-                <ArrowRightIcon class="h-6 w-6 ml-2" />
-              </LinkCta>
-            </div>
-          </div>
-        </section>
+        <SectionResolution {...resolutionsSection} resolutions={resolutions} />
       )
     }
 

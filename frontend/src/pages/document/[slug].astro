@@ -1,18 +1,16 @@
 ---
 import type { GetStaticPaths } from "astro";
 import Layout from "../../layouts/Layout.astro";
-import { getAllResolutionsSlugs, getResolutionInfo } from "../../lib/strapi";
+import { getAllDocumentsSlugs, getDocumentInfo } from "../../lib/strapi";
 import TagIcon from "../../components/icons/TagIcon.astro";
-import LinkCta from "../../components/LinkCta.astro";
-import DownIcon from "../../components/icons/DownIcon.astro";
 import DocumentPDF from "../../components/DocumentPDF.astro";
 
 const slug = Astro.params.slug;
 if (!slug) return Astro.redirect("/404");
 
 export const getStaticPaths = (async () => {
-  const slugs = await getAllResolutionsSlugs();
-  // console.log(slugs);
+  const slugs = await getAllDocumentsSlugs();
+  console.dir(slugs, { depth: null });
   return slugs.map((data: any) => {
     return {
       params: {
@@ -22,35 +20,41 @@ export const getStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
-const resolution = await getResolutionInfo(slug);
-
-console.dir(resolution, { depth: null });
-console.log("Resolucion: slug ", slug);
-
+const docs = await getDocumentInfo(slug);
 
 ---
 
-<Layout title={resolution.title}>
+<Layout title={docs.title}>
   <div class="container mx-auto bg-gray-200/40 rounded-2xl pt-4 pb-10 my-4">
     <article class="px-8 md:px-0 py-6 max-w-4xl mx-auto ">
       <div class="flex flex-col gap-4 items-center justify-center">
+        <div class="flex items-center">
+          <a href="/descargables" class="text-sm uppercase text-gray-500 hover:underline">
+            Descargables
+         </a>
+          <span class="mx-2 text-gray-500">/</span>
+          <a href={`/document/${docs.slug}`} class="text-sm uppercase text-gray-500 hover:underline">
+            {docs.title}
+          </a>
+      
+        </div>
         <div
           class="bg-green-600 text-green-50 px-4 py-1 rounded-xl w-fit mb-4 flex items-center">
           <TagIcon class="h-4 w-4 mr-2" />
-          <span class="text-sm uppercase">resolución</span>
+          <span class="text-sm uppercase">{docs.category || "Documentación"}</span>
         </div>
         
         <h2 class="text-center text-3xl md:text-4xl font-bold text-green-950 uppercase">
-          {resolution.title}
+          {docs.title}
         </h2>
 
-        {resolution.description && (
+        {docs.description && (
           <p class="text-sm md:text-base text-green-950/50 opacity-80 mb-4">
-            {resolution.description}
+            {docs.description}
           </p>
         )}
         
-        <DocumentPDF src={`/docs/${resolution.slug}.pdf`} />
+        <DocumentPDF src={`/docs/${docs.slug}.pdf`} />
        
     </article>
   </div>

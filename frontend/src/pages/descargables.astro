@@ -1,0 +1,201 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HeaderPage from "../components/HeaderPage.astro";
+import DocumentCard from "../components/DocumentCard.astro";
+import DocumentIcon from "../components/icons/DocumentIcon.astro";
+import BuildingIcon from "../components/icons/BuildingIcon.astro";
+import BriefcaseIcon from "../components/icons/BriefcaseIcon.astro";
+import ScaleIcon from "../components/icons/ScaleIcon.astro";
+import { getAllDocuments } from "../lib/strapi";
+
+const documents = await getAllDocuments();
+
+const categories = Array.from(
+  new Map(
+    documents
+      .flatMap((doc: any) => doc.categories || [])
+      .map((cat: any) => [cat.slug, cat])
+  ).values()
+);
+
+const iconMap: Record<string, any> = {
+  institucional: BuildingIcon,
+  profesionales: BriefcaseIcon,
+  leyes: ScaleIcon,
+  formularios: DocumentIcon,
+};
+
+const categoriesWithIcons = categories.map((cat: any) => ({
+  label: cat.name,
+  slug: cat.slug,
+  icon: iconMap[cat.slug] || DocumentIcon,
+}));
+
+---
+
+<Layout title="Descargables">
+  <HeaderPage
+    title="Descargables"
+    slug="descargables"
+    cover="https://res.cloudinary.com/du86bx5o0/image/upload/v1773192769/Gemini_Generated_Image_kfx8l5kfx8l5kfx8_4f63abf5e8.png"
+  />
+  <main class="bg-gray-200 py-8">
+    <section class="container mx-auto px-4 mb-10">
+      <div class="flex flex-col items-center">
+        <div
+          class="flex items-center justify-center w-16 h-16 rounded-full bg-green-600/10 p-4 mb-4">
+          <DocumentIcon className="w-6 h-6 text-green-600" />
+        </div>
+        <h2 class="text-3xl font-bold text-green-700 mb-4">
+          Documentos de Interés
+        </h2>
+        <p class="text-gray-600 mb-10 prose">
+          A continuación, encontrarás una lista de documentos de interés para
+          todos los profesionales de Colegio Público de Ingenieros de Formosa.
+        </p>
+      </div>
+       
+      <!-- filtro de categorias -->
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex items-center gap-3">
+          <span class="hidden md:block text-gray-500 text-sm">Filtrar por:</span>
+
+          <div class="flex flex-wrap items-center gap-2" id="filters">
+            
+            <!-- Botón TODOS -->
+            <button
+              data-category="all"
+              class="filter-btn active px-4 py-2 rounded-lg flex items-center gap-2">
+              <span class="text-sm">Todos</span>
+            </button>
+
+            <!-- Botones dinámicos -->
+            {categoriesWithIcons.map((cat) => {
+              const Icon = cat.icon;
+              return (
+                <button
+                  data-category={cat.slug}
+                  class="filter-btn  shadow px-4 py-2 rounded-lg cursor-pointer
+                   flex items-center gap-2 hover:bg-green-600/90 hover:text-white transition-colors">
+                  <Icon class="w-4 h-4" />
+                  <span class="text-sm">{cat.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-4 pb-10" id="documents">
+        {documents.map((document: any) => {
+          const categorySlugs = document.categories?.map((c: any) => c.slug).join(" ");
+
+          return (
+            <div class="document-item" data-category={categorySlugs}>
+              <DocumentCard {...document} />
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  const buttons = document.querySelectorAll(".filter-btn") as NodeListOf<HTMLElement>;
+  const documents = document.querySelectorAll(".document-item") as NodeListOf<HTMLElement>;
+
+  // 👉 leer parámetro de la URL
+  const params = new URLSearchParams(window.location.search);
+  let activeCategory: string = params.get("category") || "all";
+
+  // 👉 función central de filtrado
+  function applyFilter(category: string) {
+    // actualizar botones
+    buttons.forEach((btn) => {
+      btn.classList.remove("active");
+      if (btn.dataset.category === category) {
+        btn.classList.add("active");
+      }
+    });
+
+    // filtrar documentos
+    documents.forEach((doc) => {
+      const docCategories = doc.dataset.category || "";
+
+      if (category === "all" || docCategories.includes(category)) {
+        doc.style.display = "block";
+      } else {
+        doc.style.display = "none";
+      }
+    });
+  }
+
+  // 👉 aplicar filtro al cargar
+  applyFilter(activeCategory);
+
+  // 👉 eventos de click
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const category = btn.dataset.category;
+
+      activeCategory = category as string;
+
+      // actualizar URL sin recargar
+      const url = new URL(window.location as any);
+
+      if (category === "all") {
+        url.searchParams.delete("category");
+      } else {
+        url.searchParams.set("category", category as string);
+      }
+
+      window.history.pushState({}, "", url);
+
+      applyFilter(category as string);
+
+    });
+  });
+
+  // 👉 manejar botón atrás/adelante del navegador
+  window.addEventListener("popstate", () => {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category") || "all";
+
+    activeCategory = category;
+    applyFilter(category);
+  });
+
+  // const buttons = document.querySelectorAll(".filter-btn") as NodeListOf<HTMLElement>;
+  // const documents = document.querySelectorAll(".document-item") as NodeListOf<HTMLElement>;
+  
+  // let activeCategory: string = "all";
+
+  // buttons.forEach((btn) => {
+  //   btn.addEventListener("click", () => {
+  //     const category = btn.dataset.category as string;
+
+  //     // actualizar estado
+  //     activeCategory = category;
+
+  //     // estilos activos
+  //     buttons.forEach((b) => {
+  //       b.classList.remove("active");
+  //     });
+
+  //     btn.classList.add("active");
+
+  //     // filtrar documentos
+  //     documents.forEach((doc) => {
+  //       const docCategories = doc.dataset.category as string;
+  //       if (category === "all" || docCategories.includes(category ) ) {
+  //         doc.style.display = "block";
+  //       } else {
+  //         doc.style.display = "none";
+  //       }
+  //     });
+  //   });
+  // });
+
+</script>

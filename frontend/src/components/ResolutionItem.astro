@@ -4,27 +4,27 @@ import DocumentIcon from "./icons/DocumentIcon.astro";
 import DownIcon from "./icons/DownIcon.astro";
 import LinkCta from "./LinkCta.astro";
 
-const { resolucion } = Astro.props;
-const date = new Date(resolucion.publishedAt).toLocaleDateString("es-AR")
+const { slug, title , description, publishedAt, document, category } = Astro.props;
+const date = new Date(publishedAt).toLocaleDateString("es-AR")
 
 ---
 
 <article class="bg-green-700 rounded-2xl py-8 px-6 shadow flex gap-4 items-center md:justify-center justify-between">
-  <a href={"/resolucion/" + resolucion.slug}>
+  <a href={"/document/" + slug}>
     <DocumentIcon class="h-18 w-18 text-gray-200 hover:text-white hover:scale-105 transition-transform" />
   </a>
-  <a class="flex flex-col items-center"
-    href={"/resolucion/" + resolucion.slug}>
-    <h3 class="text-2xl font-bold text-white uppercase">
-        {resolucion.title}
+  <a class="flex flex-col"
+    href={"/document/" + slug}>
+    <h3 class="text-xl font-bold text-white uppercase">
+        {title}
     </h3>
     <span class="text-sm text-gray-200">{date}</span>
     <div class="hidden md:flex gap-4 justify-center items-center">
-      <LinkCta href={"/resolucion/" + resolucion.slug} label="Ver Documento">
+      <LinkCta href={"/document/" + slug} label="Ver">
         <ArrowRightIcon class="h-6 w-6 ml-2" />
       </LinkCta>
       <LinkCta
-        href={resolucion.document.url}
+        href={`/docs/${slug}.pdf`}
         type="TERTIARY"
         isDownload
         isExternal
@@ -34,14 +34,14 @@ const date = new Date(resolucion.publishedAt).toLocaleDateString("es-AR")
     </div>
     <div class="flex flex-col md:hidden gap-4 justify-center items-center">
       <LinkCta
-        href={resolucion.document.url}
+        href={`/docs/${slug}.pdf`}
         type="TERTIARY"
         isDownload
         isExternal>
         <DownIcon class="h-6 w-6" />
       </LinkCta>
        <LinkCta
-        href={"/resolucion/" + resolucion.slug}
+        href={"/document/" + slug}
         type="TERTIARY">
         <ArrowRightIcon class="h-6 w-6" />
       </LinkCta>
