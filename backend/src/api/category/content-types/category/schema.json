@@ -32,6 +32,12 @@
       "relation": "oneToMany",
       "target": "api::resolution.resolution",
       "mappedBy": "category"
+    },
+    "docs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::doc.doc",
+      "mappedBy": "categories"
     }
   }
 }
