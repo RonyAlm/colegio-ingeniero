@@ -56,6 +56,20 @@ export interface BlocksFeaturedArticles extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksFeaturedDocuments extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_featured_documents';
+  info: {
+    displayName: 'Featured Documents';
+    icon: 'book';
+  };
+  attributes: {
+    cta: Schema.Attribute.Component<'component.link', false>;
+    description: Schema.Attribute.Text;
+    docs: Schema.Attribute.Relation<'oneToMany', 'api::doc.doc'>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksHero extends Struct.ComponentSchema {
   collectionName: 'components_blocks_heroes';
   info: {
@@ -423,6 +437,7 @@ declare module '@strapi/strapi' {
       'blocks.contenido-con-imagen': BlocksContenidoConImagen;
       'blocks.faqs': BlocksFaqs;
       'blocks.featured-articles': BlocksFeaturedArticles;
+      'blocks.featured-documents': BlocksFeaturedDocuments;
       'blocks.hero': BlocksHero;
       'blocks.hero-slider': BlocksHeroSlider;
       'blocks.markdown': BlocksMarkdown;

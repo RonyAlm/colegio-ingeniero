@@ -31,7 +31,8 @@
         "blocks.card-grid",
         "blocks.hero-slider",
         "blocks.resoluciones",
-        "blocks.autoridades"
+        "blocks.autoridades",
+        "blocks.featured-documents"
       ]
     }
   }

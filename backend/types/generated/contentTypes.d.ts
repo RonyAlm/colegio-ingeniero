@@ -683,6 +683,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         'blocks.hero-slider',
         'blocks.resoluciones',
         'blocks.autoridades',
+        'blocks.featured-documents',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

@@ -56,6 +56,15 @@ const populate = {
           },
         }
       },
+      "blocks.featured-documents": {
+        populate: {
+          docs: {
+            populate: {
+              categories: true,
+            }
+          }
+        }
+      },
       "blocks.section-heading": true,
       "blocks.hero": true,
       "blocks.persona-card": true,

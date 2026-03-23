@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_blocks_featured_documents",
+  "info": {
+    "displayName": "Featured Documents",
+    "icon": "book"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "cta": {
+      "type": "component",
+      "component": "component.link",
+      "repeatable": false
+    },
+    "docs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::doc.doc"
+    }
+  },
+  "config": {}
+}
