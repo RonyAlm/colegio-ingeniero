@@ -50,7 +50,7 @@ export default async function handler(req, res) {
 
         await resend.emails.send({
             from: EMAIL_FROM,
-            to: "rony.almiron.020@gmail.com",
+            to: EMAIL_REPLY_TO,
             subject: subject,
             html: `
                 <h3>Nuevo mensaje</h3>
