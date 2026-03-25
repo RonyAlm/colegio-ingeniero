@@ -22,6 +22,15 @@ export default ({ env }) => {
       pool: {
         min: 0,
         max: 3,
+        // Destruir conexiones inactivas antes de que Hostinger las cierre (~30s)
+        idleTimeoutMillis: 20000,
+        // Revisar conexiones muertas cada 10s
+        reapIntervalMillis: 10000,
+        // Configurar keepalive TCP en cada conexión nueva
+        afterCreate: (conn: any, done: Function) => {
+          conn.stream?.setKeepAlive?.(true, 10000);
+          done(null, conn);
+        },
       },
       acquireConnectionTimeout: 60000,
     },
