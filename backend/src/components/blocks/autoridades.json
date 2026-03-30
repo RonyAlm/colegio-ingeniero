@@ -5,6 +5,15 @@
   },
   "options": {},
   "attributes": {
+    "iconSection": {
+      "type": "enumeration",
+      "enum": [
+        "Document",
+        "Users",
+        "ShieldCheck",
+        "ScaleIcon"
+      ]
+    },
     "title": {
       "type": "string"
     },

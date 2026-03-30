@@ -1,9 +1,10 @@
 import path from 'path';
 
 export default ({ env }) => {
-  const client = env('DATABASE_CLIENT', 'mysql');
+  const client = env('DATABASE_CLIENT');
 
   const useSSL = env.bool('DATABASE_SSL', false);
+
 
   return {
     connection: {

@@ -8,6 +8,9 @@ export interface BlocksAutoridades extends Struct.ComponentSchema {
   attributes: {
     autoridadesComponent: Schema.Attribute.Component<'shared.autoridad', true>;
     description: Schema.Attribute.Text;
+    iconSection: Schema.Attribute.Enumeration<
+      ['Document', 'Users', 'ShieldCheck', 'ScaleIcon']
+    >;
     title: Schema.Attribute.String;
   };
 }
