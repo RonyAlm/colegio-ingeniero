@@ -31,8 +31,8 @@ const resolutionsSection =
     (block: any) => block.__component === "blocks.resoluciones",
   ) || null;
 
-const resolutions = resolutionsSection?.resolutions
-  ? resolutionsSection.resolutions.map((resolucion: any) => resolucion)
+const resolutions = resolutionsSection?.docs
+  ? resolutionsSection.docs.map((resolucion: any) => resolucion)
   : [];
 
 const autoridades = infoPage.blocks.find(

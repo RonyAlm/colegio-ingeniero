@@ -10,8 +10,10 @@ const { title, description, slug, categories, publishedAt, linkDownload } = data
 
 const date = new Date(publishedAt).toLocaleDateString("es-AR")
 
-let linkDetail =  linkDownload && linkDownload.includes(".pdf") ? `/document/${slug}` : `/docs/${linkDownload}`;
 
+
+let linkDetail =  linkDownload && linkDownload.includes(".pdf") ? `/document/${slug}` : `/docs/${linkDownload}`;
+console.log("Documento pdf: ", linkDetail, linkDownload);
 let styles = "";
 
 if (type === "PRIMARY") {
