@@ -54,7 +54,7 @@ if (type === "primary") {
       </figure>
       <div class= { type === "primary" ? `border border-white p-4 rounded w-full h-fit` : `border border-green-600 p-4 rounded w-full h-fit`}>
         <h3 class="text-xl font-bold">{name}</h3>
-        <span class="text-sm">{cargo}</span>
+        <span class="text-sm line-clamp-2">{cargo}</span>
       </div>
     </div>
 
@@ -63,9 +63,9 @@ if (type === "primary") {
       class="absolute w-full h-full inset-0 bg-green-700 text-green-50 border border-green-600 flex flex-col 
         justify-center rounded-xl transform-[rotateY(180deg)] backface-hidden
         px-6 py-8 prose prose-invert">
-      <h3 class="text-xl font-bold uppercase">{name}</h3>
-      <span class="text-sm">{profesion}</span>
-      <span class="text-lg">{cargo}</span>
+      <h3 class="text-lg font-bold uppercase">{name}</h3>
+      <span class="text-sm text-gray-300">{profesion}</span>
+      <span class="text-sm  text-gray-300">{cargo}</span>
       <p class="text-sm">
         {description}
       </p>
