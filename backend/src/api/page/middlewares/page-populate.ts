@@ -38,14 +38,7 @@ const populate = {
       },
       "blocks.resoluciones": {
         populate: {
-          resolutions: {
-            populate: {
-              document: {
-                fields: ["alternativeText", "url", "name", "ext", "mime"],
-              },
-              category: true,
-            }
-          }
+          docs: true
         }
       },
       "blocks.autoridades": {
