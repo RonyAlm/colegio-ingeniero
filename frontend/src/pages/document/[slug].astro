@@ -10,7 +10,7 @@ if (!slug) return Astro.redirect("/404");
 
 export const getStaticPaths = (async () => {
   const slugs = await getAllDocumentsSlugs();
-  console.dir(slugs, { depth: null });
+  // console.dir(slugs, { depth: null });
   return slugs.map((data: any) => {
     return {
       params: {

@@ -1,14 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import CardArticle from "../components/CardArticle.astro";
 import { getAllPages, getPageInfo } from "../lib/strapi";
 import type { GetStaticPaths } from "astro";
 import HeaderPage from "../components/HeaderPage.astro";
-import CardAutoridad from "../components/CardAutoridad.astro";
-import LinkCta from "../components/LinkCta.astro";
-import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
 import SectionAutoridades from "../components/SectionAutoridades.astro";
 import { YouTube } from "@astro-community/astro-embed-youtube";
+
 
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
@@ -46,7 +43,6 @@ const sectionYoutube = infoPage.blocks.filter(
 const sectionDocs = infoPage.blocks.find(
   (block: any) => block.__component === "shared.docs",
 ) || null;
-
 
 ---
 
