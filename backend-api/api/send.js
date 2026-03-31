@@ -33,11 +33,11 @@ export default async function handler(req, res) {
     const last = rateLimit.get(ip) || 0
 
     // rate limit 10s
-    // if (now - last < 10000) {
-    //     return res.status(429).json({ error: "Too many requests" })
-    // }
+    if (now - last < 10000) {
+        return res.status(429).json({ error: "Too many requests" })
+    }
 
-    // rateLimit.set(ip, now)
+    rateLimit.set(ip, now)
 
     const { name, email, phone, subject, message, company } = req.body
 
