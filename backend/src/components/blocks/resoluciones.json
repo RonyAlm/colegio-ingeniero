@@ -11,10 +11,10 @@
     "description": {
       "type": "text"
     },
-    "resolutions": {
+    "docs": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::resolution.resolution"
+      "target": "api::doc.doc"
     }
   },
   "config": {}
