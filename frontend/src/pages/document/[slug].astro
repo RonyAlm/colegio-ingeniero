@@ -21,6 +21,7 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const docs = await getDocumentInfo(slug);
+console.log(docs);
 
 ---
 
@@ -54,7 +55,7 @@ const docs = await getDocumentInfo(slug);
           </p>
         )}
         
-        <DocumentPDF src={`/docs/${docs.slug}.pdf`} />
+        <DocumentPDF src={`/docs/${docs.linkDownload}`} />
        
     </article>
   </div>
