@@ -28,7 +28,7 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const post = await getPostInfo(slug);
-console.dir(post, { depth: null });
+// console.dir(post, { depth: null });
 
 const date = new Date(post.publishedAt).toLocaleDateString("es-AR", {
   day: "numeric",
@@ -72,8 +72,18 @@ const video = videoYoutube.length > 0 && videoYoutube[0];
   <div class="container mx-auto bg-gray-100 rounded-2xl py-10 my-4">
     <article class="px-8 md:px-0 py-8 max-w-3xl mx-auto prose">
       <div class="flex flex-col items-center justify-center">
+        <div class="flex items-center not-prose">
+          <a href={"/novedades"} class="text-sm uppercase text-gray-500">
+            Novedades
+          </a>
+          <span class="mx-2 text-gray-500">/</span>
+          <a href={`/post/${post.slug}`} class="text-sm uppercase text-gray-500">
+            {post.title}
+          </a>
+      
+        </div>
         <div
-          class="bg-green-200 text-green-900 px-4 py-1 rounded-xl w-fit mb-8 flex items-center"
+          class="bg-green-200 text-green-900 px-4 py-1 rounded-xl w-fit mb-8 flex items-center mt-4"
         >
           <TagIcon class="h-4 w-4 mr-2" />
           <span class="text-sm uppercase">{post.category?.name || "General"}</span>
