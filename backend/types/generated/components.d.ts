@@ -82,6 +82,7 @@ export interface BlocksHero extends Struct.ComponentSchema {
     cta: Schema.Attribute.Component<'component.link', false>;
     heading: Schema.Attribute.String;
     image: Schema.Attribute.Media<'images'>;
+    overlay: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     text: Schema.Attribute.RichText;
   };
 }

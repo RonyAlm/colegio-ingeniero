@@ -11,6 +11,10 @@
     "text": {
       "type": "richtext"
     },
+    "overlay": {
+      "type": "boolean",
+      "default": false
+    },
     "cta": {
       "type": "component",
       "component": "component.link",
