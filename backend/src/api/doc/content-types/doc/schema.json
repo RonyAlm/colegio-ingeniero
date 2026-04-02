@@ -26,7 +26,7 @@
       "default": "/",
       "required": true,
       "unique": false,
-      "regex": "^\\/([a-zA-Z0-9_-]+\\/)*[a-zA-Z0-9_-]+\\.[a-zA-Z0-9]+$"
+      "regex": "^\\/([a-zA-Z0-9_áéíóúñÁÉÍÓÚÑ-]+\\/)*[a-zA-Z0-9_áéíóúñÁÉÍÓÚÑ-]+\\.[a-zA-Z0-9]+$"
     },
     "categories": {
       "type": "relation",
