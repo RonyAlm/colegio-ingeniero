@@ -13,7 +13,7 @@ const date = new Date(publishedAt).toLocaleDateString("es-AR")
 
 
 let linkDetail =  linkDownload && linkDownload.includes(".pdf") ? `/document/${slug}` : `/docs/${linkDownload}`;
-console.log("Documento pdf: ", linkDetail, linkDownload);
+
 let styles = "";
 
 if (type === "PRIMARY") {

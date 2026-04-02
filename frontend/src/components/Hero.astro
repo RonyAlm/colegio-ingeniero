@@ -4,13 +4,13 @@ import { STRAPI_BASE_URL } from "../lib/strapi";
 
 const { data } = Astro.props;
 const { title, description, heading, text, links, image } = data;
-console.log(data);
+
 
 const imageUrl = image?.url.startsWith("http") 
 ? image?.url :  `${STRAPI_BASE_URL}${image.url}`
 
 const html = marked.parse(text);
-console.log(text);
+
 
 ---
 

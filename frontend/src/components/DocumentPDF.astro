@@ -4,7 +4,6 @@ export interface Props {
 }
 
 const { src } = Astro.props;
-console.log(src);
 ---
 
 <div
@@ -21,7 +20,6 @@ console.log(src);
     const src = container.dataset.pdfSrc;
 
     const nameDoc = src && src.split("/").pop();
-    console.log(nameDoc);
 
     EmbedPDF.init({
       theme: {
