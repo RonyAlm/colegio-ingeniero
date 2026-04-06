@@ -11,9 +11,7 @@ const rateLimit = new Map()
 
 export default async function handler(req, res) {
 
-    // permitir CORS solo a tu dominio
-    // res.setHeader("Access-Control-Allow-Origin", "https://tudominio.com")
-    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Access-Control-Allow-Origin", URL_FRONTEND)
     res.setHeader("Access-Control-Allow-Methods", "POST")
     res.setHeader("Access-Control-Allow-Headers", "Content-Type")
 
