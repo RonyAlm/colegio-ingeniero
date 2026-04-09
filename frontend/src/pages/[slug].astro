@@ -5,6 +5,8 @@ import type { GetStaticPaths } from "astro";
 import HeaderPage from "../components/HeaderPage.astro";
 import SectionAutoridades from "../components/SectionAutoridades.astro";
 import { YouTube } from "@astro-community/astro-embed-youtube";
+import LinkCta from "../components/LinkCta.astro";
+import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
 
 
 const { slug } = Astro.params;
@@ -34,6 +36,7 @@ const autoridades = infoPage.blocks.filter(
 const sectionHeading = infoPage.blocks.find(
   (block: any) => block.__component === "blocks.section-heading",
 ) || null;
+console.log(sectionHeading);
 
 const sectionYoutube = infoPage.blocks.filter(
   (block: any) => block.__component === "shared.youtube",
@@ -57,7 +60,13 @@ const sectionDocs = infoPage.blocks.find(
             {sectionHeading.heading}
           </h3>
         
-          <p class="text-lg text-green-950/70 max-w-3xl text-center">{sectionHeading.description}</p>
+          <p class="text-lg text-green-950/70 max-w-3xl text-center mb-6">{sectionHeading.description}</p>
+          {
+            sectionHeading.link && (
+              <LinkCta href={sectionHeading.link.href} type={"QUATERNARY"} label={sectionHeading.link.label}> 
+                <ArrowRightIcon class="h-6 w-6 ml-2" />
+              </LinkCta>
+          )}
         </section>
       )
     }

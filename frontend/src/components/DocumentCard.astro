@@ -30,7 +30,7 @@ const linkDetail =  linkDownload && linkDownload.includes(".pdf") ? `/document/$
           class="flex items-center justify-center w-10 h-10 p-2 rounded-lg bg-green-600/10">
           <DocumentIcon class="w-5 h-5 text-primary" />
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center flex-wrap gap-2">
           { 
             categories.map((category: any) => (
               <span class="bg-green-600/10 text-green-950/80 px-3 py-1 rounded-lg text-sm">
