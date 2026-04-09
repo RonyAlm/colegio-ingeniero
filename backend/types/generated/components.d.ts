@@ -154,7 +154,7 @@ export interface BlocksSectionHeading extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Text;
     heading: Schema.Attribute.String;
-    link: Schema.Attribute.String;
+    link: Schema.Attribute.Component<'component.link', false>;
     subtitle: Schema.Attribute.String;
   };
 }

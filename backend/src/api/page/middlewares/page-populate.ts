@@ -52,7 +52,11 @@ const populate = {
           },
         }
       },
-      "blocks.section-heading": true,
+      "blocks.section-heading": {
+        populate: {
+          link: true,
+        }
+      },
       "blocks.hero": true,
       "blocks.persona-card": true,
       "blocks.newsletter": true,

@@ -5,7 +5,7 @@
 import type { Core } from '@strapi/strapi';
 
 const populate = {
-  sort: ["createdAt:desc"],
+  sort: ["title:desc" ],
   populate: {
     categories: true,
   },
