@@ -22,3 +22,10 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# dist-changed folder
+dist-changed/
+
+# snapshot file
+.dist-snapshot.json
+deploy-diff.ps1
