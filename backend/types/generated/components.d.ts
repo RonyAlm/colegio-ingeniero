@@ -1,5 +1,18 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface BlocksAdOverlay extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_ad_overlays';
+  info: {
+    displayName: 'Ad Overlay';
+  };
+  attributes: {
+    cta: Schema.Attribute.Component<'component.link', true>;
+    description: Schema.Attribute.Text;
+    images: Schema.Attribute.Media<'images', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksAutoridades extends Struct.ComponentSchema {
   collectionName: 'components_blocks_autoridades';
   info: {
@@ -433,6 +446,7 @@ export interface SharedYoutube extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'blocks.ad-overlay': BlocksAdOverlay;
       'blocks.autoridades': BlocksAutoridades;
       'blocks.card-grid': BlocksCardGrid;
       'blocks.contenido-con-imagen': BlocksContenidoConImagen;

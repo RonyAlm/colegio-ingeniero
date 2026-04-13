@@ -647,6 +647,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         'blocks.resoluciones',
         'blocks.autoridades',
         'blocks.featured-documents',
+        'blocks.ad-overlay',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

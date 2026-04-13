@@ -32,7 +32,8 @@
         "blocks.hero-slider",
         "blocks.resoluciones",
         "blocks.autoridades",
-        "blocks.featured-documents"
+        "blocks.featured-documents",
+        "blocks.ad-overlay"
       ]
     }
   }

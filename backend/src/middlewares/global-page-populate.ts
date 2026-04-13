@@ -66,6 +66,14 @@ const populate = {
         }
       },
       "blocks.section-heading": true,
+      "blocks.ad-overlay": {
+        populate: {
+          images: {
+            fields: ["alternativeText", "url"],
+          },
+          cta: true
+        }
+      },
       "blocks.hero": true,
       "blocks.persona-card": true,
       "blocks.newsletter": true,

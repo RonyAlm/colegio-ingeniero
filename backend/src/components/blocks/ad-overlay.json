@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_blocks_ad_overlays",
+  "info": {
+    "displayName": "Ad Overlay"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "cta": {
+      "type": "component",
+      "component": "component.link",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
