@@ -10,6 +10,7 @@ import ResolutionItem from "../components/ResolutionItem.astro";
 import CardAutoridad from "../components/CardAutoridad.astro";
 import InstagramFeed from "../components/InstagramFeed.astro";
 import SectionResolution from "../components/SectionResolution.astro";
+import AdOverlay from "../components/AdOverlay.astro";
 
 const infoPage = await getHomePage();
 // console.dir(infoPage, { depth: null });
@@ -50,9 +51,16 @@ const documents = featuredDocuments?.docs
   ? featuredDocuments?.docs.map((document: any) => document)
   : [];
 
+const adOverlayData = infoPage.blocks.find(
+  (block: any) => block.__component === "blocks.ad-overlay",
+) || null;
+
 ---
 
 <Layout title={infoPage.title}>
+  
+  { adOverlayData && <AdOverlay {...adOverlayData} /> }
+
   {slider && <Slider data={slider} />}
   <main class="bg-gray-200/90">
     { articles.length > 0 && <FeaturedArticles articles={articles} />}
@@ -139,6 +147,7 @@ const documents = featuredDocuments?.docs
         </LinkCta>
       </div>
     </section>
+  
   
   </main>
 </Layout>

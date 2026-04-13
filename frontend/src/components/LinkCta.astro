@@ -1,6 +1,6 @@
 ---
 interface Props {
-  type?: "PRIMARY" | "SECONDARY" | "TERTIARY" | "QUATERNARY";
+  type?: "PRIMARY" | "SECONDARY" | "TERTIARY" | "QUATERNARY" | "ORANGE" | "WHITE";
   href: string;
   label?: string;
   isExternal?: boolean;
@@ -16,6 +16,10 @@ if (type === "SECONDARY") {
   stylesLink = "text-white bg-transparent border border-white";
 } else if (type === "QUATERNARY") {
   stylesLink = "text-green-600 bg-transparent border border-green-600";
+} else if (type === "ORANGE") {
+  stylesLink = "text-white bg-orange-600";
+} else if (type === "WHITE") {
+  stylesLink = "text-green-600 bg-white border border-green-600";
 } else  {
   stylesLink = "text-white bg-green-600";
 }
@@ -25,7 +29,7 @@ if (type === "SECONDARY") {
   href={href}
   target={isExternal ? "_blank" : "_self"}
   download={isDownload}
-  class=`${stylesLink} uppercase p-4 md:px-4 md:py-2 rounded-full  text-sm
+  class=`${stylesLink} cursor-pointer uppercase p-4 md:px-4 md:py-2 rounded-full  text-sm
               transform hover:scale-105 transition-transform text-center flex items-center`>
   {label && <span>{label}</span>}
   <slot />

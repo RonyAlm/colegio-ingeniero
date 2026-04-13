@@ -1,0 +1,162 @@
+---
+import ArrowRightIcon from './icons/ArrowRightIcon.astro';
+
+type ImageItem = {
+  url: string;
+  alternativeText?: string;
+};
+
+type CTA = {
+  label: string;
+  href: string;
+  isExternal?: boolean;
+};
+
+interface Props {
+  images?: ImageItem[];
+  title?: string;
+  description?: string;
+  cta?: CTA[];
+  bgColor?: string;
+}
+
+const {
+  images = [],
+  title,
+  description,
+  cta,
+  bgColor = "bg-gray-900",
+} = Astro.props as Props;
+
+const hasImages = images &&  images.length > 0 ;
+
+---
+
+<div
+  data-wrapper
+  class="fixed inset-0 z-50 flex items-center justify-center"
+>
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-green-200/80 backdrop-blur-sm"></div>
+
+  <div class="relative w-full h-full flex items-center justify-center">
+
+    <button
+      type="button"
+      data-close
+      aria-label="Cerrar"
+      class="cursor-pointer absolute top-5 right-5 z-50 text-green-950 text-3xl
+       font-bold hover:scale-110 transition">
+      ✕
+    </button>
+
+    { 
+     hasImages ? (
+      <div class="flex flex-col items-center justify-center relative w-full h-full">
+      
+        <div class="flex flex-wrap gap-4 items-center justify-center mt-20 md:mt-10 p-10 w-full h-fit">
+
+          {images.slice(0, 3).map((img) => (
+            <div class="h-80 md:h-125">
+              <img
+                src={img.url}
+                alt={img.alternativeText ?? "promo"}
+                class="rounded shadow w-full h-full object-cover"
+              />               
+            </div>
+          ))}
+                
+        </div>
+        {
+          cta && cta.length > 0 && (
+            cta.map((cta: CTA) => (
+             <div class="z-50 flex items-center justify-center">
+               <a class="flex items-center bg-green-600 uppercase
+              text-white px-6 py-3 rounded-full font-semibold hover:bg-green-700 transition
+                border-4 border-green-300 animate-rubber-band"
+                href={cta.href} target="_blank"> 
+                <span>{cta.label}</span>
+                <ArrowRightIcon class="h-6 w-6 ml-2" />
+               </a>
+              </div>
+            ))
+          )
+        }
+      </div>
+      ) : (
+      <!-- 🎨 Fallback -->
+      <div class={`flex gap-4 flex-col items-center justify-center relative w-full h-full px-4 md:px-0`}>
+        <div class="h-fit bg-green-50 p-4 py-10 rounded-2xl text-center px-4 border-4 border-green-200 animate-zoom-in">
+          <a href="/" class="flex mb-8 justify-center items-center">
+            <img src={"/logo.png"} alt="Logo" class="w-10 h-10 md:w-16 md:h-16 transform hover:scale-105 transition-transform" />
+            <span class="text-sm uppercase font-bold ml-2 text-green-950/80 text-shadow">Colegio Público de 
+              <br>Ingenieros de Formosa</span>
+          </a>
+          {title && <h2 class="text-6xl  text-orange-600 text-center my-4">
+            <span class="text-green-600 font-bold">{title.split(" ")[0]}</span> 
+            { title.split(" ")[1] }
+          </h2>}
+          {description && (
+            <p class="mt-4 text-gray-600 text-lg md:text-xl max-w-2xl mx-auto">
+              {description}
+            </p>
+          )}
+          { cta && cta?.length > 0 &&
+            cta?.map((cta: CTA) => (
+              <div class="z-50 mt-8 flex items-center justify-center">
+               <a class="flex items-center bg-green-600 uppercase
+              text-white px-6 py-3 rounded-full font-semibold hover:bg-green-700 transition
+                border-4 border-green-300 animate-rubber-band"
+                href={cta.href} target="_blank"> 
+                <span>{cta.label}</span>
+                <ArrowRightIcon class="h-6 w-6 ml-2" />
+               </a>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      )
+    }
+
+  </div>
+
+</div>
+
+<script>
+  (() => {
+    // Tomamos el primer banner (o podrías usar querySelectorAll si tenés varios)
+    const wrapper = document.querySelector('[data-wrapper]');
+    if (!(wrapper instanceof HTMLElement)) return;
+
+    const closeBtn = wrapper.querySelector('[data-close]');
+
+    let timeoutId = setTimeout(() => {
+      wrapper.classList.add("hidden");
+    }, 10000);
+
+    // ❌ Botón cerrar
+    if (closeBtn instanceof HTMLElement) {
+      closeBtn.addEventListener("click", () => {
+        wrapper.classList.add("hidden");
+        clearTimeout(timeoutId);
+      });
+    }
+
+    // ❌ Click fuera (IMPORTANTE: corregido)
+    wrapper.addEventListener("click", (e) => {
+      if (e.target === wrapper) {
+        wrapper.classList.add("hidden");
+        clearTimeout(timeoutId);
+      }
+    });
+
+    // ❌ ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        wrapper.classList.add("hidden");
+        clearTimeout(timeoutId);
+      }
+    });
+  })();
+</script>
