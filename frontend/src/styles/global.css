@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@import 'tailwind-animations';
 
 @font-face {
     font-family: 'Inter';
