@@ -194,3 +194,33 @@ export const getDocumentInfo = async (slug: string) => {
   if (!result) return null;
   return result;
 }
+
+
+export const getAllCourses = async () => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/courses`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result.data;
+}
+
+export const getAllCoursesSlugs = async () => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/courses`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result.data.map((course: any) => course.slug);
+}
+
+export const getCourseInfo = async (slug: string) => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/courses`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const info = await res.json();
+  const result = info.data.find((course: any) => course.slug === slug);
+  if (!result) return null;
+  return result;
+}

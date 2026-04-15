@@ -1,0 +1,12 @@
+---
+   import CardCourse from "./CardCourse.astro";
+   const { courses } = Astro.props;
+---
+
+<section class="container mx-auto px-4 pb-20 flex flex-col gap-4">
+      {
+        courses.map((course: any) => (
+          <CardCourse {...course} />
+        ))
+      }
+</section>

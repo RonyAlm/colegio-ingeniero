@@ -1,0 +1,175 @@
+---
+import type { GetStaticPaths } from "astro";
+import { marked } from "marked";
+import { Image } from "astro:assets";
+import { YouTube } from '@astro-community/astro-embed-youtube';
+import Layout from "../../layouts/Layout.astro";
+import { getPostInfo, getAllPostsSlugs, getAllCoursesSlugs, getCourseInfo } from "../../lib/strapi";
+import TagIcon from "../../components/icons/TagIcon.astro";
+import ArrowRightIcon from "../../components/icons/ArrowRightIcon.astro";
+import LinkIcon from "../../components/icons/LinkIcon.astro";
+import CardArticle from "../../components/CardArticle.astro";
+import LinkCta from "../../components/LinkCta.astro";
+import Gallery from "../../components/Gallery.astro";
+import IconClock from "../../components/icons/IconClock.astro";
+import IconInfo from "../../components/icons/IconInfo.astro";
+import CalendarIcon from "../../components/icons/CalendarIcon.astro";
+
+const slug = Astro.params.slug;
+if (!slug) return Astro.redirect("/404");
+
+export const getStaticPaths = (async () => {
+  const slugs = await getAllCoursesSlugs();
+  // console.log(slugs);
+  return slugs.map((data: any) => {
+    return {
+      params: {
+        slug: data,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const course = await getCourseInfo(slug);
+const { title, description, startDate, endDate, hours, mode, images, links: any } = course;
+
+const start = new Date(startDate).toLocaleDateString("es-AR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+const end = new Date(endDate).toLocaleDateString("es-AR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+})
+
+const date = `${start} - ${end}`;
+
+const text = description ? marked.parse(description) : null;
+
+// const featuredArticles = course.featured ? course.featured.articles : [];
+
+const gallerys = course.blocks.filter(
+  (block: any) => block.__component === "shared.gallery",
+) || [];
+
+const galleryImg = gallerys.length > 0 && gallerys[0].image;
+
+const links = course.blocks.filter(
+  (block: any) => block.__component === "shared.link",
+) || [];
+
+const videoYoutube = course.blocks.filter(
+  (block: any) => block.__component === "shared.youtube",
+) || []; 
+
+const video = videoYoutube.length > 0 && videoYoutube[0];
+
+---
+
+<Layout title={title}>
+  <div class="container mx-auto bg-gray-100 rounded-2xl py-10 my-4">
+    <article class="px-8 md:px-0 py-8 max-w-3xl mx-auto prose">
+      <div class="flex flex-col items-center justify-center">
+        <div class="flex items-center not-prose">
+          <a href={"/cursos"} class="text-sm uppercase text-gray-500">
+            Cursos
+          </a>
+          <span class="mx-2 text-gray-500">/</span>
+          <a href={`/course/${course.slug}`} class="text-sm uppercase text-gray-500 line-clamp-1">
+            {title}
+          </a>
+      
+        </div>
+        <div
+          class="bg-green-200 text-green-900 px-4 py-1 rounded-xl w-fit mb-8 flex items-center mt-4">
+          <TagIcon class="h-4 w-4 mr-2" />
+          <span class="text-sm uppercase">{course.category?.name || "General"}</span>
+        </div>
+        <span class="text-sm text-gray-400">{date}</span>
+        <h2 class="text-center text-3xl md:text-5xl font-bold text-gray-800 mt-4">
+          {title}
+        </h2>
+        <p class="text-center text-sm md:text-base text-gray-600">
+          {course.subtitle}
+        </p>
+
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center">
+            <IconInfo class="w-6 h-6 text-green-600 mr-2" />
+            <span class="text-xl text-gray-400">{mode}</span>
+          </div>
+        
+          <div class="flex items-center">
+            <IconClock class="w-6 h-6 text-green-600 mr-2" />
+            <span class="text-xl text-gray-400">{hours}</span>
+          </div>
+        </div>
+
+        { images.length > 0 && (
+          <figure
+            class="w-full md:p-6 flex justify-center md:border-2 border-gray-200 mb-0">
+            <img
+              class="bg-cover bg-center rounded-2xl shadow prose-figure:my-0"
+              src={images[0].url}
+              alt={images[0].alternativeText}
+            />
+          </figure>
+        )}
+      </div>
+      <div
+        class="flex gap-4 items-center mt-0 text-green-600 prose-a:text-green-600">
+        <LinkIcon href={"#"} icon="instagram" isExternal columns="bg-gray-50 border border-green-600" />
+        <LinkIcon href={"#"} icon="facebook" isExternal  columns="bg-gray-50 border border-green-600"/>
+        <LinkIcon href={"#"} icon="youtube" isExternal  columns="bg-gray-50 border border-green-600"/>
+      </div>
+      {text && <div class="prose" set:html={text} />}
+      {
+        galleryImg && <Gallery columns="mt-10 md:grid-cols-2" images={galleryImg}/>
+      }
+      {
+        video && <YouTube id={video?.videoId} class="mt-10 rounded-xl" />
+      }
+
+      {
+        links.length > 0 && (
+          <div class="flex flex-col gap-4 mt-10">
+            {links.map((link: any) => (
+              <LinkCta href={link.url} label={link.title} type="SECONDARY" />
+            ))}
+          </div>
+        )
+      }
+      
+    </article>
+  </div>
+
+  <!-- {featuredArticles.length > 0 && (
+     <section class="container mx-auto py-10 pb-20 px-8 md:px-0">
+    <div class="flex flex-col md:flex-row justify-between items-center py-10">
+      <h2 class="text-2xl md:text-4xl text-center md:text-left  font-bold text-green-950 mb-6 md:mb-0">
+        Noticias y Novedades Destacadas
+      </h2>
+      <LinkCta href="/novedades" label="Ver más" type="SECONDARY">
+        <ArrowRightIcon class="h-4 w-4 ml-2" />
+      </LinkCta>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {
+        featuredArticles.map((post: any) => (
+          <CardArticle
+            title={post.title}
+            description={post.description}
+            image={post.cover?.url}
+            category={"Novedades"}
+            slug={post.slug}
+            date={post.publishedAt}
+          />
+        ))
+      }
+    </div>
+  </section>
+  )} -->
+ 
+</Layout>
