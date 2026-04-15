@@ -4,9 +4,9 @@ import LinkCta from "./LinkCta.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
 
 const infoHero = Astro.props.data;
-if(!infoHero || infoHero.length === 0) return null
+if(!infoHero || infoHero.length === 0) return redirect("/");
 
-console.log(infoHero);
+// console.log(infoHero);
 
 
 ---
