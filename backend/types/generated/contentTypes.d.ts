@@ -567,16 +567,13 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     blocks: Schema.Attribute.DynamicZone<
       ['shared.youtube', 'shared.gallery', 'shared.media']
     >;
+    cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.RichText;
     endDate: Schema.Attribute.Date;
     hours: Schema.Attribute.String;
-    images: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
     links: Schema.Attribute.Component<'component.link', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -588,6 +585,7 @@ export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'>;
     startDate: Schema.Attribute.Date;
+    subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -690,6 +688,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         'blocks.autoridades',
         'blocks.featured-documents',
         'blocks.ad-overlay',
+        'blocks.featured-courses',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

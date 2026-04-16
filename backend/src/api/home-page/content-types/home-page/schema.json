@@ -33,7 +33,8 @@
         "blocks.resoluciones",
         "blocks.autoridades",
         "blocks.featured-documents",
-        "blocks.ad-overlay"
+        "blocks.ad-overlay",
+        "blocks.featured-courses"
       ]
     }
   }

@@ -65,6 +65,18 @@ const populate = {
           }
         }
       },
+      "blocks.featured-courses": {
+        populate: {
+          courses: {
+            populate: {
+              cover: {
+                fields: ["alternativeText", "url"],
+              },
+            }
+          },
+          cta: true,
+        }
+      },
       "blocks.section-heading": true,
       "blocks.ad-overlay": {
         populate: {

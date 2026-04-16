@@ -72,6 +72,19 @@ export interface BlocksFeaturedArticles extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksFeaturedCourses extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_featured_courses';
+  info: {
+    displayName: 'Featured Courses';
+  };
+  attributes: {
+    courses: Schema.Attribute.Relation<'oneToMany', 'api::course.course'>;
+    cta: Schema.Attribute.Component<'component.link', true>;
+    description: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksFeaturedDocuments extends Struct.ComponentSchema {
   collectionName: 'components_blocks_featured_documents';
   info: {
@@ -452,6 +465,7 @@ declare module '@strapi/strapi' {
       'blocks.contenido-con-imagen': BlocksContenidoConImagen;
       'blocks.faqs': BlocksFaqs;
       'blocks.featured-articles': BlocksFeaturedArticles;
+      'blocks.featured-courses': BlocksFeaturedCourses;
       'blocks.featured-documents': BlocksFeaturedDocuments;
       'blocks.hero': BlocksHero;
       'blocks.hero-slider': BlocksHeroSlider;

@@ -8,8 +8,8 @@ import { link } from 'fs';
 const populate = {
   sort: ['title:desc'],
   populate: {
-    images: {
-      fields: ['url', 'alternativeText'],
+    cover: {
+      fields: ['alternativeText', 'url', 'ext'],
     },
     links: true,
     blocks: {
@@ -26,6 +26,17 @@ const populate = {
             image: {
               fields: ["alternativeText", "url", "ext", "width", "height"],
 
+            }
+          }
+        },
+        "blocks.featured-courses": {
+          populate: {
+            courses: {
+              populate: {
+                cover: {
+                  fields: ["alternativeText", "url", "ext"],
+                }
+              }
             }
           }
         },
