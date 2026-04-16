@@ -8,7 +8,8 @@ import EyeIcon from "./icons/EyeIcon.astro";
 import IconInfo from "./icons/IconInfo.astro";
 import Gallery from "./Gallery.astro";
 import Image from "astro/components/Image.astro";
-const { title, description, startDate, endDate, hours, mode, links, images, slug } =
+import ArrowTROnIcon from "./icons/ArrowTROnIcon.astro";
+const { title, subtitle, description, startDate, endDate, hours, mode, links, cover, slug } =
   Astro.props;
 
 const text = description && marked.parse(description);
@@ -30,42 +31,36 @@ const date = `${start} - ${end}`;
 
 <article class="bg-white shadow-md rounded-lg flex flex-col md:flex-row gap-2">
   <a href={`/course/${slug}`} class="md:w-2/5 overflow-hidden md:rounded-s-lg">
-    <img src={images[0].url} alt={images[0].alternativeText} class="w-full h-full object-cover hover:scale-102 transition-transform" />
+    <img src={cover.url} alt={cover.alternativeText} class="w-full h-full object-cover hover:scale-102 transition-transform" />
   </a>
-  <div class="p-4 pt-2 mb-10 md:py-10 md:w-7/12 flex flex-col justify-between">
+  <div class="p-4 pt-2 md:py-10 md:w-7/12 flex flex-col justify-between">
 
-    <a href={`/course/${slug}`} class="text-2xl font-semibold text-green-950 hover:underline
+    <a href={`/course/${slug}`} class="text-3xl mt-4 font-semibold text-green-950 hover:underline
       transition-all hover:text-green-600 mb-4">{title}</a>
 
-    <div class="flex items-center">
-      <IconInfo class="w-6 h-6 text-green-600 mr-2" />
-      <span class="text-sm text-green-600">{mode}</span>
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center">
+        <IconInfo class="w-6 h-6 text-green-600 mr-2" />
+        <span class="text-sm text-green-600">{mode}</span>
+      </div>
+
+      <div class="flex items-center">
+        <CalendarIcon class="w-6 h-6 text-green-600 mr-2"  />
+        <span class="text-sm text-gray-400">{date}</span>
+      </div>
+    
+      <div class="flex items-center">
+        <IconClock class="w-6 h-6 text-green-600 mr-2" />
+        <span class="text-sm text-gray-400">{hours}</span>
+      </div>
     </div>
 
-    <div class="flex items-center">
-      <CalendarIcon class="w-6 h-6 text-green-600 mr-2"  />
-      <span class="text-sm text-gray-400">{date}</span>
-    </div>
-  
-    <div class="flex items-center">
-      <IconClock class="w-6 h-6 text-green-600 mr-2" />
-      <span class="text-sm text-gray-400">{hours}</span>
-    </div>
 
-    <div class="text-gray-600 my-4 line-clamp-8 prose" set:html={text}></div>
-    <div class="flex flex-row flex-wrap gap-4 mt-6">
-      <LinkCta href={`/course/${slug}`} type="PRIMARY" label="Leer más">
-        <EyeIcon class="h-6 w-6 ml-2" />
+    <div class="text-gray-600 my-4 line-clamp-4 prose" set:html={text}></div>
+    <div class="flex justify-end flex-row flex-wrap gap-4 mt-6">
+      <LinkCta href={`/course/${slug}`} type="QUATERNARY" label="Leer más">
+        <ArrowRightIcon class="h-6 w-6 ml-2" />
       </LinkCta>
-      { 
-        links && (
-          links.map((link: any) => (
-            <LinkCta href={link.url} type="QUATERNARY" label={link.label} isExternal>
-              <ArrowRightIcon class="h-6 w-6 ml-2" />
-            </LinkCta>
-          ))
-        )
-      }
     </div>
   </div>
 </article>
