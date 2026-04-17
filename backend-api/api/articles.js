@@ -90,6 +90,7 @@ export default async function handler(req, res) {
         ON categories.id = articles_category_lnk.category_id
       INNER JOIN files_related_mph 
         ON files_related_mph.related_id = articles.id
+        AND files_related_mph.related_type = 'api::article.article'
       INNER JOIN files 
         ON files.id = files_related_mph.file_id
       WHERE articles.published_at IS NOT NULL 
