@@ -95,7 +95,7 @@ export default async function handler(req, res) {
                 LEFT JOIN files_related_mph frm 
                 ON frm.related_id = a.id
                 AND frm.related_type = 'api::article.article'
-                AND frm.field = 'cover'   -- 🔥 clave
+                AND frm.field = 'cover'
 
                 LEFT JOIN files f 
                 ON f.id = frm.file_id
