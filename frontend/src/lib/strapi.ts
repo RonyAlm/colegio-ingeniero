@@ -1,8 +1,9 @@
-import { get } from "node:http";
 import type { THeader, TFooter, TImagen } from "../types";
 
 export const STRAPI_BASE_URL =
   import.meta.env.STRAPI_BASE_URL || "http://localhost:1337";
+
+export const STRAPI_BASE_URL_RENDER = import.meta.env.STRAPI_BASE_URL_RENDER;
 
 interface StrapiResponse<T = null> {
   success: boolean;

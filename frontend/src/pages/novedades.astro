@@ -2,8 +2,9 @@
 import HeaderPage from "../components/HeaderPage.astro";
 import Layout from "../layouts/Layout.astro";
 import CardArticle from "../components/CardArticle.astro";
-import { getPostsPage, STRAPI_BASE_URL } from "../lib/strapi";
+import { getPostsPage } from "../lib/strapi";
 
+const API_ARTICLES = import.meta.env.API_ARTICLES;
 const PAGE_SIZE = 12;
 const { data: articles, pagination } = await getPostsPage(1, PAGE_SIZE);
 ---
@@ -54,7 +55,7 @@ const { data: articles, pagination } = await getPostsPage(1, PAGE_SIZE);
     </section>
 </Layout>
 
-<script define:vars={{ strapiBaseUrl: STRAPI_BASE_URL, pageSize: PAGE_SIZE, totalPages: pagination.pageCount, totalArticles: pagination.total }}>
+<script define:vars={{ strapiBaseUrl: API_ARTICLES, pageSize: PAGE_SIZE, totalPages: pagination.pageCount, totalArticles: pagination.total }}>
   let currentPage = 1;
 
   function formatDate(dateStr) {

@@ -27,7 +27,7 @@ if(!infoHero || infoHero.length === 0) return redirect("/");
                   </p>
                    {
                      info.cta &&
-                     <LinkCta href={info.cta.href} label={info.cta.label}>
+                     <LinkCta href={info.cta.href} label={info.cta.label} type="WITHBORDER">
                        <ArrowRightIcon class="h-6 w-6 ml-2" />
                      </LinkCta>
                    }

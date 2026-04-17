@@ -1,6 +1,6 @@
 ---
 interface Props {
-  type?: "PRIMARY" | "SECONDARY" | "TERTIARY" | "QUATERNARY" | "ORANGE" | "WHITE";
+  type?: "PRIMARY" | "SECONDARY" | "TERTIARY" | "QUATERNARY" | "ORANGE" | "WHITE" | "WITHBORDER";
   href: string;
   label?: string;
   isExternal?: boolean;
@@ -20,6 +20,8 @@ if (type === "SECONDARY") {
   stylesLink = "text-white bg-orange-600";
 } else if (type === "WHITE") {
   stylesLink = "text-green-600 bg-white border border-green-600";
+} else if (type === "WITHBORDER") {
+  stylesLink = "text-white bg-green-600 transition-colors border-4 border-green-100 animate-rubber-band";
 } else  {
   stylesLink = "text-white bg-green-600";
 }
