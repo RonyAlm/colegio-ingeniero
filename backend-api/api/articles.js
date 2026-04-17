@@ -43,19 +43,19 @@ export default async function handler(req, res) {
     }
 
     // 🛡 Rate limit por IP
-    const ip =
-        req.headers["x-forwarded-for"] ||
-        req.socket?.remoteAddress ||
-        "unknown"
+    // const ip =
+    //     req.headers["x-forwarded-for"] ||
+    //     req.socket?.remoteAddress ||
+    //     "unknown"
 
-    const now = Date.now()
-    const last = rateLimit.get(ip) || 0
+    // const now = Date.now()
+    // const last = rateLimit.get(ip) || 0
 
-    if (now - last < 2000) {
-        return res.status(429).json({ error: "Too many requests" })
-    }
+    // if (now - last < 2000) {
+    //     return res.status(429).json({ error: "Too many requests" })
+    // }
 
-    rateLimit.set(ip, now)
+    // rateLimit.set(ip, now)
 
     try {
 
