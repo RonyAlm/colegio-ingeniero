@@ -79,24 +79,32 @@ export default async function handler(req, res) {
         // 📄 Query principal (tu query + paginación)
         const [rows] = await pool.query(
             `
-      SELECT 
-        articles.*, 
-        categories.name as category, 
-        files.url as cover 
-      FROM articles 
-      INNER JOIN articles_category_lnk 
-        ON articles.id = articles_category_lnk.article_id 
-      INNER JOIN categories 
-        ON categories.id = articles_category_lnk.category_id
-      INNER JOIN files_related_mph 
-        ON files_related_mph.related_id = articles.id
-        AND files_related_mph.related_type = 'api::article.article'
-      INNER JOIN files 
-        ON files.id = files_related_mph.file_id
-      WHERE articles.published_at IS NOT NULL 
-      ORDER BY articles.published_at DESC
-      LIMIT ? OFFSET ?
-      `,
+                SELECT 
+                a.*,
+                c.name AS category,
+                f.url AS cover
+
+                FROM articles a
+
+                LEFT JOIN articles_category_lnk acl 
+                ON a.id = acl.article_id
+
+                LEFT JOIN categories c 
+                ON c.id = acl.category_id
+
+                LEFT JOIN files_related_mph frm 
+                ON frm.related_id = a.id
+                AND frm.related_type = 'api::article.article'
+                AND frm.field = 'cover'   -- 🔥 clave
+
+                LEFT JOIN files f 
+                ON f.id = frm.file_id
+
+                WHERE a.published_at IS NOT NULL
+
+                ORDER BY a.published_at DESC
+                LIMIT ? OFFSET ?
+            `,
             [pageSize, offset]
         )
 
