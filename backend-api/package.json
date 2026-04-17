@@ -12,6 +12,7 @@
   "type": "module",
   "dependencies": {
     "@react-email/components": "^1.0.10",
+    "mysql2": "^3.22.1",
     "resend": "^6.9.4"
   }
 }
