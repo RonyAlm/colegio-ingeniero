@@ -121,7 +121,8 @@ export default async function handler(req, res) {
         console.error("DB ERROR:", error)
 
         return res.status(500).json({
-            error: "Internal server error"
+            error: "Internal server error",
+            details: error
         })
 
     }
