@@ -10,11 +10,11 @@ const URL_FRONTEND = process.env.URL_FRONTEND
 
 // 🔌 Pool de conexiones (optimizado para serverless)
 const pool = mysql.createPool({
-    host: DB_HOST,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    database: DB_NAME,
-    port: DB_PORT,
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
+    port: process.env.DATABASE_PORT,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
