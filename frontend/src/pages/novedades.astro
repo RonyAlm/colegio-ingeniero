@@ -1,4 +1,5 @@
 ---
+import { getPostsPage } from "../lib/strapi";
 import HeaderPage from "../components/HeaderPage.astro";
 import Layout from "../layouts/Layout.astro";
 import CardArticle from "../components/CardArticle.astro";
@@ -7,13 +8,10 @@ const API_ARTICLES = import.meta.env.API_ARTICLES;
 
 const PAGE_SIZE = 9;
 
-const res = await fetch(`${API_ARTICLES}/api/articles?pagination[page]=1&pagination[pageSize]=${PAGE_SIZE}`);
-const json = await res.json();
+const articlesStrapi = await getPostsPage(1, PAGE_SIZE);
 
-const articles = json.data;
+const totalArticles = articlesStrapi.pagination.total;
 
-const totalArticles = json.meta.pagination.total;
-console.log(totalArticles);
 ---
 
 <Layout title="Novedades" description="Novedades de Colegio Público de Ingenieros de Formosa">
@@ -26,14 +24,14 @@ console.log(totalArticles);
         <h1 class="text-4xl font-bold text-green-950 text-center mb-8">Todas las Novedades</h1>
         <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
            {
-            articles.map((article: any) => (
+            articlesStrapi.data.map((article: any) => (
               <CardArticle
                 title={article.title}
                 description={article.description}
-                image={article.cover}
+                image={article.cover.url}
                 slug={article.slug}
-                category={article.category || "Novedades"}
-                date={article.created_at}
+                category={"Novedades"}
+                date={article.createdAt}
               />
             ))
            }
@@ -41,7 +39,7 @@ console.log(totalArticles);
 
             <!-- BOTÓN VER MÁS -->
         <div class="container mx-auto flex justify-center flex-col gap-4 items-center mt-10">
-          <span id="pagination" class="text-sm text-gray-500">Mostrando {articles.length} de {totalArticles} novedades</span>
+          <span id="pagination" class="text-sm text-gray-500">Mostrando {articlesStrapi.data.length} de {totalArticles} novedades</span>
           <button 
             id="load-more-btn"
             class="w-fit bg-green-700 border-2 border-green-200 text-white p-2 px-4 rounded-full hover:bg-green-600
@@ -134,7 +132,12 @@ console.log(totalArticles);
         { cache: "force-cache" }
       );
 
+      if (!res.ok) {
+        throw new Error("Error al obtener los datos, intenta de nuevo más tarde!");
+      }
+
       const data = await res.json();
+
       cache.set(page, data);
       return data;
     }

@@ -57,7 +57,7 @@ export const getStrapiData = async (url: string) => {
 };
 
 // Obtiene una página de artículos (para carga inicial en /novedades)
-export const getPostsPage = async (page: number = 1, pageSize: number = 12) => {
+export const getPostsPage = async (page: number = 1, pageSize: number = 9) => {
   const res = await fetch(
     `${STRAPI_BASE_URL}/api/articles?pagination[page]=${page}&pagination[pageSize]=${pageSize}`
   );
