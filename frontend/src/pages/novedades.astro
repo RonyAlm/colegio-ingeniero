@@ -41,7 +41,7 @@ console.log(totalArticles);
 
             <!-- BOTÓN VER MÁS -->
         <div class="container mx-auto flex justify-center flex-col gap-4 items-center mt-10">
-          <span class="text-sm text-gray-500">Mostrando {articles.length} de {totalArticles} novedades</span>
+          <span id="pagination" class="text-sm text-gray-500">Mostrando {articles.length} de {totalArticles} novedades</span>
           <button 
             id="load-more-btn"
             class="w-fit bg-green-700 border-2 border-green-200 text-white p-2 px-4 rounded-full hover:bg-green-600
@@ -76,6 +76,7 @@ console.log(totalArticles);
     const trigger = document.getElementById("load-more-trigger") as HTMLDivElement;
     const loader = document.getElementById("loader") as HTMLDivElement;
     const button = document.getElementById("load-more-btn") as HTMLButtonElement;
+    const pagination = document.getElementById("pagination") as HTMLDivElement;
 
    const formatDate = (date: string) => {
       const options: Intl.DateTimeFormatOptions = {
@@ -143,6 +144,8 @@ console.log(totalArticles);
 
       loading = true;
       loader.classList.remove("hidden");
+
+      pagination.classList.add("hidden");
 
       page++;
 
