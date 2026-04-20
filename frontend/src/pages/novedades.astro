@@ -11,6 +11,9 @@ const res = await fetch(`${API_ARTICLES}/api/articles?pagination[page]=1&paginat
 const json = await res.json();
 
 const articles = json.data;
+
+const totalArticles = json.meta.pagination.total;
+console.log(totalArticles);
 ---
 
 <Layout title="Novedades" description="Novedades de Colegio Público de Ingenieros de Formosa">
@@ -36,6 +39,17 @@ const articles = json.data;
            }
         </div>
 
+            <!-- BOTÓN VER MÁS -->
+        <div class="container mx-auto flex justify-center flex-col gap-4 items-center mt-10">
+          <span class="text-sm text-gray-500">Mostrando {articles.length} de {totalArticles} novedades</span>
+          <button 
+            id="load-more-btn"
+            class="w-fit bg-green-700 border-2 border-green-200 text-white p-2 px-4 rounded-full hover:bg-green-600
+             transition-colors cursor-pointer animate-rubber-band">
+            Mostrar más novedades
+          </button>
+        </div>
+
         <!-- Trigger -->
         <div id="load-more-trigger" class="h-10"></div>
 
@@ -51,6 +65,7 @@ const articles = json.data;
     let page = 1;
     let loading = false;
     let hasMore = true;
+    let infiniteEnabled = false;
 
     const PAGE_SIZE = 9;
     const API_URL = "https://colegio-ingeniero-api.vercel.app/api/articles";
@@ -60,6 +75,7 @@ const articles = json.data;
     const container = document.getElementById("articles-grid") as HTMLDivElement;
     const trigger = document.getElementById("load-more-trigger") as HTMLDivElement;
     const loader = document.getElementById("loader") as HTMLDivElement;
+    const button = document.getElementById("load-more-btn") as HTMLButtonElement;
 
    const formatDate = (date: string) => {
       const options: Intl.DateTimeFormatOptions = {
@@ -122,40 +138,49 @@ const articles = json.data;
       return data;
     }
 
-    const observer = new IntersectionObserver(async (entries) => {
-      if (!entries[0].isIntersecting || loading || !hasMore) return;
+    async function loadNextPage() {
+      if (loading || !hasMore) return;
 
       loading = true;
       loader.classList.remove("hidden");
 
       page++;
 
-      try {
-        const data = await getArticles(page);
+      const data = await getArticles(page);
 
-        if (!data.data || data.data.length === 0) {
-          hasMore = false;
-          observer.disconnect();
-          loader.innerText = "No hay más novedades";
-          return;
-        }
-
-        const fragment = document.createDocumentFragment();
-
-        data.data.forEach((article: any) => {
-          const card = createCard(article);
-          fragment.appendChild(card);
-        });
-
-        container.appendChild(fragment);
-
-      } catch (err) {
-        console.error(err);
+      if (!data.data || data.data.length === 0) {
+        hasMore = false;
+        loader.innerText = "No hay más novedades";
+        return;
       }
+
+      const fragment = document.createDocumentFragment();
+
+      data.data.forEach((article: any) => {
+        fragment.appendChild(createCard(article));
+      });
+
+      container.appendChild(fragment);
 
       loader.classList.add("hidden");
       loading = false;
+    }
+
+    // 👉 CLICK INICIAL
+    button.addEventListener("click", async () => {
+      button.style.display = "none";
+
+      await loadNextPage();
+
+      // activar infinite scroll
+      infiniteEnabled = true;
+      observer.observe(trigger);
     });
 
-    observer.observe(trigger);
+    // 👉 INFINITE SCROLL
+    const observer = new IntersectionObserver(async (entries) => {
+      if (!entries[0].isIntersecting || !infiniteEnabled) return;
+
+      await loadNextPage();
+    });
 </script>
