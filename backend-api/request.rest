@@ -18,3 +18,6 @@ GET https://colegio-ingeniero-api.vercel.app/api/instagram?limit=3
 
 ### GET - Instagram Feed (12 posts)
 GET https://colegio-ingeniero-api.vercel.app/api/instagram?limit=12
+
+###
+GET https://colegio-ingeniero-api.vercel.app/api/articles?pagination[page]=2&pagination[pageSize]=25

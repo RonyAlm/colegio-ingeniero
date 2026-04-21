@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_blocks_featured_courses",
+  "info": {
+    "displayName": "Featured Courses"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "cta": {
+      "type": "component",
+      "component": "component.link",
+      "repeatable": true
+    },
+    "courses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::course.course"
+    }
+  },
+  "config": {}
+}

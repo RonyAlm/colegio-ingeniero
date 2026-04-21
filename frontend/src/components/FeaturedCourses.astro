@@ -1,0 +1,37 @@
+---
+import type { ACTION_ERROR_CODES } from "astro:actions";
+import CardCourse from "./CardCourse.astro";
+import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
+import LinkCta from "./LinkCta.astro";
+const { title, subtitle, description, cta, courses } = Astro.props;
+---
+
+<section class="py-20 bg-gray-200">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl text-green-950 text-center my-4">
+            {title && title.split(" ")[0]}
+            <strong class="text-green-600 font-bold">{ title.split(" ").slice(1).join(" ") }</strong>
+        </h2>
+        <hr class="border border-green-700 w-1/4 mx-auto mb-4 rounded-full">
+        <p class="text-white text-lg mb-4">
+            {subtitle}
+        </p>
+        <p class="text-white text-lg mb-4">
+            {description}
+        </p>
+        <div class="flex flex-col gap-4 mt-20">
+            {courses.map((course: any) => (
+                <CardCourse {...course} />
+            ))}
+        </div>
+        <div class="flex flex-wrap items-center justify-center mt-10">
+            {
+                cta.map((cta: any) => (
+                    <LinkCta href={cta.href} label={cta.label} isExternal={cta.isExternal} type={cta.type}>
+                        <ArrowRightIcon class="h-6 w-6 ml-2" />
+                    </LinkCta>
+                ))
+            }
+        </div>
+    </div>
+</section>

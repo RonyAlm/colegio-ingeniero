@@ -11,6 +11,7 @@ import CardAutoridad from "../components/CardAutoridad.astro";
 import InstagramFeed from "../components/InstagramFeed.astro";
 import SectionResolution from "../components/SectionResolution.astro";
 import AdOverlay from "../components/AdOverlay.astro";
+import FeaturedCourses from "../components/FeaturedCourses.astro";
 
 const infoPage = await getHomePage();
 // console.dir(infoPage, { depth: null });
@@ -54,6 +55,14 @@ const documents = featuredDocuments?.docs
 const adOverlayData = infoPage.blocks.find(
   (block: any) => block.__component === "blocks.ad-overlay",
 ) || null;
+
+const featuredCourses = infoPage.blocks.find(
+  (block: any) => block.__component === "blocks.featured-courses",
+) || null;
+
+const courses = featuredCourses?.courses
+  ? featuredCourses?.courses.map((course: any) => course)
+  : [];
 
 ---
 
@@ -139,14 +148,22 @@ const adOverlayData = infoPage.blocks.find(
       )
     }
 
-    <section class="py-10 bg-linear-to-t from-green-600 to-green-800 border-b-2 border-green-700">
-      <InstagramFeed limit={3} showTitle={true} />
+    <section class="py-10 bg-linear-to-t from-green-600 to-green-800">
+      <InstagramFeed limit={4} showTitle={true} />
       <div class="flex items-center justify-center mt-4 mb-10">
         <LinkCta href="/redes-sociales" type="TERTIARY" label="Ver más publicaciones">
           <ArrowRightIcon class="h-6 w-6 ml-2" />
         </LinkCta>
       </div>
     </section>
+
+    {
+      featuredCourses && (
+        <FeaturedCourses
+          {...featuredCourses}
+        />
+      )
+    }
   
   
   </main>

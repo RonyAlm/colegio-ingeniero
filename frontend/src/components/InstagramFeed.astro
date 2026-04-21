@@ -68,7 +68,7 @@ try {
       <hr class="border-green-50 w-1/12 mx-auto mb-6 rounded-full">
       <p class="text-green-50/50">Últimas publicaciones de Instagram</p>
     </div>
-  )}
+  ) }
 
   {error && (
     <p class="text-center text-gray-100 py-10">
@@ -83,7 +83,7 @@ try {
   )}
 
   {!error && posts.length > 0 && (
-    <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
       {posts.map((post: any) => (
         <a
           href={post.permalink}

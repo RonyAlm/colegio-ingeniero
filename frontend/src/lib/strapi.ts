@@ -1,8 +1,9 @@
-import { get } from "node:http";
 import type { THeader, TFooter, TImagen } from "../types";
 
 export const STRAPI_BASE_URL =
   import.meta.env.STRAPI_BASE_URL || "http://localhost:1337";
+
+export const STRAPI_BASE_URL_RENDER = import.meta.env.STRAPI_BASE_URL_RENDER;
 
 interface StrapiResponse<T = null> {
   success: boolean;
@@ -56,7 +57,7 @@ export const getStrapiData = async (url: string) => {
 };
 
 // Obtiene una página de artículos (para carga inicial en /novedades)
-export const getPostsPage = async (page: number = 1, pageSize: number = 12) => {
+export const getPostsPage = async (page: number = 1, pageSize: number = 9) => {
   const res = await fetch(
     `${STRAPI_BASE_URL}/api/articles?pagination[page]=${page}&pagination[pageSize]=${pageSize}`
   );
@@ -191,6 +192,36 @@ export const getDocumentInfo = async (slug: string) => {
   if (!res.ok) throw new Error("Error al obtener los datos");
   const info = await res.json();
   const result = info.data.find((doc: any) => doc.slug === slug);
+  if (!result) return null;
+  return result;
+}
+
+
+export const getAllCourses = async () => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/courses`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result.data;
+}
+
+export const getAllCoursesSlugs = async () => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/courses`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result.data.map((course: any) => course.slug);
+}
+
+export const getCourseInfo = async (slug: string) => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/courses`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const info = await res.json();
+  const result = info.data.find((course: any) => course.slug === slug);
   if (!result) return null;
   return result;
 }
