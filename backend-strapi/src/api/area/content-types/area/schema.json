@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "areas",
+  "info": {
+    "singularName": "area",
+    "pluralName": "areas",
+    "displayName": "Area"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    },
+    "icon": {
+      "type": "enumeration",
+      "enum": [
+        "Document",
+        "Users",
+        "ShieldCheck",
+        "ScaleIcon"
+      ]
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}
