@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_blocks_sliders",
+  "info": {
+    "displayName": "Slider"
+  },
+  "options": {},
+  "attributes": {
+    "Slide": {
+      "type": "component",
+      "component": "shared.hero",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

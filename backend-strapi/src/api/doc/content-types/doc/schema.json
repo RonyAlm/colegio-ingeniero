@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "docs",
+  "info": {
+    "singularName": "doc",
+    "pluralName": "docs",
+    "displayName": "Doc"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "linkDownload": {
+      "type": "string",
+      "default": "/",
+      "required": true,
+      "regex": "^\\/([a-zA-Z0-9_áéíóúñÁÉÍÓÚÑ-]+\\/)*[a-zA-Z0-9_áéíóúñÁÉÍÓÚÑ-]+\\.[a-zA-Z0-9]+$"
+    },
+    "category_docs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category-doc.category-doc",
+      "mappedBy": "docs"
+    }
+  }
+}

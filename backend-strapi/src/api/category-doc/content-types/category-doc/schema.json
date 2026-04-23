@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "category_docs",
+  "info": {
+    "singularName": "category-doc",
+    "pluralName": "category-docs",
+    "displayName": "CategoryDoc"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "docs": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::doc.doc",
+      "inversedBy": "category_docs"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_shared_items",
+  "info": {
+    "displayName": "Item"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    },
+    "isExternal": {
+      "type": "boolean"
+    },
+    "isSubmenu": {
+      "type": "boolean",
+      "default": false
+    },
+    "submenu": {
+      "type": "component",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "isSubmenu"
+            },
+            true
+          ]
+        }
+      },
+      "component": "shared.sub-item",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

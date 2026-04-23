@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_blocks_featured_articles",
+  "info": {
+    "displayName": "Featured Articles"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
+    },
+    "articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::article.article"
+    }
+  },
+  "config": {}
+}

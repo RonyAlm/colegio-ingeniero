@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_blocks_legal_documents",
+  "info": {
+    "displayName": "Legal Documents"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
+    },
+    "docs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::doc.doc"
+    }
+  },
+  "config": {}
+}

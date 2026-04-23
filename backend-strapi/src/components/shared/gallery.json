@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_galleries",
+  "info": {
+    "displayName": "Gallery"
+  },
+  "options": {},
+  "attributes": {
+    "columns": {
+      "type": "integer",
+      "min": 1,
+      "max": 4
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  },
+  "config": {}
+}

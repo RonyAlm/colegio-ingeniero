@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_blocks_instructional_videos",
+  "info": {
+    "displayName": " Instructional Videos"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
+    },
+    "videos": {
+      "type": "component",
+      "component": "shared.youtube",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

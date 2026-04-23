@@ -31,6 +31,16 @@
       "type": "component",
       "component": "shared.seo",
       "repeatable": false
+    },
+    "header": {
+      "type": "component",
+      "component": "blocks.header",
+      "repeatable": false
+    },
+    "footer": {
+      "type": "component",
+      "component": "blocks.footer",
+      "repeatable": false
     }
   }
 }

@@ -1,0 +1,48 @@
+{
+  "collectionName": "components_shared_links",
+  "info": {
+    "displayName": "Link"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    },
+    "isExternal": {
+      "type": "boolean",
+      "default": false
+    },
+    "isButton": {
+      "type": "boolean",
+      "default": false
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "primary",
+        "secondary",
+        "accent",
+        "ghost",
+        "link",
+        "danger"
+      ]
+    },
+    "icon": {
+      "type": "enumeration",
+      "enum": [
+        "map",
+        "hours",
+        "phone",
+        "email",
+        "instagram",
+        "facebook",
+        "youtube",
+        "whatsapp"
+      ]
+    }
+  },
+  "config": {}
+}

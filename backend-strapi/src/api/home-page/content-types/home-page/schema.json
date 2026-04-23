@@ -1,0 +1,37 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_pages",
+  "info": {
+    "singularName": "home-page",
+    "pluralName": "home-pages",
+    "displayName": "Home Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.youtube",
+        "shared.gallery",
+        "blocks.slider",
+        "blocks.section-heading",
+        "blocks.legal-documents",
+        "blocks.featured-documents",
+        "blocks.featured-courses",
+        "blocks.featured-authorities",
+        "blocks.featured-articles",
+        "blocks.ad-overlay",
+        "blocks.instructional-videos"
+      ]
+    }
+  }
+}
