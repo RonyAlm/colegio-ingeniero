@@ -1,0 +1,40 @@
+---
+import CardAutoridad from "./CardAutoridad.astro";
+import LinkCta from "./LinkCta.astro";
+import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
+
+const { title, description, cta, authorities} = Astro.props;
+
+---
+
+<section class="px-4 py-20 bg-linear-to-t from-green-600 to-green-800">
+  <div class="container mx-auto h-fit">
+    <h2 class="text-4xl text-green-100 text-center mb-2">
+      {title}
+    </h2>
+    <p class="text-center text-2xl text-green-100 mb-4">
+      {description}
+    </p>
+    <hr class="border-green-100 w-1/12 mx-auto mb-6" />
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+      {
+        authorities.map((autoridad: any) => (
+          <CardAutoridad autoridad={autoridad} type="primary" />
+        ))
+      }
+    </div>
+    {
+      cta && (
+        <div class="flex items-center justify-center mt-10">
+          { 
+           cta.map(({ href, label } : any) => (
+            <LinkCta href={href} type="TERTIARY" label={label}>
+                <ArrowRightIcon class="h-6 w-6 ml-2" />
+            </LinkCta>     
+           ))
+          }
+        </div>
+      )
+    }
+  </div>
+</section>
