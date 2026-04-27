@@ -1,24 +1,20 @@
-/**
- * `authority-populate` middleware
- */
-
 import type { Core } from '@strapi/strapi';
-
-const populate = {
-    sort: ['createdAt:desc'],
-    populate: {
-      image: {
-        fields: ['alternativeText', 'url', 'ext'],
-      },
-      area: true
-    }
-};
+import { getAuthorityQuery, AuthorityQuery } from '../utils/query';
 
 export default (config, { strapi }: { strapi: Core.Strapi }) => {
-  // Add your own logic here.
   return async (ctx, next) => {
-    strapi.log.info('In authority-populate middleware.');
-    ctx.query = populate;
+    const { slug, ...restQuery } = ctx.query as {
+      slug?: string;
+      [key: string]: unknown;
+    };
+
+    const baseQuery: AuthorityQuery = getAuthorityQuery(slug);
+
+    ctx.query = {
+      ...baseQuery,
+      ...restQuery,
+    };
+
     await next();
   };
 };

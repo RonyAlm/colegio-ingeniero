@@ -17,7 +17,7 @@
       "required": true
     },
     "text": {
-      "type": "blocks"
+      "type": "richtext"
     },
     "overlay": {
       "type": "boolean",

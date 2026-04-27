@@ -173,7 +173,7 @@ export interface SharedHero extends Struct.ComponentSchema {
     heading: Schema.Attribute.String & Schema.Attribute.Required;
     image: Schema.Attribute.Media<'images'>;
     overlay: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    text: Schema.Attribute.Blocks;
+    text: Schema.Attribute.RichText;
   };
 }
 
