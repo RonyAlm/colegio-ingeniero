@@ -9,6 +9,7 @@ const API_ARTICLES = import.meta.env.API_ARTICLES;
 const PAGE_SIZE = 9;
 
 const articlesStrapi = await getPostsPage(1, PAGE_SIZE);
+// console.log(articlesStrapi);
 
 const totalArticles = articlesStrapi.pagination.total;
 
@@ -26,12 +27,7 @@ const totalArticles = articlesStrapi.pagination.total;
            {
             articlesStrapi.data.map((article: any) => (
               <CardArticle
-                title={article.title}
-                description={article.description}
-                image={article.cover.url}
-                slug={article.slug}
-                category={"Novedades"}
-                date={article.createdAt}
+                {...article}
               />
             ))
            }

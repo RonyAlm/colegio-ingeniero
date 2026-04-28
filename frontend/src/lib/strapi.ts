@@ -1,7 +1,7 @@
 import type { THeader, TFooter, TImagen } from "../types";
 
 export const STRAPI_BASE_URL =
-  import.meta.env.STRAPI_BASE_URL || "http://localhost:1337";
+  import.meta.env.STRAPI_BASE_URL || "http://localhost:1338";
 
 export const STRAPI_BASE_URL_RENDER = import.meta.env.STRAPI_BASE_URL_RENDER;
 
@@ -224,4 +224,32 @@ export const getCourseInfo = async (slug: string) => {
   const result = info.data.find((course: any) => course.slug === slug);
   if (!result) return null;
   return result;
+}
+
+export const getAllAuthorities = async () => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/authorities`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result.data;
+}
+
+export const getAuthoritiesByArea = async (areaSlug: string) => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/authorities?slug=${areaSlug}`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result;
+}
+
+export const getAuthoritiesGrouped = async () => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/authorities/grouped`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  const data = result.data.sort((a: any, b: any) => a.areaId - b.areaId);
+  return data;
 }

@@ -13,7 +13,7 @@ const documents = await getAllDocuments();
 const categories = Array.from(
   new Map(
     documents
-      .flatMap((doc: any) => doc.categories || [])
+      .flatMap((doc: any) => doc.category_docs || [])
       .map((cat: any) => [cat.slug, cat])
   ).values()
 );
@@ -89,7 +89,7 @@ const categoriesWithIcons = categories.map((cat: any) => ({
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-4 pb-10" id="documents">
         {documents.map((document: any) => {
-          const categorySlugs = document.categories?.map((c: any) => c.slug).join(" ");
+          const categorySlugs = document.category_docs?.map((c: any) => c.slug).join(" ");
 
           return (
             <div class="document-item" data-category={categorySlugs}>

@@ -1,19 +1,20 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { getAllPages, getPageInfo, getAllCourses } from "../lib/strapi";
 import type { GetStaticPaths } from "astro";
+import Layout from "../layouts/Layout.astro";
+import { getAllPages, getPageInfo, getAllCourses, getAllAuthorities, getAuthoritiesByArea, getAuthoritiesGrouped } from "../lib/strapi";
 import HeaderPage from "../components/HeaderPage.astro";
-import SectionAutoridades from "../components/SectionAutoridades.astro";
+import SectionAuthorities from "../components/SectionAuthorities.astro";
 import { YouTube } from "@astro-community/astro-embed-youtube";
 import LinkCta from "../components/LinkCta.astro";
 import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
 import Courses from "../components/Courses.astro";
+import SectionHeading from "../components/SectionHeading.astro";
 
 
 const { slug } = Astro.params;
 if (!slug) return Astro.redirect("/404");
 
-export const getStaticPaths = (async () => {
+export const getStaticPaths = ( async () => {
   const slugs = await getAllPages();
 
   return slugs.map((data: any) => {
@@ -29,15 +30,11 @@ const infoPage = await getPageInfo(slug);
 
 const coverImg = infoPage.cover ? infoPage.cover.url : null;
 
-const autoridades = infoPage.blocks.filter(
-  (block: any) => block.__component === "blocks.autoridades",
-) || null;
-
+const sectionAuthorities = await getAuthoritiesGrouped();
 
 const sectionHeading = infoPage.blocks.find(
   (block: any) => block.__component === "blocks.section-heading",
 ) || null;
-console.log(sectionHeading);
 
 const sectionYoutube = infoPage.blocks.filter(
   (block: any) => block.__component === "shared.youtube",
@@ -49,7 +46,6 @@ const sectionDocs = infoPage.blocks.find(
 ) || null;
 
 const allCourses = infoPage.title === "Cursos" ? await getAllCourses() : null;
-console.log(allCourses);
 
 ---
 
@@ -59,27 +55,13 @@ console.log(allCourses);
 
     { 
       sectionHeading && (
-        <section class="container mx-auto px-4 py-10 md:py-20 flex flex-col items-center">
-          <h3 class="text-2xl font-bold md:text-4xl text-green-700 mb-4 uppercase">
-            {sectionHeading.heading}
-          </h3>
-        
-          <p class="text-lg text-green-950/70 max-w-3xl text-center">{sectionHeading.description}</p>
-          {
-            sectionHeading.link && (
-              <div class="flex items-center mt-6">
-                <LinkCta href={sectionHeading.link.href} type={"QUATERNARY"} label={sectionHeading.link.label}> 
-                  <ArrowRightIcon class="h-6 w-6 ml-2" />
-                </LinkCta>
-              </div>
-          )}
-        </section>
+        <SectionHeading {...sectionHeading} />
       )
     }
 
-    { autoridades && (
-        autoridades.map((data: any) => (
-            <SectionAutoridades data={data} />
+    { slug === "autoridades" && (
+        sectionAuthorities.map((data: any) => (
+            <SectionAuthorities {...data} />
         ))
       )
     }
