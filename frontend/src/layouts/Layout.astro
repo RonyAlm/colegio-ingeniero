@@ -13,7 +13,7 @@ interface Props {
 
 const globalData = await getGlobal();
 
-if (globalData.error) console.log(globalData.error);
+// if (globalData.error) console.log(globalData.error);
 
 const { header, footer, favicon, siteName, siteDescription } =
   globalData?.data || {};

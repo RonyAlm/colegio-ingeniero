@@ -3,11 +3,12 @@ import "@splidejs/splide/dist/css/splide.min.css";
 import LinkCta from "./LinkCta.astro";
 import IngLogo from "./icons/IngLogo.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
+import { marked } from "marked";
 
 const infoHero = Astro.props.data;
 if(!infoHero || infoHero.length === 0) return redirect("/");
 
-// console.log(infoHero);
+// console.dir( infoHero, { depth: null });
 
 
 ---
@@ -27,26 +28,26 @@ if(!infoHero || infoHero.length === 0) return redirect("/");
                     info.heading.includes("IngeLink") ?
                      <a 
                        href="https://intranet.ingenierosformosa.com.ar/intranet/servicios/ingelink/"
-                       class="flex justify-center items-center hover:scale-105 transition-transform"
+                       class="flex justify-center items-center transition-transform"
                        target="_blank">
                        <IngLogo class="h-20 w-20 text-green-600 " />
                        <span class="text-4xl md:text-6xl text-green-600 text-center text-shadow animate-zoom-in">
                          { info.heading.split(" ")[0] }
-                         <strong class="text-yellow-500 font-bold">{info.heading.split(" ")[1]}</strong> 
+                         <strong class="text-green-100 font-bold text-shadow">{info.heading.split(" ")[1]}</strong> 
                        </span> 
                       </a> : 
                       <h2 class={`text-2xl md:text-4xl font-bold text-shadow-2xs uppercase
                         ${!info.overlay ? 'text-green-700' : ''}`}>{info.heading}
                       </h2>
                   }
-                  <p class="my-4 mx-6 mx-text-sm text-shadow-neutral-600 md:text-lg max-w-3xl line-clamp-3">
-                    {info.text}
-                  </p>
+                  <div class="my-4 mx-6 mx-text-sm text-shadow-neutral-600 md:text-lg max-w-3xl line-clamp-3" set:html={marked.parse(info.text)}></div>
                    {
-                     info.cta &&
-                     <LinkCta href={info.cta.href} label={info.cta.label} type="WITHBORDER">
-                       <ArrowRightIcon class="h-6 w-6 ml-2" />
-                     </LinkCta>
+                     info.cta && 
+                     info.cta.map((cta: any) => (
+                       <LinkCta href={cta.href} label={cta.label} type="WITHBORDER">
+                         <ArrowRightIcon class="h-6 w-6 ml-2" />
+                       </LinkCta>
+                     ))
                    }
                 </div>
               </div>

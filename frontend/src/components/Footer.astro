@@ -1,13 +1,8 @@
 ---
-import { STRAPI_BASE_URL } from "../lib/strapi";
 import LinkIcon from "./icons/LinkIcon.astro";
 
 const { data } = Astro.props;
-const { logo, socialLinks, infoLinks, contactLinks } = data;
-
-const logoUrl = logo.image.url.startsWith("http")
-  ? logo.image.url
-  : `${STRAPI_BASE_URL}${logo.image.url}`;
+const { logoImage, logoText, socialLinks, infoLinks, contactLinks } = data;
 
 ---
 
@@ -16,7 +11,7 @@ const logoUrl = logo.image.url.startsWith("http")
     class="container mx-auto px-4 py-10 md:py-20 flex flex-col md:flex-row justify-between md:items-center">
     <a href="/" class="max-w-fit flex justify-center items-center">
       <img
-        src={logoUrl}
+        src={logoImage.url}
         alt="Logo"
         class="w-12 h-12 md:w-16 md:h-16 transform hover:scale-105 transition-transform"/>
       <span class="text-sm md:text-sm uppercase ml-2 font-bold">Colegio Público de <br> Ingenieros de Formosa</span>
