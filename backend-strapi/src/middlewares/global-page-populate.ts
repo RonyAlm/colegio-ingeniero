@@ -44,7 +44,11 @@ const populate = {
           cta: true,
         }
       },
-      "blocks.section-heading": true,
+      "blocks.section-heading": {
+        populate: {
+          link: true
+        }
+      },
       "blocks.ad-overlay": {
         populate: {
           images: {
