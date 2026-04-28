@@ -7,7 +7,7 @@ import DownIcon from "./icons/DownIcon.astro";
 import LinkCta from "./LinkCta.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
 
-const { title, description, slug, categories, publishedAt, linkDownload } = Astro.props;
+const { title, description, slug, category_docs, publishedAt, linkDownload } = Astro.props;
 
 const date = new Date(publishedAt).toLocaleDateString("es-AR", {
     day: "numeric",
@@ -32,7 +32,7 @@ const linkDetail =  linkDownload && linkDownload.includes(".pdf") ? `/document/$
         </div>
         <div class="flex items-center flex-wrap gap-2">
           { 
-            categories.map((category: any) => (
+            category_docs.map((category: any) => (
               <span class="bg-green-600/10 text-green-950/80 px-3 py-1 rounded-lg text-sm">
                 {category.name}
               </span> 
