@@ -1,15 +1,17 @@
 ---
-
-const { image, title, description, slug, category, date } = Astro.props;
-const link = `/post/${slug}`
-
 import ArrowTop from "../components/icons/ArrowTop.astro";
 
-const dateString = new Date(date).toLocaleDateString("es-AR", {
+const { cover, title, description, slug, category_articles, publishedAt } = Astro.props;
+const link = `/post/${slug}`
+
+const categories = category_articles && category_articles.length ? category_articles : [{ name: "Novedades" }];
+
+const dateString = new Date(publishedAt).toLocaleDateString("es-AR", {
   day: "numeric",
   month: "long",
   year: "numeric",
 });
+
 ---
 
 <article
@@ -17,10 +19,10 @@ const dateString = new Date(date).toLocaleDateString("es-AR", {
    border-2 border-gray-300 hover:border-green-600 transition-colors relative">
 
   <a href={link}>
-    {image ? (
+    { cover ? (
       <img
         class="w-full h-48 rounded-xl object-cover cursor-pointer"
-        src={image}
+        src={cover.url}
         alt={title}
       />
     ) : (
@@ -29,10 +31,14 @@ const dateString = new Date(date).toLocaleDateString("es-AR", {
       </div>
     )}
   </a>
-
-  <span class="text-sm w-fit not-prose bg-green-800 text-white px-4 py-1
-   rounded-xl absolute top-6 left-6">{category}</span>
-
+  
+  {
+    categories.map((category: any) => (
+      <span class="text-sm w-fit not-prose bg-green-800 text-white px-4 py-1
+        rounded-xl absolute top-6 left-6">{category.name}</span>
+    )) 
+  }
+ 
   <div class="p-4 pb-0 prose flex flex-col min-h-47">
     <h3 class="text-lg font-bold line-clamp-2">{title}</h3>
     <p class="text-sm text-gray-600 line-clamp-3">

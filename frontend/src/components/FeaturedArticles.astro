@@ -17,12 +17,7 @@ const { articles = [] } = Astro.props
     {
       articles.map((article: any) => (
         <CardArticle
-          title={article.title}
-          description={article.description}
-          image={article.cover?.url}
-          slug={article.slug}
-          category={article.category?.name || "Novedades"}
-          date={article.publishedAt}
+          {...article}
         />
       ))
     }
