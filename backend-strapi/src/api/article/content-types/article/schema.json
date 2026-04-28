@@ -18,7 +18,7 @@
     "slug": {
       "type": "uid",
       "targetField": "title",
-      "required": true
+      "required": false
     },
     "description": {
       "type": "text",
@@ -45,7 +45,8 @@
       "components": [
         "blocks.section-heading",
         "shared.youtube",
-        "shared.gallery"
+        "shared.gallery",
+        "blocks.featured-articles"
       ]
     }
   }

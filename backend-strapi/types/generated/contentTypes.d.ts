@@ -472,7 +472,12 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
   };
   attributes: {
     blocks: Schema.Attribute.DynamicZone<
-      ['blocks.section-heading', 'shared.youtube', 'shared.gallery']
+      [
+        'blocks.section-heading',
+        'shared.youtube',
+        'shared.gallery',
+        'blocks.featured-articles',
+      ]
     >;
     category_articles: Schema.Attribute.Relation<
       'manyToMany',
@@ -494,7 +499,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    slug: Schema.Attribute.UID<'title'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
