@@ -101,7 +101,7 @@ export default async function handler(req, res) {
 
                 WHERE a.published_at IS NOT NULL
 
-                ORDER BY a.created_at DESC;
+                ORDER BY a.created_at DESC
                 LIMIT ? OFFSET ?
             `,
             [pageSize, offset]
