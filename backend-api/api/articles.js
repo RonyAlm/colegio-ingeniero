@@ -83,14 +83,13 @@ export default async function handler(req, res) {
                 a.*,
                 c.name AS category,
                 f.url AS cover
-
                 FROM articles a
 
-                LEFT JOIN articles_category_lnk acl 
+                LEFT JOIN articles_category_articles_lnk acl 
                 ON a.id = acl.article_id
 
-                LEFT JOIN categories c 
-                ON c.id = acl.category_id
+                LEFT JOIN category_articles c 
+                ON c.id = acl.category_article_id
 
                 LEFT JOIN files_related_mph frm 
                 ON frm.related_id = a.id

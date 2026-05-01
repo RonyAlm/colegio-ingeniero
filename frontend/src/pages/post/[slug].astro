@@ -1,7 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { marked } from "marked";
-import { Image } from "astro:assets";
 import { YouTube } from '@astro-community/astro-embed-youtube';
 import Layout from "../../layouts/Layout.astro";
 import { getPostInfo, getAllPostsSlugs } from "../../lib/strapi";
@@ -11,13 +10,14 @@ import LinkIcon from "../../components/icons/LinkIcon.astro";
 import CardArticle from "../../components/CardArticle.astro";
 import LinkCta from "../../components/LinkCta.astro";
 import Gallery from "../../components/Gallery.astro";
+import RecentArticles from "../../components/RecentArticles.astro";
+import FeaturedArticles from "../../components/FeaturedArticles.astro";
 
 const slug = Astro.params.slug;
 if (!slug) return Astro.redirect("/404");
 
 export const getStaticPaths = (async () => {
   const slugs = await getAllPostsSlugs();
-  // console.log(slugs);
   return slugs.map((data: any) => {
     return {
       params: {
@@ -28,7 +28,6 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const post = await getPostInfo(slug);
-// console.dir(post, { depth: null });
 
 const date = new Date(post.publishedAt).toLocaleDateString("es-AR", {
   day: "numeric",
@@ -39,26 +38,17 @@ const date = new Date(post.publishedAt).toLocaleDateString("es-AR", {
   weekday: "long",
 });
 
-const richTextBlock = post.blocks.filter(
-  (block: any) => block.__component === "shared.rich-text",
-)[0];
-const contentText = richTextBlock?.body || null;
+const text = post.content ? marked.parse(post.content) : null;
 
-const text = contentText ? marked.parse(contentText) : null;
+const featuredArticles = post.blocks.find(
+  (block: any) => block.__component === "blocks.featured-articles",
+) || null;
 
-const featuredArticles = post.featured ? post.featured.articles : [];
-
-const gallerys = post.blocks.filter(
+const gallerys = post.blocks.find(
   (block: any) => block.__component === "shared.gallery",
-) || [];
+) || null;
 
-const galleryImg = gallerys.length > 0 && gallerys[0].image;
-
-const links = post.blocks.filter(
-  (block: any) => block.__component === "shared.link",
-) || [];
-
-const link = links.length > 0 && links[0].link;
+const galleryImg = gallerys && gallerys.images && gallerys.images.length > 0 ? gallerys.images : null;
 
 const videoYoutube = post.blocks.filter(
   (block: any) => block.__component === "shared.youtube",
@@ -82,12 +72,14 @@ const video = videoYoutube.length > 0 && videoYoutube[0];
           </a>
       
         </div>
-        <div
-          class="bg-green-200 text-green-900 px-4 py-1 rounded-xl w-fit mb-8 flex items-center mt-4"
-        >
-          <TagIcon class="h-4 w-4 mr-2" />
-          <span class="text-sm uppercase">{post.category?.name || "General"}</span>
-        </div>
+        { post.category_articles && post.category_articles.length > 0 && (
+          <div class="bg-green-200 text-green-900 px-4 py-1
+           rounded-xl w-fit mb-8 flex items-center mt-4">
+            <TagIcon class="h-4 w-4 mr-2" />
+            <span class="text-sm uppercase">{post.category_articles[0].name || "General"}</span>
+          </div>
+        )}
+        
         <span class="text-sm text-gray-400">{date}</span>
         <h2 class="text-center text-3xl md:text-5xl font-bold text-gray-800 mt-4">
           {post.title}
@@ -113,7 +105,7 @@ const video = videoYoutube.length > 0 && videoYoutube[0];
         <LinkIcon href={"#"} icon="facebook" isExternal  columns="bg-gray-50 border border-green-600"/>
         <LinkIcon href={"#"} icon="youtube" isExternal  columns="bg-gray-50 border border-green-600"/>
       </div>
-      {text && <div class="prose" set:html={text} />}
+      { text && <div class="prose" set:html={text} />}
       {
         galleryImg && <Gallery columns="mt-10 md:grid-cols-2" images={galleryImg}/>
       }
@@ -123,31 +115,10 @@ const video = videoYoutube.length > 0 && videoYoutube[0];
     </article>
   </div>
 
-  {featuredArticles.length > 0 && (
-     <section class="container mx-auto py-10 pb-20 px-8 md:px-0">
-    <div class="flex flex-col md:flex-row justify-between items-center py-10">
-      <h2 class="text-2xl md:text-4xl text-center md:text-left  font-bold text-green-950 mb-6 md:mb-0">
-        Noticias y Novedades Destacadas
-      </h2>
-      <LinkCta href="/novedades" label="Ver más" type="SECONDARY">
-        <ArrowRightIcon class="h-4 w-4 ml-2" />
-      </LinkCta>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {
-        featuredArticles.map((post: any) => (
-          <CardArticle
-            title={post.title}
-            description={post.description}
-            image={post.cover?.url}
-            category={"Novedades"}
-            slug={post.slug}
-            date={post.publishedAt}
-          />
-        ))
-      }
-    </div>
-  </section>
-  )}
- 
+  { 
+    featuredArticles ? 
+     <FeaturedArticles articles={featuredArticles.articles} />
+     : <RecentArticles />
+  }
+
 </Layout>
