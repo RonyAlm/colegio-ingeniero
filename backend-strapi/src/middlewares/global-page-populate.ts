@@ -29,7 +29,8 @@ const populate = {
               },
               category_articles: true,
             }
-          }
+          },
+          cta: true
         }
       },
       "blocks.featured-courses": {
@@ -95,6 +96,19 @@ const populate = {
       "blocks.instructional-videos": {
         populate: {
           videos: true,
+          cta: true
+        }
+      },
+      "blocks.featured-content": {
+        populate: {
+          items: {
+            populate: {
+              cover: {
+                fields: ["alternativeText", "url"],
+              },
+              cta: true
+            }
+          },
           cta: true
         }
       },

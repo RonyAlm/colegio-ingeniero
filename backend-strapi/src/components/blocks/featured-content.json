@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_blocks_featured_contents",
+  "info": {
+    "displayName": "Featured Content"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
+    },
+    "items": {
+      "type": "component",
+      "component": "shared.item-content",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
