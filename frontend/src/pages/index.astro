@@ -14,6 +14,7 @@ import FeaturedCourses from "../components/FeaturedCourses.astro";
 import FeaturedAuthorities from "../components/FeaturedAuthorities.astro";
 import InstructionalVideos from "../components/InstructionalVideos.astro";
 import FeaturedDocuments from "../components/FeaturedDocuments.astro";
+import FeaturedContent from "../components/FeaturedContent.astro";
 
 const infoPage = await getHomePage();
 // console.dir(infoPage, { depth: null });
@@ -68,6 +69,10 @@ const instructionalVideos = infoPage.blocks.find(
   (block: any) => block.__component === "blocks.instructional-videos",
 ) || null;
 
+const featuredContent = infoPage.blocks.find(
+  (block: any) => block.__component === "blocks.featured-content",
+) || null;
+
 ---
 
 <Layout title={infoPage.title}>
@@ -77,7 +82,10 @@ const instructionalVideos = infoPage.blocks.find(
   { slider && <Slider data={slider} />}
 
   <main class="bg-gray-200/90">
-    { articles.length > 0 && <FeaturedArticles articles={articles} />}
+     
+    { featuredContent && (
+      <FeaturedContent {...featuredContent} />
+    )}
 
     {
       resolutionsSection && (
@@ -102,6 +110,8 @@ const instructionalVideos = infoPage.blocks.find(
         <FeaturedDocuments {...featuredDocuments} />
       )
     }
+
+    { featuredArticles && <FeaturedArticles {...featuredArticles} />}
 
     <section class="py-10 bg-linear-to-t from-green-600 to-green-800">
       <InstagramFeed limit={4} showTitle={true} />

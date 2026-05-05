@@ -1,0 +1,47 @@
+---
+import ArrowTop from "../components/icons/ArrowTop.astro";
+import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
+import LinkCta from "./LinkCta.astro";
+
+const { type, heading, text, cover, cta } = Astro.props;
+
+---
+
+<article
+  class="bg-gray-100 rounded-2xl overflow-hidden p-4
+   border-2 border-gray-300 hover:border-green-600 transition-colors relative">
+
+  <a href={cta[0].href}>
+    { cover ? (
+      <img
+        class="w-full h-48 rounded-xl object-cover cursor-pointer"
+        src={cover[0].url}
+        alt={heading}
+      />
+    ) : (
+      <div class="w-full h-48 rounded-xl bg-gray-300 flex items-center justify-center">
+        <span class="text-gray-500 text-sm">Sin imagen</span>
+      </div>
+    )}
+  </a>
+  
+      <span class="text-sm w-fit not-prose bg-green-800 text-white px-4 py-1
+        rounded-xl absolute top-6 left-6">{type}</span>
+   
+ 
+  <div class="p-4 pb-0 prose flex flex-col min-h-47">
+    <h3 class="text-lg font-bold line-clamp-2">{heading}</h3>
+    <p class="text-sm text-gray-600 line-clamp-3">
+      {text}
+    </p>
+    <div class="flex flex-wrap gap-2 justify-between items-center mt-auto not-prose">       
+      { cta && 
+        cta?.map(({ href, label, variant}: any) => (
+          <LinkCta href={href} type={"QUATERNARY"} label={label}>
+            <ArrowRightIcon class="h-6 w-6 ml-2" />
+          </LinkCta>
+      ))}
+    </div>
+  </div>
+   
+</article>
