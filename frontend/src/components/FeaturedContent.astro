@@ -1,0 +1,34 @@
+---
+import CardContent from "./CardContent.astro";
+import HeadingText from "./HeadingText.astro";
+import LinkCta from "./LinkCta.astro";
+import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
+const { title, description, cta, items } = Astro.props
+
+
+---
+
+<section id="featured-content" class="container mx-auto px-4 py-20">
+  <HeadingText title={title} description={description} variant="green" />
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {
+      items.map((content: any) => (
+        <CardContent
+          {...content}
+        />
+      ))
+    }
+  </div>
+  {
+    cta && (
+      <div class="flex items-center justify-center mt-8">
+        {
+          cta.map(({href, label, isExternal, variant}: any) => (
+            <LinkCta href={href} label={label} isExternal={isExternal} type={variant.toUpperCase()}>
+              <ArrowRightIcon class="h-6 w-6 ml-2" />
+            </LinkCta>
+          ))
+        }
+      </div>
+  )}
+</section>

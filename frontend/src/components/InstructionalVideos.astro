@@ -2,20 +2,13 @@
 import { YouTube } from "@astro-community/astro-embed-youtube"
 import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro"
 import LinkCta from "../components/LinkCta.astro"
+import HeadingText from "./HeadingText.astro";
 
 const { title, description, cta, videos} = Astro.props;
 ---
    
    <section class="md:pt-20 container mx-auto px-4 py-20">
-      <h2 class="text-4xl text-green-950 text-center mb-12">
-        { title.split(" ")[0]  } <span class="text-green-600 font-bold">{title.split(" ")[1]}</span> 
-      </h2>
-      {
-        description && (
-          <p class="text-center text-sm md:text-base text-green-950/50 opacity-80 mb-4">
-            {description}
-          </p>
-      )}
+      <HeadingText title={title} description={description} variant="green" />
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {
             videos.map((video: any) => (

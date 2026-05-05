@@ -1,33 +1,30 @@
 ---
-
+import HeadingText from "./HeadingText.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
 import LinkCta from "./LinkCta.astro";
 import ResolutionItem from "./ResolutionItem.astro";
 
-const { title, description, resolutions } = Astro.props
-
+const { title, description, resolutions } = Astro.props;
 ---
 
 <section class="bg-green-800 px-4 py-20">
-          <div class="container mx-auto">
-            <h2 class="text-4xl font-bold text-green-100 text-center my-4">
-              {title}
-            </h2>
-            { description && (
-                <p class="text-center text-sm md:text-base text-gray-600">
-                  {description}
-                </p>
-              )
-            }
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-10">
-              { resolutions.map((resolucion: any) => (
-                <ResolutionItem data={resolucion} />
-              ))}
-            </div>
-            <div class="flex items-center justify-center">
-              <LinkCta href={"/descargables?category=leyes"} type="TERTIARY" label="Ver más">
-                <ArrowRightIcon class="h-6 w-6 ml-2" />
-              </LinkCta>
-            </div>
-          </div>
+  <div class="container mx-auto">
+    <HeadingText title={title} description={description} variant="white" />
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-10">
+      {
+        resolutions.map((resolucion: any) => (
+          <ResolutionItem data={resolucion} />
+        ))
+      }
+    </div>
+    <div class="flex items-center justify-center my-10">
+      <LinkCta
+        href={"/descargables?category=leyes"}
+        type="TERTIARY"
+        label="Ver más"
+      >
+        <ArrowRightIcon class="h-6 w-6 ml-2" />
+      </LinkCta>
+    </div>
+  </div>
 </section>

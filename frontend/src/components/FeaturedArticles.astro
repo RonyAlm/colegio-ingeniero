@@ -1,18 +1,19 @@
 ---
 import CardArticle from "./CardArticle.astro";
+import HeadingText from "./HeadingText.astro";
 import LinkCta from "./LinkCta.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
-const { articles = [] } = Astro.props
-
+const { title, description, cta , articles = [] } = Astro.props
 
 ---
 
-<section class="container mx-auto px-4 py-20">
-  <h2 class="text-4xl text-green-950 text-center mb-10">
-    Noticias y <strong class="font-bold text-green-600"
-      >Novedades Destacadas</strong
-    >
-  </h2>
+<section id="featured-articles" class="container mx-auto px-4 py-20">
+  <HeadingText title={title} description={description} variant="green" />
+  {description && (
+    <p class="text-center text-sm md:text-base text-green-950/50 opacity-80 mb-4">
+      {description}
+    </p>
+  )}
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {
       articles.map((article: any) => (
@@ -22,9 +23,17 @@ const { articles = [] } = Astro.props
       ))
     }
   </div>
-  <div class="flex items-center justify-center mt-8">
-    <LinkCta href={"/novedades"} type="QUATERNARY" label="Ver más">
-      <ArrowRightIcon class="h-6 w-6 ml-2" />
-    </LinkCta>
-  </div>
+  {
+    cta && (
+      <div class="flex items-center justify-center mt-10">
+        {
+          cta.map(({ href, label, variant, isExternal}: any) => (
+            <LinkCta href={href} type={"QUATERNARY"} label={label} isExternal={isExternal}>
+              <ArrowRightIcon class="h-6 w-6 ml-2" />
+            </LinkCta>
+          ))
+        }
+      </div>
+    )
+  }  
 </section>
