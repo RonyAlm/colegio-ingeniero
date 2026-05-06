@@ -1,4 +1,6 @@
 ---
+import HeadingText from './HeadingText.astro';
+
 interface Props {
   limit?: number;
   showTitle?: boolean;
@@ -61,13 +63,9 @@ try {
 }
 ---
 
-<section class="container mx-auto px-4 py-10" id="instagram-feed">
+<section class="container mx-auto px-4" id="instagram-feed">
   { showTitle && (
-    <div class="text-center mb-10">
-      <h2 class="text-4xl text-green-50 mb-2">Redes Sociales</h2>
-      <hr class="border-green-50 w-1/12 mx-auto mb-6 rounded-full">
-      <p class="text-green-50/50">Últimas publicaciones de Instagram</p>
-    </div>
+     <HeadingText title="Redes Sociales" description="Últimas publicaciones de Instagram"/>
   ) }
 
   {error && (
@@ -83,7 +81,7 @@ try {
   )}
 
   {!error && posts.length > 0 && (
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+    <div class="md:py-8 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
       {posts.map((post: any) => (
         <a
           href={post.permalink}

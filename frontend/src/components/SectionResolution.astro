@@ -4,7 +4,7 @@ import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
 import LinkCta from "./LinkCta.astro";
 import ResolutionItem from "./ResolutionItem.astro";
 
-const { title, description, resolutions } = Astro.props;
+const { title, description, resolutions, cta } = Astro.props;
 ---
 
 <section class="bg-green-800 px-4 py-20">
@@ -17,14 +17,15 @@ const { title, description, resolutions } = Astro.props;
         ))
       }
     </div>
-    <div class="flex items-center justify-center my-10">
-      <LinkCta
-        href={"/descargables?category=leyes"}
-        type="TERTIARY"
-        label="Ver más"
-      >
-        <ArrowRightIcon class="h-6 w-6 ml-2" />
-      </LinkCta>
-    </div>
+    {
+      cta && (
+        <div class="flex items-center justify-center mt-6">
+          {cta.map(({ href, label }: any) => (
+            <LinkCta href={href} type="TERTIARY" label={label}>
+              <ArrowRightIcon class="h-6 w-6 ml-2" />
+            </LinkCta>
+          ))}
+        </div>
+    )}
   </div>
 </section>

@@ -9,7 +9,7 @@ const { title, description, cta, videos} = Astro.props;
    
    <section class="md:pt-20 container mx-auto px-4 py-20">
       <HeadingText title={title} description={description} variant="green" />
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-10">
           {
             videos.map((video: any) => (
               <YouTube id={video.videoId} class="aspect-video mx-auto w-full rounded-2xl" 
@@ -17,7 +17,7 @@ const { title, description, cta, videos} = Astro.props;
             ))
           }
       </div>
-      <div class="flex items-center justify-center mt-10">
+      <div class="flex items-center justify-center mt-6">
         {
           cta && (
             cta.map(({ href, label } : any) => (
