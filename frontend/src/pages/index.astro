@@ -1,13 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getAllPages, getHomePage } from "../lib/strapi";
-import { YouTube } from '@astro-community/astro-embed-youtube';
+import { getHomePage } from "../lib/strapi";
+import { findBlock } from "../utils";
 import Slider from "../components/HeroSlider.astro";
-import LinkCta from "../components/LinkCta.astro";
-import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
 import FeaturedArticles from "../components/FeaturedArticles.astro";
-import ResolutionItem from "../components/ResolutionItem.astro";
-import InstagramFeed from "../components/InstagramFeed.astro";
 import SectionResolution from "../components/SectionResolution.astro";
 import AdOverlay from "../components/AdOverlay.astro";
 import FeaturedCourses from "../components/FeaturedCourses.astro";
@@ -17,27 +13,21 @@ import FeaturedDocuments from "../components/FeaturedDocuments.astro";
 import FeaturedContent from "../components/FeaturedContent.astro";
 import SectionInstagram from "../components/SectionInstagram.astro";
 
-const findBlock = (page: any, block: string) => {
-  return page.blocks.find(
-    (blck: any) => blck.__component === `blocks.${block}`,
-  ) || null;
-}
+const { title, description, blocks: pageBlocks } = await getHomePage();
 
-const infoPage = await getHomePage();
-
-const heroSlider = findBlock(infoPage, "slider");
-const featuredArticles = findBlock(infoPage, "featured-articles");
-const legalDocuments = findBlock(infoPage, "legal-documents");
-const featuredAuthorities = findBlock(infoPage, "featured-authorities");
-const featuredDocuments = findBlock(infoPage, "featured-documents");
-const adOverlayData = findBlock(infoPage, "ad-overlay");
-const featuredCourses = findBlock(infoPage, "featured-courses");
-const instructionalVideos = findBlock(infoPage, "instructional-videos");
-const featuredContent = findBlock(infoPage, "featured-content");
+const heroSlider = findBlock(pageBlocks, "slider");
+const featuredArticles = findBlock(pageBlocks, "featured-articles");
+const legalDocuments = findBlock(pageBlocks, "legal-documents");
+const featuredAuthorities = findBlock(pageBlocks, "featured-authorities");
+const featuredDocuments = findBlock(pageBlocks, "featured-documents");
+const adOverlayData = findBlock(pageBlocks, "ad-overlay");
+const featuredCourses = findBlock(pageBlocks, "featured-courses");
+const instructionalVideos = findBlock(pageBlocks, "instructional-videos");
+const featuredContent = findBlock(pageBlocks, "featured-content");
 
 ---
 
-<Layout title={infoPage.title}>
+<Layout title={title} description={description}>
   
   <AdOverlay data={adOverlayData} /> 
   <Slider data={heroSlider} />
