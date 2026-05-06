@@ -15,121 +15,43 @@ import FeaturedAuthorities from "../components/FeaturedAuthorities.astro";
 import InstructionalVideos from "../components/InstructionalVideos.astro";
 import FeaturedDocuments from "../components/FeaturedDocuments.astro";
 import FeaturedContent from "../components/FeaturedContent.astro";
+import SectionInstagram from "../components/SectionInstagram.astro";
+
+const findBlock = (page: any, block: string) => {
+  return page.blocks.find(
+    (blck: any) => blck.__component === `blocks.${block}`,
+  ) || null;
+}
 
 const infoPage = await getHomePage();
-// console.dir(infoPage, { depth: null });
 
-const heroSlider = infoPage.blocks.find(
-  (block: any) => block.__component === "blocks.slider",
-);
-const slider = heroSlider ? heroSlider.Slide : null;
-// console.log(slider);
-
-const featuredArticles = infoPage.blocks.find(
-  (block: any) => block.__component === "blocks.featured-articles",
-);
-const articles = featuredArticles
-  ? featuredArticles?.articles.map((article: any) => article)
-  : [];
-
-const resolutionsSection =
-  infoPage.blocks.find(
-    (block: any) => block.__component === "blocks.legal-documents",
-  ) || null;
-
-const resolutions = resolutionsSection?.docs
-  ? resolutionsSection.docs.map((resolucion: any) => resolucion)
-  : [];
-
-const featuredAuthorities = infoPage.blocks.find(
-  (block: any) => block.__component === "blocks.featured-authorities",
-) || null;
-
-const featuredDocuments = infoPage.blocks.find(
-  (block: any) => block.__component === "blocks.featured-documents",
-) || null;
-
-const documents = featuredDocuments?.docs
-  ? featuredDocuments?.docs.map((document: any) => document)
-  : [];
-
-const adOverlayData = infoPage.blocks.find(
-  (block: any) => block.__component === "blocks.ad-overlay",
-) || null;
-
-const featuredCourses = infoPage.blocks.find(
-  (block: any) => block.__component === "blocks.featured-courses",
-) || null;
-
-const courses = featuredCourses?.courses
-  ? featuredCourses?.courses.map((course: any) => course)
-  : [];
-
-const instructionalVideos = infoPage.blocks.find(
-  (block: any) => block.__component === "blocks.instructional-videos",
-) || null;
-
-const featuredContent = infoPage.blocks.find(
-  (block: any) => block.__component === "blocks.featured-content",
-) || null;
+const heroSlider = findBlock(infoPage, "slider");
+const featuredArticles = findBlock(infoPage, "featured-articles");
+const legalDocuments = findBlock(infoPage, "legal-documents");
+const featuredAuthorities = findBlock(infoPage, "featured-authorities");
+const featuredDocuments = findBlock(infoPage, "featured-documents");
+const adOverlayData = findBlock(infoPage, "ad-overlay");
+const featuredCourses = findBlock(infoPage, "featured-courses");
+const instructionalVideos = findBlock(infoPage, "instructional-videos");
+const featuredContent = findBlock(infoPage, "featured-content");
 
 ---
 
 <Layout title={infoPage.title}>
   
-  { adOverlayData && <AdOverlay {...adOverlayData} /> }
-
-  { slider && <Slider data={slider} />}
+  <AdOverlay data={adOverlayData} /> 
+  <Slider data={heroSlider} />
 
   <main class="bg-gray-200/90">
      
-    { featuredContent && (
-      <FeaturedContent {...featuredContent} />
-    )}
+    <FeaturedContent data={featuredContent} /> 
+    <SectionResolution data={legalDocuments} />
+    <InstructionalVideos data={instructionalVideos} />  
+    <FeaturedAuthorities data={featuredAuthorities} /> 
+    <FeaturedDocuments data={featuredDocuments} /> 
+    <FeaturedArticles data={featuredArticles} />
+    <SectionInstagram />
+    <FeaturedCourses data={featuredCourses} />
 
-    {
-      resolutionsSection && (
-        <SectionResolution {...resolutionsSection} resolutions={resolutions} />
-      )
-    }
-
-    {
-      instructionalVideos && (
-        <InstructionalVideos {...instructionalVideos} />
-      )
-    }
-    
-    {
-      featuredAuthorities && (
-          <FeaturedAuthorities {...featuredAuthorities} />
-      )
-    }
-
-    {
-      featuredDocuments && (
-        <FeaturedDocuments {...featuredDocuments} />
-      )
-    }
-
-    { featuredArticles && <FeaturedArticles {...featuredArticles} />}
-
-    <section class="py-20 bg-linear-to-t from-green-600 to-green-800">
-      <InstagramFeed limit={4} showTitle={true} />
-      <div class="flex items-center justify-center mt-6">
-        <LinkCta href="/redes-sociales" type="TERTIARY" label="Ver más publicaciones">
-          <ArrowRightIcon class="h-6 w-6 ml-2" />
-        </LinkCta>
-      </div>
-    </section>
-
-    {
-      featuredCourses && (
-        <FeaturedCourses
-          {...featuredCourses}
-        />
-      )
-    }
-  
-  
   </main>
 </Layout>

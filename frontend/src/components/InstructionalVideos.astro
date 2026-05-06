@@ -4,7 +4,10 @@ import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro"
 import LinkCta from "../components/LinkCta.astro"
 import HeadingText from "./HeadingText.astro";
 
-const { title, description, cta, videos} = Astro.props;
+const { data } = Astro.props;
+if(!data) return
+
+const { title, description, cta, videos} = data;
 ---
    
    <section class="md:pt-20 container mx-auto px-4 py-20">

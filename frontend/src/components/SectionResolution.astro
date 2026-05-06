@@ -4,7 +4,14 @@ import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
 import LinkCta from "./LinkCta.astro";
 import ResolutionItem from "./ResolutionItem.astro";
 
-const { title, description, resolutions, cta } = Astro.props;
+const { data } = Astro.props;
+
+if (!data) {
+  return;
+}
+
+const { title, description, docs, cta } = data;
+
 ---
 
 <section class="bg-green-800 px-4 py-20">
@@ -12,7 +19,7 @@ const { title, description, resolutions, cta } = Astro.props;
     <HeadingText title={title} description={description} variant="white" />
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 py-10">
       {
-        resolutions.map((resolucion: any) => (
+        docs.map((resolucion: any) => (
           <ResolutionItem data={resolucion} />
         ))
       }

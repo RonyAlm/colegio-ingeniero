@@ -3,7 +3,10 @@ import CardCourse from "./CardCourse.astro";
 import HeadingText from "./HeadingText.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
 import LinkCta from "./LinkCta.astro";
-const { title, subtitle, description, cta, courses } = Astro.props;
+
+const { data } = Astro.props;
+if(!data) return
+const { title, subtitle, description, cta, courses } = data;
 ---
 
 <section id="featured-course" class="py-20 bg-gray-200">

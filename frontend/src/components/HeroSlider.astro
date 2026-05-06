@@ -5,11 +5,10 @@ import IngLogo from "./icons/IngLogo.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
 import { marked } from "marked";
 
-const infoHero = Astro.props.data;
-if(!infoHero || infoHero.length === 0) return redirect("/");
+const { data } = Astro.props;
+if(!data) return 
 
-// console.dir( infoHero, { depth: null });
-
+const { Slide: infoHero } = data;
 
 ---
 

@@ -3,7 +3,10 @@ import CardArticle from "./CardArticle.astro";
 import HeadingText from "./HeadingText.astro";
 import LinkCta from "./LinkCta.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
-const { title, description, cta , articles = [] } = Astro.props
+
+const { data } = Astro.props;
+if(!data) return
+const { title, description, cta , articles = [] } = data;
 
 ---
 

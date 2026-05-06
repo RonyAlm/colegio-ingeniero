@@ -4,7 +4,10 @@ import LinkCta from "./LinkCta.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
 import HeadingText from "./HeadingText.astro";
 
-const { title, description, cta, docs } = Astro.props;
+const { data } = Astro.props;
+if(!data) return
+
+const { title, description, cta, docs } = data;
 ---
 
 <section id="featured-documents" class="md:pt-20 container mx-auto px-4 py-20">
