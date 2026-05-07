@@ -1,0 +1,17 @@
+---
+import InstagramFeed from "../components/InstagramFeed.astro";
+import LinkCta from "../components/LinkCta.astro";
+import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
+---
+
+<section class="py-20 bg-linear-to-t from-green-600 to-green-800">
+  <InstagramFeed limit={4} showTitle={true} />
+  <div class="flex items-center justify-center mt-6">
+    <LinkCta
+      href="/redes-sociales"
+      type="TERTIARY"
+      label="Ver más publicaciones" >
+      <ArrowRightIcon class="h-6 w-6 ml-2" />
+    </LinkCta>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_shared_contents",
+  "info": {
+    "displayName": "Content"
+  },
+  "options": {},
+  "attributes": {
+    "markdown": {
+      "type": "richtext"
+    }
+  },
+  "config": {}
+}

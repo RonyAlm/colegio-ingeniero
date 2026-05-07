@@ -2,37 +2,35 @@
 import ResolutionItem from "./ResolutionItem.astro";
 import LinkCta from "./LinkCta.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
+import HeadingText from "./HeadingText.astro";
 
-const { title, description, cta, docs } = Astro.props;
+const { data } = Astro.props;
+if(!data) return
+
+const { title, description, cta, docs } = data;
 ---
 
-<section class="md:pt-20 container mx-auto px-4 py-20">
-          <h2 class="text-4xl text-green-950 text-center mb-2 mt-8">
-            { title.split(" ")[0] }
-              <span class="text-green-600 font-bold">{title.split(" ")[1]}</span> 
-          </h2>
-          <hr class="border-green-700 w-1/4 mx-auto mb-4 rounded-full">
-          { description && (
-            <p class="text-center text-sm md:text-base text-green-950/50 opacity-80 mb-4">
-              {description}
-            </p>
-          )}
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
-            {docs.map((doc: any) => (
-              <ResolutionItem data={doc} type="SECONDARY" />
-            ))}
-          </div>
-          {
-            cta && (
-              <div class="flex items-center justify-center mt-10">
-                { 
-                  cta.map(({ href, label } : any) => (
-                    <LinkCta href={href} type="QUATERNARY" label={label}>
-                      <ArrowRightIcon class="h-6 w-6 ml-2" />
-                    </LinkCta>
-                  ))
-                }
-              </div>
-            )
-          }
-        </section>
+<section id="featured-documents" class="md:pt-20 container mx-auto px-4 py-20">
+  <HeadingText title={title} description={description} variant="green" />
+  {
+    description && (
+      <p class="text-center text-sm md:text-base text-green-950/50 opacity-80 mb-4">
+        {description}
+      </p>
+    )
+  }
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+    {docs.map((doc: any) => <ResolutionItem data={doc} type="SECONDARY" />)}
+  </div>
+  {
+    cta && (
+      <div class="flex items-center justify-center mt-10">
+        {cta.map(({ href, label, isExternal }: any) => (
+          <LinkCta href={href} type="QUATERNARY" label={label} isExternal={isExternal} >
+            <ArrowRightIcon class="h-6 w-6 ml-2" />
+          </LinkCta>
+        ))}
+      </div>
+    )
+  }
+</section>

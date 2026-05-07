@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_shared_item_contents",
+  "info": {
+    "displayName": "ItemContent"
+  },
+  "options": {},
+  "attributes": {
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "blog",
+        "curso",
+        "documento",
+        "expo",
+        "evento",
+        "actividad",
+        "efeméride"
+      ]
+    },
+    "cover": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "heading": {
+      "type": "string"
+    },
+    "text": {
+      "type": "text"
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

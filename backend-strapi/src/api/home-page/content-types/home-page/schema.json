@@ -30,7 +30,8 @@
         "blocks.featured-authorities",
         "blocks.featured-articles",
         "blocks.ad-overlay",
-        "blocks.instructional-videos"
+        "blocks.instructional-videos",
+        "blocks.featured-content"
       ]
     }
   }

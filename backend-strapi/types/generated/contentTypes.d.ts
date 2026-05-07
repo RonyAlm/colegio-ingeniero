@@ -604,6 +604,38 @@ export interface ApiCategoryDocCategoryDoc extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCategoryEventCategoryEvent
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'category_events';
+  info: {
+    displayName: 'CategoryEvent';
+    pluralName: 'category-events';
+    singularName: 'category-event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    events: Schema.Attribute.Relation<'manyToMany', 'api::event.event'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::category-event.category-event'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
   collectionName: 'courses';
   info: {
@@ -676,6 +708,49 @@ export interface ApiDocDoc extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiEventEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'events';
+  info: {
+    displayName: 'Event';
+    pluralName: 'events';
+    singularName: 'event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    blocks: Schema.Attribute.DynamicZone<
+      ['shared.content', 'shared.gallery', 'shared.link', 'shared.youtube']
+    >;
+    category_events: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::category-event.category-event'
+    >;
+    cover: Schema.Attribute.Media<'images' | 'videos'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.DateTime;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    endDate: Schema.Attribute.DateTime;
+    isRecurring: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
+      Schema.Attribute.Private;
+    locationName: Schema.Attribute.String;
+    locationUrl: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -733,6 +808,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         'blocks.featured-articles',
         'blocks.ad-overlay',
         'blocks.instructional-videos',
+        'blocks.featured-content',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -1314,8 +1390,10 @@ declare module '@strapi/strapi' {
       'api::authority.authority': ApiAuthorityAuthority;
       'api::category-article.category-article': ApiCategoryArticleCategoryArticle;
       'api::category-doc.category-doc': ApiCategoryDocCategoryDoc;
+      'api::category-event.category-event': ApiCategoryEventCategoryEvent;
       'api::course.course': ApiCourseCourse;
       'api::doc.doc': ApiDocDoc;
+      'api::event.event': ApiEventEvent;
       'api::global.global': ApiGlobalGlobal;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::page.page': ApiPagePage;

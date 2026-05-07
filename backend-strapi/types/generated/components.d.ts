@@ -42,6 +42,19 @@ export interface BlocksFeaturedAuthorities extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksFeaturedContent extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_featured_contents';
+  info: {
+    displayName: 'Featured Content';
+  };
+  attributes: {
+    cta: Schema.Attribute.Component<'shared.link', true>;
+    description: Schema.Attribute.String;
+    items: Schema.Attribute.Component<'shared.item-content', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface BlocksFeaturedCourses extends Struct.ComponentSchema {
   collectionName: 'components_blocks_featured_courses';
   info: {
@@ -145,6 +158,16 @@ export interface BlocksSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedContent extends Struct.ComponentSchema {
+  collectionName: 'components_shared_contents';
+  info: {
+    displayName: 'Content';
+  };
+  attributes: {
+    markdown: Schema.Attribute.RichText;
+  };
+}
+
 export interface SharedGallery extends Struct.ComponentSchema {
   collectionName: 'components_shared_galleries';
   info: {
@@ -188,6 +211,30 @@ export interface SharedItem extends Struct.ComponentSchema {
     isSubmenu: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     label: Schema.Attribute.String;
     submenu: Schema.Attribute.Component<'shared.sub-item', true>;
+  };
+}
+
+export interface SharedItemContent extends Struct.ComponentSchema {
+  collectionName: 'components_shared_item_contents';
+  info: {
+    displayName: 'ItemContent';
+  };
+  attributes: {
+    cover: Schema.Attribute.Media<'images' | 'videos', true>;
+    cta: Schema.Attribute.Component<'shared.link', true>;
+    heading: Schema.Attribute.String;
+    text: Schema.Attribute.Text;
+    type: Schema.Attribute.Enumeration<
+      [
+        'blog',
+        'curso',
+        'documento',
+        'expo',
+        'evento',
+        'actividad',
+        'efem\u00E9ride',
+      ]
+    >;
   };
 }
 
@@ -261,6 +308,7 @@ declare module '@strapi/strapi' {
       'blocks.ad-overlay': BlocksAdOverlay;
       'blocks.featured-articles': BlocksFeaturedArticles;
       'blocks.featured-authorities': BlocksFeaturedAuthorities;
+      'blocks.featured-content': BlocksFeaturedContent;
       'blocks.featured-courses': BlocksFeaturedCourses;
       'blocks.featured-documents': BlocksFeaturedDocuments;
       'blocks.footer': BlocksFooter;
@@ -269,9 +317,11 @@ declare module '@strapi/strapi' {
       'blocks.legal-documents': BlocksLegalDocuments;
       'blocks.section-heading': BlocksSectionHeading;
       'blocks.slider': BlocksSlider;
+      'shared.content': SharedContent;
       'shared.gallery': SharedGallery;
       'shared.hero': SharedHero;
       'shared.item': SharedItem;
+      'shared.item-content': SharedItemContent;
       'shared.link': SharedLink;
       'shared.seo': SharedSeo;
       'shared.sub-item': SharedSubItem;

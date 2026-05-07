@@ -13,6 +13,10 @@ type CTA = {
 };
 
 interface Props {
+  data: PropsData;
+}
+
+interface PropsData {
   images?: ImageItem[];
   title?: string;
   description?: string;
@@ -20,13 +24,9 @@ interface Props {
   bgColor?: string;
 }
 
-const {
-  images = [],
-  title,
-  description,
-  cta,
-  bgColor = "bg-gray-900",
-} = Astro.props as Props;
+const { data } = Astro.props as Props;
+if(!data) return
+const { images, title, description, cta, bgColor = "bg-green-200" } = data as PropsData;
 
 const hasImages = images &&  images.length > 0 ;
 

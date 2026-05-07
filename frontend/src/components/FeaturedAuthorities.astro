@@ -1,21 +1,18 @@
 ---
 import CardAuthority from "./CardAuthority.astro";
+import HeadingText from "./HeadingText.astro";
 import LinkCta from "./LinkCta.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
-
-const { title, description, cta, authorities} = Astro.props;
+const { data } = Astro.props;
+if(!data) return
+const { title, description, cta, authorities} = data;
 
 ---
 
-<section class="px-4 py-20 bg-linear-to-t from-green-600 to-green-800">
+<section id="featured-authorities" class="px-4 py-20 bg-linear-to-t from-green-600 to-green-800">
   <div class="container mx-auto h-fit">
-    <h2 class="text-4xl text-green-100 text-center mb-2">
-      {title}
-    </h2>
-    <p class="text-center text-2xl text-green-100 mb-4">
-      {description}
-    </p>
-    <hr class="border-green-100 w-1/12 mx-auto mb-6" />
+    <HeadingText title={title} description={description} variant="white" />
+    <!-- <hr class="border-green-100 w-1/12 mx-auto mb-6" /> -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
       {
         authorities.map((autoridad: any) => (
