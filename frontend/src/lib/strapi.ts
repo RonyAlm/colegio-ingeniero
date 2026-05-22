@@ -253,3 +253,32 @@ export const getAuthoritiesGrouped = async () => {
   const data = result.data.sort((a: any, b: any) => a.areaId - b.areaId);
   return data;
 }
+
+export const getAllEvents = async () => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/events`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result.data;
+}
+
+export const getAllEventsSlugs = async () => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/events`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const result = await res.json();
+  return result.data.map((event: any) => event.slug);
+}
+
+export const getEventInfo = async (slug: string) => {
+  const res = await fetch(
+    `${STRAPI_BASE_URL}/api/events`
+  );
+  if (!res.ok) throw new Error("Error al obtener los datos");
+  const info = await res.json();
+  const result = info.data.find((event: any) => event.slug === slug);
+  if (!result) return null;
+  return result;
+}

@@ -1,4 +1,5 @@
 ---
+import { getPostsPage } from "../lib/strapi";
 import CardArticle from "./CardArticle.astro";
 import HeadingText from "./HeadingText.astro";
 import LinkCta from "./LinkCta.astro";
@@ -8,6 +9,8 @@ const { data } = Astro.props;
 if(!data) return
 const { title, description, cta , articles = [] } = data;
 
+const articlesRecent = await getPostsPage(1, 6);
+
 ---
 
 <section id="featured-articles" class="container mx-auto px-4 py-20">
@@ -15,7 +18,7 @@ const { title, description, cta , articles = [] } = data;
   
   <div class="md:py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {
-      articles.map((article: any) => (
+      articlesRecent.data.map((article: any) => (
         <CardArticle
           {...article}
         />

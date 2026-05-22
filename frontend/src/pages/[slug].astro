@@ -1,7 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 import Layout from "../layouts/Layout.astro";
-import { getAllPages, getPageInfo, getAllCourses, getAllAuthorities, getAuthoritiesByArea, getAuthoritiesGrouped } from "../lib/strapi";
+import { getAllPages, getPageInfo, getAllCourses, getAllEvents, getAuthoritiesGrouped } from "../lib/strapi";
 import HeaderPage from "../components/HeaderPage.astro";
 import SectionAuthorities from "../components/SectionAuthorities.astro";
 import { YouTube } from "@astro-community/astro-embed-youtube";
@@ -9,6 +9,8 @@ import LinkCta from "../components/LinkCta.astro";
 import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
 import Courses from "../components/Courses.astro";
 import SectionHeading from "../components/SectionHeading.astro";
+import { findBlock } from "../utils";
+import CardEvents from "../components/CardEvents.astro";
 
 
 const { slug } = Astro.params;
@@ -26,31 +28,27 @@ export const getStaticPaths = ( async () => {
   });
 }) satisfies GetStaticPaths;
 
-const infoPage = await getPageInfo(slug);
+const { title, description, slug: pageSlug, cover, blocks} = await getPageInfo(slug);
 
-const coverImg = infoPage.cover ? infoPage.cover.url : null;
+const coverImg = cover ? cover.url : null;
 
 const sectionAuthorities = await getAuthoritiesGrouped();
 
-const sectionHeading = infoPage.blocks.find(
-  (block: any) => block.__component === "blocks.section-heading",
-) || null;
+const sectionHeading = findBlock(blocks, "section-heading");
 
-const sectionYoutube = infoPage.blocks.filter(
+const sectionYoutube = blocks.filter(
   (block: any) => block.__component === "shared.youtube",
 ) || null;
 
+const allCourses = title === "Cursos" ? await getAllCourses() : null;
+const allEvents = title === "Eventos" ? await getAllEvents() : null;
 
-const sectionDocs = infoPage.blocks.find(
-  (block: any) => block.__component === "shared.docs",
-) || null;
-
-const allCourses = infoPage.title === "Cursos" ? await getAllCourses() : null;
+console.dir(allEvents, { depth: null });
 
 ---
 
-<Layout title={infoPage.title} description={infoPage.description}>
-  <HeaderPage title={infoPage.title} slug={infoPage.slug} cover={coverImg} />
+<Layout title={title} description={description}>
+  <HeaderPage title={title} slug={pageSlug} cover={coverImg} />
   <main class="bg-gray-200">
 
     { 
@@ -86,20 +84,23 @@ const allCourses = infoPage.title === "Cursos" ? await getAllCourses() : null;
     }
 
     {
-      sectionDocs && (
-        <section class="md:pt-10 container mx-auto px-4 py-40">
-          <div class="flex items-center justify-center gap-4 flex-wrap max-w-3xl mx-auto">
-            <iframe
-            src={`https://docs.google.com/gview?url=${sectionDocs.document.file.url}&embedded=true`}
-            class="w-full h-screen rounded-xl border border-green-600"></iframe>
-          </div>
-        </section>
+      allCourses && (
+        <Courses courses={allCourses} />
       )
     }
 
     {
-      allCourses && (
-        <Courses courses={allCourses} />
+      allEvents && (
+        <section class="md:pt-20 container mx-auto px-4 py-40">
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {
+                allEvents.map((event: any) => (
+                  <CardEvents event={event} />
+                ))
+              }
+          </div>
+        </section>
       )
     }
 

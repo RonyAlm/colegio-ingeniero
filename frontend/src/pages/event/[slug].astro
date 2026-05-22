@@ -1,0 +1,187 @@
+---
+import type { GetStaticPaths } from "astro";
+import { marked } from "marked";
+import { YouTube } from '@astro-community/astro-embed-youtube';
+import Layout from "../../layouts/Layout.astro";
+import { getAllEventsSlugs, getEventInfo } from "../../lib/strapi";
+import TagIcon from "../../components/icons/TagIcon.astro";
+import ArrowRightIcon from "../../components/icons/ArrowRightIcon.astro";
+import LinkIcon from "../../components/icons/LinkIcon.astro";
+import CardArticle from "../../components/CardArticle.astro";
+import LinkCta from "../../components/LinkCta.astro";
+import Gallery from "../../components/Gallery.astro";
+import RecentArticles from "../../components/RecentArticles.astro";
+import FeaturedArticles from "../../components/FeaturedArticles.astro";
+import MapPin from "../../components/icons/MapPin.astro";
+import CalendarIcon from "../../components/icons/CalendarIcon.astro";
+import { findBlock } from "../../utils";
+
+const slug = Astro.params.slug;
+if (!slug) return Astro.redirect("/404");
+
+export const getStaticPaths = (async () => {
+  const slugs = await getAllEventsSlugs();
+  return slugs.map((data: any) => {
+    return {
+      params: {
+        slug: data,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const event = await getEventInfo(slug);
+
+const date = new Date(event.date).toLocaleDateString("es-AR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "America/Argentina/Buenos_Aires",
+  localeMatcher: "best fit",
+  weekday: "long",
+});
+
+const startDate = new Date(event.date).toLocaleString(
+  "es-AR",
+  {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "America/Argentina/Buenos_Aires",
+  }
+);
+
+const endDate = new Date(event.endDate).toLocaleString(
+  "es-AR",
+  {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    timeZone: "America/Argentina/Buenos_Aires",
+  }
+);
+
+const content = findBlock(event.blocks, "content", "shared");
+const text = content && content.markdown ? marked.parse(content.markdown) : null;
+
+const gallerys = findBlock(event.blocks, "gallery", "shared");
+
+const galleryImg = gallerys && gallerys.images && gallerys.images.length > 0 ? gallerys.images : null;
+
+const videoYoutube = event.blocks.filter(
+  (block: any) => block.__component === "shared.youtube",
+) || []; 
+
+const video = videoYoutube.length > 0 && videoYoutube[0];
+
+const links = event.blocks.filter(
+  (block: any) => block.__component === "shared.link",
+) || [];
+
+console.dir(links, { depth: null });
+
+---
+
+<Layout title={event.title}>
+  <div class="container mx-auto bg-gray-100 rounded-2xl py-10 my-4">
+    <article class="px-8 md:px-0 py-8 max-w-3xl mx-auto prose">
+      <div class="flex flex-col items-center justify-center">
+        <div class="flex items-center not-prose">
+          <a href={"/eventos"} class="text-sm uppercase text-gray-500">
+            Eventos
+          </a>
+          <span class="mx-2 text-gray-500">/</span>
+          <a href={`/event/${event.slug}`} class="text-sm uppercase text-gray-500 line-clamp-1">
+            {event.title}
+          </a>
+        
+        </div>
+        { event.category_events && event.category_events.length > 0 && (
+          <div class="bg-green-200 text-green-900 px-4 py-1
+           rounded-xl w-fit mb-8 flex items-center mt-4">
+            <TagIcon class="h-4 w-4 mr-2" />
+            <span class="text-sm uppercase">{event.category_events[0].name || "General"}</span>
+          </div>
+        )}
+        
+        <span class="text-sm text-gray-400">{date}</span>
+        <h2 class="text-center text-3xl md:text-4xl font-bold text-gray-800 mt-4">
+          {event.title}
+        </h2>
+        <p class="text-center text-sm md:text-base text-gray-600">
+          {event.description}
+        </p>
+         
+        <div class=" flex gap-4 justify-between items-center">
+          <div  class="flex items-center text-sm text-gray-400">
+            <CalendarIcon class="h-4 w-4 mr-2"/>
+              {startDate}
+          </div>
+          <span class="text-gray-400"> - </span>
+          <div class="flex items-center text-sm text-gray-400">
+            <CalendarIcon class="h-4 w-4 mr-2"/>
+            {endDate}
+          </div>
+        </div>
+
+        <a href={event.locationUrl} class="not-prose cursor-pointer flex items-center mt-4 
+        text-green-600 hover:scale-105 transition-transform" target="_blank">
+          <MapPin class="h-6 w-6 mr-2" />
+          <span class="text-lg ">{event.locationName}</span>
+        </a>
+
+        
+
+        {event.cover?.url && (
+          <figure
+            class="w-full md:p-6 flex justify-center md:border-2 border-gray-200 mb-0">
+            <img
+              class="bg-cover bg-center rounded-2xl shadow prose-figure:my-0"
+              src={event.cover.url}
+              alt={event.title}
+            />
+          </figure>
+        )}
+      </div>
+      <div
+        class="flex gap-4 items-center mt-0 text-green-600 prose-a:text-green-600">
+        <LinkIcon href={"https://www.instagram.com/colegio_de_ingenieros/"} 
+          icon="instagram" isExternal columns="bg-gray-50 border border-green-600" />
+        <LinkIcon href={"https://www.facebook.com/profile.php?id=100078781661565"} 
+          icon="facebook" isExternal  columns="bg-gray-50 border border-green-600"/>
+        <LinkIcon href={"https://www.youtube.com/@ColegioPublicodeIngenieros"} 
+          icon="youtube" isExternal  columns="bg-gray-50 border border-green-600"/>
+      </div>
+      { text && <div class="prose" set:html={text} />}
+      {
+        galleryImg && <Gallery columns="mt-10 md:grid-cols-2" images={galleryImg}/>
+      }
+      {
+        video && <YouTube id={video?.videoId} class="mt-10 rounded-xl" />
+      }
+      { links && links.length > 0 && (
+        <div class="flex flex-wrap gap-4 mt-8 not-prose">
+          {links.map((link: any) => (
+            <LinkCta isExternal={link.isExternal} href={link.href}
+             label={link.label} type={link.variant}>
+              <ArrowRightIcon class="h-6 w-6 ml-2" />
+            </LinkCta>
+          ))}
+        </div>
+      )}
+    </article>
+  </div>
+
+  { 
+    // featuredArticles ? 
+    //  <FeaturedArticles articles={featuredArticles.articles} />
+    //  : <RecentArticles />
+  }
+
+</Layout>

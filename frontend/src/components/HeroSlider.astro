@@ -39,7 +39,10 @@ const { Slide: infoHero } = data;
                         ${!info.overlay ? 'text-green-700' : ''}`}>{info.heading}
                       </h2>
                   }
-                  <div class="my-4 mx-6 mx-text-sm text-shadow-neutral-600 md:text-lg max-w-3xl line-clamp-3" set:html={marked.parse(info.text)}></div>
+                  { info.text && info.text.trim() !== '' && 
+                    <div class="my-4 mx-6 mx-text-sm text-shadow-neutral-600 md:text-lg max-w-3xl line-clamp-3"
+                    set:html={marked.parse(info.text)} />
+                  }
                    {
                      info.cta && 
                      info.cta.map((cta: any) => (
