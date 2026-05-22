@@ -12,6 +12,7 @@ import InstructionalVideos from "../components/InstructionalVideos.astro";
 import FeaturedDocuments from "../components/FeaturedDocuments.astro";
 import FeaturedContent from "../components/FeaturedContent.astro";
 import SectionInstagram from "../components/SectionInstagram.astro";
+import FeaturedEvent from "../components/FeaturedEvent.astro";
 
 const { title, description, blocks: pageBlocks } = await getHomePage();
 
@@ -39,9 +40,11 @@ const featuredContent = findBlock(pageBlocks, "featured-content");
     <InstructionalVideos data={instructionalVideos} />  
     <FeaturedAuthorities data={featuredAuthorities} /> 
     <FeaturedDocuments data={featuredDocuments} /> 
+    <FeaturedEvent />
     <FeaturedArticles data={featuredArticles} />
     <SectionInstagram />
     <FeaturedCourses data={featuredCourses} />
+
 
   </main>
 </Layout>

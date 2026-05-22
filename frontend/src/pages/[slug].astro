@@ -1,16 +1,13 @@
 ---
 import type { GetStaticPaths } from "astro";
 import Layout from "../layouts/Layout.astro";
-import { getAllPages, getPageInfo, getAllCourses, getAllEvents, getAuthoritiesGrouped } from "../lib/strapi";
+import { getAllPages, getPageInfo, getAllCourses, getAuthoritiesGrouped } from "../lib/strapi";
 import HeaderPage from "../components/HeaderPage.astro";
 import SectionAuthorities from "../components/SectionAuthorities.astro";
 import { YouTube } from "@astro-community/astro-embed-youtube";
-import LinkCta from "../components/LinkCta.astro";
-import ArrowRightIcon from "../components/icons/ArrowRightIcon.astro";
 import Courses from "../components/Courses.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import { findBlock } from "../utils";
-import CardEvents from "../components/CardEvents.astro";
 
 
 const { slug } = Astro.params;
@@ -41,9 +38,6 @@ const sectionYoutube = blocks.filter(
 ) || null;
 
 const allCourses = title === "Cursos" ? await getAllCourses() : null;
-const allEvents = title === "Eventos" ? await getAllEvents() : null;
-
-console.dir(allEvents, { depth: null });
 
 ---
 
@@ -86,21 +80,6 @@ console.dir(allEvents, { depth: null });
     {
       allCourses && (
         <Courses courses={allCourses} />
-      )
-    }
-
-    {
-      allEvents && (
-        <section class="md:pt-20 container mx-auto px-4 py-40">
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {
-                allEvents.map((event: any) => (
-                  <CardEvents event={event} />
-                ))
-              }
-          </div>
-        </section>
       )
     }
 
