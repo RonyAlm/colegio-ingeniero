@@ -35,11 +35,13 @@ const date = new Date(event.date).toLocaleDateString("es-AR", {
     </p>
     <div class="flex justify-between items-center gap-2 not-prose">
       <span class="text-sm text-gray-400">{date}</span>
-      <a href={`/event/${event.slug}`} 
-        class="bg-green-700/60 text-white p-2 rounded-full flex items-center
-        hover:bg-green-600 transition-colors" title="Leer más">
-        <ArrowTop class="h-4 w-4" />
-      </a>
+      { !event.category_events.find((c: any) => c.name === "Efeméride") && (
+          <a href={`/event/${event.slug}`} 
+            class="bg-green-700/60 text-white p-2 rounded-full flex items-center
+            hover:bg-green-600 transition-colors" title="Leer más">
+            <ArrowTop class="h-4 w-4" />
+          </a>
+      )}
     </div>
   </div>
 </article>
