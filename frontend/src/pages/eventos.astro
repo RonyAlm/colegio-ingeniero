@@ -1,0 +1,312 @@
+---
+import Layout from "../layouts/Layout.astro";
+import HeaderPage from "../components/HeaderPage.astro";
+import { getAllEvents } from "../lib/strapi";
+import TagIcon from "../components/icons/TagIcon.astro";
+import CardEvents from "../components/CardEvents.astro";
+
+const events = await getAllEvents();
+
+// Categorías únicas
+const categories = Array.from(
+  new Map(
+    events
+      .flatMap((event: any) => event.category_events || [])
+      .map((cat: any) => [cat.slug, cat]),
+  ).values(),
+);
+
+// Años únicos
+const years = Array.from(
+  new Set(events.map((event: any) => new Date(event.date).getFullYear())),
+).sort();
+
+// Meses
+const months = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
+---
+
+<Layout title="Eventos">
+  <HeaderPage
+    title="Eventos"
+    slug="Eventos"
+    cover="https://res.cloudinary.com/du86bx5o0/image/upload/v1773192769/Gemini_Generated_Image_kfx8l5kfx8l5kfx8_4f63abf5e8.png"/>
+
+  <main class="bg-gray-200 py-8">
+    <section class="container mx-auto px-4 my-10">
+      <!-- TÍTULO -->
+      <div class="flex flex-col items-center">
+        <h2 class="text-4xl font-bold text-green-700 mb-4">Eventos</h2>
+
+        <p class="text-gray-600 mb-10 prose text-center">
+          A continuación, encontrarás una lista de eventos de interés para todos
+          los profesionales del Colegio Público de Ingenieros de Formosa.
+        </p>
+      </div>
+
+      <!-- FILTROS -->
+      <div class="flex flex-col gap-6 mb-8">
+        <!-- CATEGORÍAS -->
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="hidden md:block text-gray-500 text-sm">
+            Filtrar por:
+          </span>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- TODOS -->
+            <button
+              data-category="all"
+              class="filter-btn active px-4 py-2 rounded-lg shadow bg-green-700 text-white flex items-center gap-2 cursor-pointer"
+            >
+              <span class="text-sm"> Todos </span>
+            </button>
+
+            <!-- CATEGORÍAS -->
+            {
+              categories.map((cat: any) => (
+                <button
+                  data-category={cat.slug}
+                  class="filter-btn px-4 py-2 rounded-lg shadow bg-white text-gray-700
+                flex items-center gap-2 hover:bg-green-600 hover:text-white
+                transition-colors cursor-pointer">
+                  <TagIcon class="w-4 h-4" />
+                  <span class="text-sm">{cat.name}</span>
+                </button>
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- FILTROS MES -->
+        <div class="flex flex-col gap-4">
+          <!-- MESES -->
+          <div class="flex flex-wrap items-center gap-2">
+            
+            <button
+              data-month="all"
+              class="month-btn px-4 py-2 rounded-lg shadow bg-white text-gray-700
+            hover:bg-green-600 hover:text-white transition-colors cursor-pointer">
+              Todos
+            </button>
+
+            {
+              months.map((month, index) => (
+                <button
+                  data-month={index}
+                  class="month-btn px-4 py-2 rounded-lg shadow bg-white text-gray-700
+              hover:bg-green-600 hover:text-white transition-colors cursor-pointer"
+                >
+                  {month}
+                </button>
+              ))
+            }
+          </div>
+
+          <!-- AÑOS -->
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="hidden md:block text-gray-500 text-sm"> Año: </span>
+
+            <button
+              data-year="all"
+              class="year-btn px-4 py-2 rounded-lg shadow bg-white text-gray-700
+            hover:bg-green-600 hover:text-white transition-colors cursor-pointer"
+            >
+              Todos
+            </button>
+
+            {
+              years.map((year) => (
+                <button
+                  data-year={year}
+                  class="year-btn px-4 py-2 rounded-lg shadow bg-white text-gray-700
+              hover:bg-green-600 hover:text-white transition-colors cursor-pointer"
+                >
+                  {year}
+                </button>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- EVENTOS -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 py-4 pb-10" id="events">
+        {
+          events.map((event: any) => {
+            const categorySlugs = event.category_events
+              ?.map((c: any) => c.slug)
+              .join(" ");
+
+            return (
+              <div
+                class="event-item"
+                data-category={categorySlugs}
+                data-month={new Date(event.date).getMonth()}
+                data-year={new Date(event.date).getFullYear()}
+              >
+                <CardEvents event={event} />
+              </div>
+            );
+          })
+        }
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  const categoryButtons = document.querySelectorAll(".filter-btn") as NodeListOf<HTMLElement>;
+  const monthButtons = document.querySelectorAll(".month-btn") as NodeListOf<HTMLElement>;
+  const yearButtons = document.querySelectorAll(".year-btn") as NodeListOf<HTMLElement>;
+  const events = document.querySelectorAll(".event-item") as NodeListOf<HTMLElement>;
+
+  const params = new URLSearchParams(window.location.search) as URLSearchParams;
+
+  const currentDate = new Date() as Date;
+
+  const currentMonth = currentDate.getMonth().toString();
+  const currentYear = currentDate.getFullYear().toString();
+
+  let activeCategory = params.get("category") || "all";
+  let activeMonth = params.get("month") || currentMonth;
+  let activeYear = params.get("year") || currentYear;
+
+  // FILTRAR
+  function applyFilters() {
+    // Categorías
+    categoryButtons.forEach((btn) => {
+      const isActive = btn.dataset.category === activeCategory;
+      if(isActive) {
+        btn.classList.remove("bg-white");
+      } else {
+        btn.classList.add("bg-white");
+      }
+      btn.classList.toggle("bg-green-700", isActive);
+      btn.classList.toggle("text-white", isActive);
+    });
+
+    // Meses
+    monthButtons.forEach((btn) => {
+      const isActive = btn.dataset.month === activeMonth;
+      if(isActive) {
+        btn.classList.remove("bg-white");
+      } else {
+        btn.classList.add("bg-white");
+      }
+      btn.classList.toggle("bg-green-700", isActive);
+      btn.classList.toggle("text-white", isActive);
+    });
+
+    // Años
+    yearButtons.forEach((btn) => {
+      const isActive = btn.dataset.year === activeYear;
+      if(isActive) {
+        btn.classList.remove("bg-white");
+      } else {
+        btn.classList.add("bg-white");
+      }
+      btn.classList.toggle("bg-green-700", isActive);
+      btn.classList.toggle("text-white", isActive);
+    });
+
+    // Eventos
+    events.forEach((event) => {
+      const categories = (event.dataset.category || "").split(" ");
+
+      const eventMonth = event.dataset.month || "";
+      const eventYear = event.dataset.year || "";
+
+      const matchCategory =
+        activeCategory === "all" || categories.includes(activeCategory);
+
+      const matchMonth = activeMonth === "all" || eventMonth === activeMonth;
+      const matchYear = activeYear === "all" || eventYear === activeYear;
+
+      event.hidden = !(matchCategory && matchMonth && matchYear);
+    });
+  }
+
+  // URL
+  function updateURL() {
+    const url = new URL(window.location as any);
+
+    // Categoría
+    if (activeCategory === "all") {
+      url.searchParams.delete("category");
+    } else {
+      url.searchParams.set("category", activeCategory);
+    }
+
+    // Mes
+    if (activeMonth === "all") {
+      url.searchParams.delete("month");
+    } else {
+      url.searchParams.set("month", activeMonth);
+    }
+
+    // Año
+    if (activeYear === "all") {
+      url.searchParams.delete("year");
+    } else {
+      url.searchParams.set("year", activeYear);
+    }
+
+    history.pushState({}, "", url);
+  }
+
+  // Categorías
+  categoryButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activeCategory = btn.dataset.category || "all";
+
+      updateURL();
+      applyFilters();
+    });
+  });
+
+  // Meses
+  monthButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activeMonth = btn.dataset.month || "all";
+
+      updateURL();
+      applyFilters();
+    });
+  });
+
+  // Años
+  yearButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activeYear = btn.dataset.year || "all";
+
+      updateURL();
+      applyFilters();
+    });
+  });
+
+  // Browser
+  window.addEventListener("popstate", () => {
+    const params = new URLSearchParams(window.location.search);
+
+    activeCategory = params.get("category") || "all";
+    activeMonth = params.get("month") || currentMonth;
+    activeYear = params.get("year") || currentYear;
+
+    applyFilters();
+  });
+
+  // INIT
+  applyFilters();
+</script>

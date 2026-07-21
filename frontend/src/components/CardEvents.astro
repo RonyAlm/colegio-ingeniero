@@ -1,0 +1,47 @@
+---
+import LinkCta from "./LinkCta.astro";
+import IconArrowRight from "./icons/ArrowRightIcon.astro";
+import ArrowTop from "./icons/ArrowTop.astro";
+const { event } = Astro.props;
+
+const date = new Date(event.date).toLocaleDateString("es-AR", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+})
+---
+
+<article class="bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300
+ hover:border-green-600 transition-colors relative group">
+
+  <a href={`/event/${event.slug}`}>
+    <div class="w-full aspect-3/4 rounded-xl bg-gray-300 flex items-center justify-center">
+      <img class="w-full h-auto  object-cover cursor-pointer"
+       src={event.cover.url} alt={event.title} />
+    </div>
+  </a>
+  <div class="flex justify-between absolute top-0 py-6 left-0 text-sm w-full not-prose
+   bg-linear-to-b from-green-600/95 to-transparent">
+    <span class="text-sm w-fit not-prose px-4 bg-green-800
+   text-white py-1 rounded-r-lg shadow">{date}</span>
+    <span class="px-4 py-1 bg-white text-green-800
+     rounded-l-lg shadow">{event.category_events[0].name}</span>
+  </div>
+  <div class="group-hover:bottom-0 w-full absolute -bottom-full
+   left-0 bg-green-50 p-4 prose flex flex-col transition-all duration-300">
+    <h3 class="text-green-700 text-2xl font-bold line-clamp-2">{event.title}</h3>
+    <p class="text-sm text-gray-600 line-clamp-3">
+      {event.description}
+    </p>
+    <div class="flex justify-between items-center gap-2 not-prose">
+      <span class="text-sm text-gray-400">{date}</span>
+      { !event.category_events.find((c: any) => c.name === "Efeméride") && (
+          <a href={`/event/${event.slug}`} 
+            class="bg-green-700/60 text-white p-2 rounded-full flex items-center
+            hover:bg-green-600 transition-colors" title="Leer más">
+            <ArrowTop class="h-4 w-4" />
+          </a>
+      )}
+    </div>
+  </div>
+</article>
