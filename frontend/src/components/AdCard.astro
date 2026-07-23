@@ -1,0 +1,73 @@
+---
+const { ads, type } = Astro.props;
+
+let randomAd = Math.floor(Math.random() * ads.length);
+const initialAd = ads[randomAd];
+const { title, image, cta } = initialAd;
+
+---
+
+<article id={type === "secondary" ? "ad-card-secondary" : "ad-card-primary"} data-ads={JSON.stringify(ads)} 
+ class={`${type === "secondary" ? "md:hidden" : ""} w-full md:max-h-110 md:min-h-110 rounded-2xl overflow-hidden relative transition-all duration-300`}>
+    <a href={cta} target="_blank" rel="noopener noreferrer">
+        <img id="ad-image" src={image} alt={title}
+        class="ad-image w-full rounded-xl object-cover cursor-pointer transition-opacity duration-300" />
+        <span class="text-xs md:text-sm w-fit not-prose bg-gray-100 text-gray-800 px-4 py-1 rounded-xl absolute top-2 left-2 md:top-4 md:left-4">Publicidad</span>
+    </a>
+</article>
+
+<script>
+    const cardPrimary = document.querySelector("#ad-card-primary") as HTMLElement 
+    const cardSecondary = document.querySelector("#ad-card-secondary") as HTMLElement;
+    const imgPrimary = cardPrimary.querySelector("img") as HTMLImageElement;
+    const imgSecondary = cardSecondary.querySelector("img") as HTMLImageElement;
+    const linkPrimary = cardPrimary.querySelector("a") as HTMLAnchorElement;
+    const linkSecondary = cardSecondary.querySelector("a") as HTMLAnchorElement;
+
+    const ads = JSON.parse(cardPrimary.getAttribute("data-ads") as string);
+    const ads2 = JSON.parse(cardSecondary.getAttribute("data-ads") as string);
+    let index = Math.floor(Math.random() * ads.length);
+    let index2 = Math.floor(Math.random() * ads2.length);
+
+    function changeAd() {
+
+        index++;
+        index2++;
+
+        if(index >= ads.length){
+            index = 0;
+        }
+
+        if(index2 >= ads2.length){
+            index2 = 0;
+        }
+
+        imgPrimary.classList.add("opacity-0");
+        imgSecondary.classList.add("opacity-0");
+
+        setTimeout(() => {
+
+            const ad = ads[index];
+            const ad2 = ads2[index2];
+
+            imgPrimary.src = ad.image;
+            imgPrimary.alt = ad.title;
+
+            linkPrimary.href = ad.cta;
+
+            imgPrimary.classList.remove("opacity-0");
+
+            imgSecondary.src = ad2.image;
+            imgSecondary.alt = ad2.title;
+
+            linkSecondary.href = ad2.cta;
+
+            imgSecondary.classList.remove("opacity-0");
+
+        },300);
+
+    }
+
+    setInterval(changeAd, 10000);
+
+</script>

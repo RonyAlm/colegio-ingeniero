@@ -1,0 +1,78 @@
+---
+
+ const ads = [
+  {
+    id: 1,
+    title: "Ad 1",
+    description: "Ad description",
+    image: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784813615/ad_vertical_3a67df7b14.jpg",
+    cta: "https://google.com/1"
+  },
+  {
+    id: 2,
+    title: "Ad 2",
+    description: "Ad description",
+    image: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784813615/ad_vertical_3a67df7b14.jpg",
+    cta: "https://google.com/2"
+  },
+ ]
+
+ let randomAd = Math.floor(Math.random() * ads.length);
+ const initialAd = ads[randomAd];
+ const { title, description, image, cta } = initialAd;
+---
+
+<section id="ad-vertical" data-ads={JSON.stringify(ads)} 
+     class="hidden w-3xs h-170 rounded-2xl fixed right-10 top-6">
+    <a id="ad-vertical-link" class="w-full h-full" target="_blank" rel="noopener noreferrer" href={cta}>
+        <img id="ad-vertical-image" src={image} alt={title}
+        class="rounded-2xl w-full h-full object-cover cursor-pointer transition-opacity duration-300" />
+    </a>
+    <span class="text-sm w-fit not-prose
+     bg-gray-100 text-gray-800 px-4 py-1 rounded-xl absolute top-4 left-4">Publicidad</span>
+</section>
+
+<script>
+  const adVertical = document.getElementById("ad-vertical") as HTMLElement;
+  const img = document.getElementById("ad-vertical-image") as HTMLImageElement;
+  const link = document.getElementById("ad-vertical-link") as HTMLAnchorElement;
+  const ads = JSON.parse(adVertical.getAttribute("data-ads") as string); ;
+  let index = Math.floor(Math.random() * ads.length);
+
+  function changeAd() {
+
+    index++;
+
+    if(index >= ads.length){
+      index = 0;
+    }
+
+    img.classList.add("opacity-0");
+
+    setTimeout(() => {
+
+      const ad = ads[index];
+
+      img.src = ad.image;
+      img.alt = ad.title;
+
+      link.href = ad.cta;
+
+      img.classList.remove("opacity-0");
+
+    },300);
+  }
+
+  setInterval(changeAd, 5000);
+
+
+   window.addEventListener("scroll", () => {
+    if (window.scrollY > 500 && window.innerWidth > 1024) {
+      adVertical.classList.remove("hidden");
+    } else {
+      adVertical.classList.add("hidden");
+    }
+   })
+
+   
+</script>
