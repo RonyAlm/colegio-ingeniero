@@ -8,10 +8,10 @@ const { title, image, cta } = initialAd;
 ---
 
 <article id={type === "secondary" ? "ad-card-secondary" : "ad-card-primary"} data-ads={JSON.stringify(ads)} 
- class={`${type === "secondary" ? "md:hidden" : ""} w-full md:max-h-110 md:min-h-110 rounded-2xl overflow-hidden relative transition-all duration-300`}>
+ class={`${type === "secondary" ? "md:hidden" : ""} w-full h-full rounded-2xl overflow-hidden relative transition-all duration-300`}>
     <a href={cta} target="_blank" rel="noopener noreferrer">
         <img id="ad-image" src={image} alt={title}
-        class="ad-image w-full rounded-xl object-cover cursor-pointer transition-opacity duration-300" />
+        class="ad-image w-full h-full rounded-xl object-cover cursor-pointer transition-opacity duration-300" />
         <span class="text-xs md:text-sm w-fit not-prose bg-gray-100 text-gray-800 px-4 py-1 rounded-xl absolute top-2 left-2 md:top-4 md:left-4">Publicidad</span>
     </a>
 </article>

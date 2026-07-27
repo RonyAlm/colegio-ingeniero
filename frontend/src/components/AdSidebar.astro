@@ -28,8 +28,16 @@
         <img id="ad-vertical-image" src={image} alt={title}
         class="rounded-2xl w-full h-full object-cover cursor-pointer transition-opacity duration-300" />
     </a>
-    <span class="text-sm w-fit not-prose
-     bg-gray-100 text-gray-800 px-4 py-1 rounded-xl absolute top-4 left-4">Publicidad</span>
+    <div class="w-full px-4 flex items-center justify-between absolute top-4">
+      <span class="text-sm w-fit not-prose
+     bg-gray-100 text-gray-800 px-4 py-1 rounded-xl">Publicidad</span>
+      <button id="ad-vertical-close" class="text-gray-400 hover:text-gray-200 transition-colors cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
 </section>
 
 <script>
@@ -38,6 +46,7 @@
   const link = document.getElementById("ad-vertical-link") as HTMLAnchorElement;
   const ads = JSON.parse(adVertical.getAttribute("data-ads") as string); ;
   let index = Math.floor(Math.random() * ads.length);
+  let isClosed = false;
 
   function changeAd() {
 
@@ -63,16 +72,21 @@
     },300);
   }
 
-  setInterval(changeAd, 5000);
+  setInterval(changeAd, 10000);
 
 
    window.addEventListener("scroll", () => {
-    if (window.scrollY > 500 && window.innerWidth > 1024) {
+    if (window.scrollY > 500 && window.innerWidth > 1024 && !isClosed) {
       adVertical.classList.remove("hidden");
     } else {
       adVertical.classList.add("hidden");
     }
    })
 
+   const closeAd = document.getElementById("ad-vertical-close") as HTMLElement;
+   closeAd.addEventListener("click", () => {
+    adVertical.classList.add("hidden");
+    isClosed = true;
+   })
    
 </script>
