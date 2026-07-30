@@ -195,6 +195,7 @@ export interface SharedHero extends Struct.ComponentSchema {
     cta: Schema.Attribute.Component<'shared.link', true>;
     heading: Schema.Attribute.String;
     image: Schema.Attribute.Media<'images'>;
+    image_movil: Schema.Attribute.Media<'images'>;
     overlay: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
     text: Schema.Attribute.RichText;
   };

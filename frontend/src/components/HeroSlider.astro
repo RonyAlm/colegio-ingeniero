@@ -4,8 +4,24 @@ import LinkCta from "./LinkCta.astro";
 import IngLogo from "./icons/IngLogo.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
 import { marked } from "marked";
+import { transformImgUrl } from "../utils";
+import type { TImagen } from "../types";
 
-const { data } = Astro.props;
+interface SliderItem {
+  id: number;
+  image?: TImagen | null;
+  image_movil?: TImagen | null;
+  heading?: string | null;
+  text?: string | null;
+  overlay?: boolean;
+  cta?: Array<{ href: string; label: string }>;
+}
+
+interface SliderData {
+  Slide?: SliderItem[] | null;
+}
+
+const { data } = Astro.props as { data?: SliderData | null };
 
 const infoHero = Array.isArray(data?.Slide) ? data.Slide : [];
 
@@ -14,19 +30,43 @@ const parseMarkdown = (value: unknown) =>
 
 ---
 
-<section class="splide h-fit md:h-100">
+<section class="splide">
   <div class="splide__track">
     <ul class="splide__list">
       {
-        infoHero.map((info: any) => {
+        infoHero.map((info, index) => {
           const heading = info.heading ?? "";
           const text = parseMarkdown(info.text);
+          const desktopImageUrl = info.image?.url
+            ? transformImgUrl(info.image.url)
+            : "";
+          const mobileImageUrl = info.image_movil?.url
+            ? transformImgUrl(info.image_movil.url)
+            : "";
+          const fallbackImageUrl = desktopImageUrl || mobileImageUrl;
+          const altText =
+            info.image_movil?.alternativeText ||
+            info.image?.alternativeText ||
+            heading;
 
           return (
            <li
-              class={ `splide__slide bg-center h-full md:h-100 bg-no-repeat bg-cover aspect-square bg-green-200/50`}
-              style={ info.image ? `background-image: url('${info.image.url}')` : ''}>
-              <div class={`px-4 py-20 flex h-full items-center justify-center  ${info.overlay ? 'bg-green-700/30 text-white' : ''}`}>
+              class="splide__slide relative aspect-square overflow-hidden bg-green-200/50 md:aspect-[16/5]">
+              {fallbackImageUrl && (
+                <picture class="absolute inset-0 block h-full w-full">
+                  {mobileImageUrl && (
+                    <source media="(max-width: 767px)" srcset={mobileImageUrl} />
+                  )}
+                  <img
+                    src={fallbackImageUrl}
+                    alt={altText}
+                    class="h-full w-full object-cover"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchpriority={index === 0 ? "high" : "auto"}
+                  />
+                </picture>
+              )}
+              <div class={`relative z-10 px-4 py-20 flex h-full items-center justify-center ${info.overlay ? 'bg-green-700/30 text-white' : ''}`}>
                 <div class="container text-center flex flex-col items-center">
                   
                   { 
@@ -48,7 +88,7 @@ const parseMarkdown = (value: unknown) =>
                   {text && <div class="my-4 mx-6 mx-text-sm text-shadow-neutral-600 md:text-lg max-w-3xl line-clamp-3" set:html={text}></div>}
                    {
                      info.cta && 
-                     info.cta.map((cta: any) => (
+                     info.cta.map((cta) => (
                        <LinkCta href={cta.href} label={cta.label} type="WITHBORDER">
                          <ArrowRightIcon class="h-6 w-6 ml-2" />
                        </LinkCta>

@@ -16,6 +16,9 @@ const populate = {
               image: {
                 fields: ["alternativeText", "url"],
               },
+              image_movil: {
+                fields: ["alternativeText", "url"],
+              },
             }
           }
         }
