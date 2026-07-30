@@ -3,6 +3,7 @@ import LinkCta from "./LinkCta.astro";
 import BarMenu from "./icons/BarMenu.astro";
 import Close from "./icons/Close.astro";
 import ArrowTROnIcon from "./icons/ArrowTROnIcon.astro";
+import IconSearchProfe from "./icons/IconSearchProfe.astro";
 
 
 const { logoImage, logoText, navItems, cta} = Astro.props.data
@@ -92,11 +93,22 @@ fixed top-0 left-0 right-0 z-50 h-20
                  <a href={cta.href} target={cta.isExternal ? "_blank" : "_self"}>{cta.label}</a>
             </li>
           ))
+        }
+        {
+          <li class="md:hidden transform hover:scale-105 transition-transform border border-gray-200 p-4
+                md:border-0 md:p-0 cursor-pointer">
+             <a href={"https://intranet.ingenierosformosa.com.ar/sicpro/buscador-profesionales/"} target="_blank">Buscador de profesionales habilitados</a>
+          </li>
         }     
       </ul>
     </nav>
 
     <div class="hidden md:flex flex-row gap-2 items-center">
+      <!-- <a href={"https://intranet.ingenierosformosa.com.ar/sicpro/buscador-profesionales/"}
+        target="_blank" rel="noopener noreferrer" title="Buscador de profesionales habilitados"
+        class="transform hover:scale-105 transition-transform border border-gray-200 p-2 rounded-full cursor-pointer">
+        <IconSearchProfe class="w-4" />
+      </a> -->
       {
         cta.map((cta: any) => (
           <LinkCta href={cta.href} label={cta.label} isExternal={cta.isExternal} type={cta.variant.toUpperCase()}>
@@ -105,6 +117,12 @@ fixed top-0 left-0 right-0 z-50 h-20
           
         ))
       }
+      <a href={"https://intranet.ingenierosformosa.com.ar/sicpro/buscador-profesionales/"}
+        target="_blank" rel="noopener noreferrer" title="Buscador de profesionales habilitados"
+        class="bg-green-600 transform hover:scale-105 transition-transform p-2 rounded-full cursor-pointer shadow">
+        <IconSearchProfe class="w-4" />
+      </a>
+
     </div>
   
   </div>
