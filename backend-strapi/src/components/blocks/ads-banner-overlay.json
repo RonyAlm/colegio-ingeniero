@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_blocks_ads_banner_overlays",
+  "info": {
+    "displayName": "AdsBannerOverlay"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "ads": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ad.ad"
+    }
+  },
+  "config": {}
+}

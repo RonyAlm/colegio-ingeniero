@@ -13,6 +13,18 @@ export interface BlocksAdOverlay extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksAdsBannerOverlay extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_ads_banner_overlays';
+  info: {
+    displayName: 'AdsBannerOverlay';
+  };
+  attributes: {
+    ads: Schema.Attribute.Relation<'oneToMany', 'api::ad.ad'>;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksFeaturedArticles extends Struct.ComponentSchema {
   collectionName: 'components_blocks_featured_articles';
   info: {
@@ -306,6 +318,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'blocks.ad-overlay': BlocksAdOverlay;
+      'blocks.ads-banner-overlay': BlocksAdsBannerOverlay;
       'blocks.featured-articles': BlocksFeaturedArticles;
       'blocks.featured-authorities': BlocksFeaturedAuthorities;
       'blocks.featured-content': BlocksFeaturedContent;

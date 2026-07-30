@@ -31,7 +31,8 @@
         "blocks.featured-articles",
         "blocks.ad-overlay",
         "blocks.instructional-videos",
-        "blocks.featured-content"
+        "blocks.featured-content",
+        "blocks.ads-banner-overlay"
       ]
     }
   }

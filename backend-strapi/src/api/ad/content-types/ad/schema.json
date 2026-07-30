@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ads",
+  "info": {
+    "singularName": "ad",
+    "pluralName": "ads",
+    "displayName": "Ad"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "platinum",
+        "oro",
+        "plata",
+        "bronce"
+      ]
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "banner overlay",
+        "banner sidebar",
+        "banner sidebar movil",
+        "carrusel desktop",
+        "carrusel movil",
+        "card"
+      ]
+    }
+  }
+}

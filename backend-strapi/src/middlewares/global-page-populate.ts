@@ -112,6 +112,18 @@ const populate = {
           cta: true
         }
       },
+      "blocks.ads-banner-overlay": {
+        populate: {
+          ads: {
+            populate: {
+              image: {
+                fields: ["alternativeText", "url"],
+              },
+              cta: true
+            }
+          }
+        },
+      },
       "shared.youtube": true,
       "shared.gallery": {
         populate: {
