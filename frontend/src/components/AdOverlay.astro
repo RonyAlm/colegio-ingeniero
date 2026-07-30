@@ -33,14 +33,30 @@ const ads = [
   {
     title: "Ad 1",
     description: "Ad 1",
-    image: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784816443/ad_card_2_ad186aafb7.jpg",
-    cta: "https://google.com/1"
+    image: {
+      url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784816443/ad_card_1_09a215bd8b.jpg"
+    },
+    cta: [
+      {
+        label: "CTA 1",
+        href: "https://google.com/1",
+        isExternal: true
+      },
+    ]
   },
   {
     title: "Ad 2",
     description: "Ad 2",
-    image: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784816443/ad_card_2_ad186aafb7.jpg",
-    cta: "https://google.com/2"
+    image: {
+      url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784816443/ad_card_2_ad186aafb7.jpg"
+    },
+    cta: [
+      {
+        label: "CTA 2",
+        href: "https://google.com/2",
+        isExternal: true
+      },
+    ]
   }
 ]
 
@@ -116,7 +132,7 @@ const ads = [
 
     let timeoutId = setTimeout(() => {
       wrapper.classList.add("hidden");
-    }, 10000);
+    }, 20000);
 
     // ❌ Botón cerrar
     if (closeBtn instanceof HTMLElement) {

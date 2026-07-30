@@ -1,4 +1,6 @@
 ---
+import { getHomePage } from "../lib/strapi";
+import { findBlock } from "../utils";
 import AdCard from "./AdCard.astro";
 import CardContent from "./CardContent.astro";
 import HeadingText from "./HeadingText.astro";
@@ -8,39 +10,79 @@ const { data } = Astro.props;
 if(!data) return
 const { title, description, cta, items } = data;
 
-const ads = [
-  {
-    id: 1,
-    title: "Ad 1",
-    description: "Ad description",
-    image: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784816443/ad_card_1_09a215bd8b.jpg",
-    cta: "https://google.com/1"
-  },
-  {
-    id: 2,
-    title: "Ad 2",
-    description: "Ad description",
-    image: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784816443/ad_card_2_ad186aafb7.jpg",
-    cta: "https://google.com/2"
-  },
-]
+const adsCard = {
+  heading: "Ad Card ",
+  description: "Ad Card  Description",
+  ads: [
+    {
+      id: 1,
+      title: "Ad 1",
+      description: "Ad description",
+      image: {
+        url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784816443/ad_card_1_09a215bd8b.jpg"
+      },
+      cta: [
+        {
+          label: "CTA 1",
+          href: "https://google.com/1",
+          isExternal: true
+        },
+      ]
+    },
+    {
+      id: 2,
+      title: "Ad 2",
+      description: "Ad description",
+      image: {
+        url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784816443/ad_card_2_ad186aafb7.jpg"
+      },
+      cta: [
+        {
+          label: "CTA 2",
+          href: "https://google.com/2",
+          isExternal: true
+        },
+      ]
+    },
+  ]
+}
 
-const ads2 = [
-  {
-    id: 1,
-    title: "Ad 1",
-    description: "Ad description",
-    image: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784820270/ad_horizontal_8028cdab33.jpg",
-    cta: "https://google.com/1"
-  },
-  {
-    id: 2,
-    title: "Ad 2",
-    description: "Ad description",
-    image: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784816443/ad_card_2_ad186aafb7.jpg",
-    cta: "https://google.com/2"
-  },
-]
+const adsSiderbarMobile = {
+  heading: "Ad Siderbar Mobile",
+  description: "Ad Siderbar Mobile Description",
+  ads: [
+    {
+      id: 1,
+      title: "Ad 1",
+      description: "Ad description",
+      image: {
+        url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784820270/ad_horizontal_8028cdab33.jpg"
+      },
+      cta: [
+        {
+          label: "CTA 1",
+          href: "https://google.com/1",
+          isExternal: true
+        },
+      ]
+    },
+    {
+      id: 2,
+      title: "Ad 2",
+      description: "Ad description",
+      image: {
+        url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784820270/ad_horizontal_8028cdab33.jpg"
+      },
+      cta: [
+        {
+          label: "CTA 2",
+          href: "https://google.com/2",
+          isExternal: true
+        },
+      ]
+    },
+  ]
+}
 
 let itemsCard = [] as any;
 
@@ -63,7 +105,7 @@ items.forEach((item: any, index : number) => {
   <HeadingText title={title} description={description} variant="green" />
   <div class="flex flex-row gap-4">
 
-    <div class="card md:pr-52 md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class={`${adsSiderbarMobile?.ads.length > 0 ? "md:pr-52" : ""} md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
       { 
         itemsCard.map((item: any) => (
           item.type === "content" ? (
@@ -72,12 +114,12 @@ items.forEach((item: any, index : number) => {
             />
           ) : (
             <AdCard
-              ads={ads}
+              ads={adsCard?.ads}
             />
           )
         ))
       }
-      <AdCard ads={ads2} type="secondary"/>
+      <AdCard ads={adsSiderbarMobile?.ads} type="secondary"/>
     </div>
 
   </div>
@@ -94,7 +136,3 @@ items.forEach((item: any, index : number) => {
       </div>
   )}
 </section>
-
-<script>
-
-</script>
