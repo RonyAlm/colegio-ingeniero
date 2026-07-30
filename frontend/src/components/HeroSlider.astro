@@ -10,39 +10,41 @@ if(!data) return
 
 const { Slide: infoHero } = data;
 
-const ads = [
-  {
-    id: 1,
-    title: "Ad 1",
-    description: "Ad description",
-    image: { 
-      url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784815474/slider_Escritorio_3e2fd776a9.png"
-    },
-    cta: [
-      {
-        label: "Más información",
-        href: "https://google.com/1",
-        isExternal: true
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: "Ad 2",
-    description: "Ad description",
-    image: {
-      url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784815474/slider_Escritorio_3e2fd776a9.png"
-    },
-    cta: [
-      {
-        label: "Más información",
-        href: "https://google.com/2",
-        isExternal: true
-      }
-    ]
+// const ads = [
+//   {
+//     id: 1,
+//     title: "Ad 1",
+//     description: "Ad description",
+//     image: { 
+//       url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784815474/slider_Escritorio_3e2fd776a9.png"
+//     },
+//     cta: [
+//       {
+//         label: "Más información",
+//         href: "https://google.com/1",
+//         isExternal: true
+//       }
+//     ]
+//   },
+//   {
+//     id: 2,
+//     title: "Ad 2",
+//     description: "Ad description",
+//     image: {
+//       url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784815474/slider_Escritorio_3e2fd776a9.png"
+//     },
+//     cta: [
+//       {
+//         label: "Más información",
+//         href: "https://google.com/2",
+//         isExternal: true
+//       }
+//     ]
     
-  },
- ]
+//   },
+//  ]
+
+const ads = [] as any;
 
 let infoHeroWithAd = infoHero;
 

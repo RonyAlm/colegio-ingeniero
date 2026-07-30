@@ -10,6 +10,7 @@ const { data } = Astro.props;
 if(!data) return
 const { title, description, cta, items } = data;
 
+/**
 const adsCard = {
   heading: "Ad Card ",
   description: "Ad Card  Description",
@@ -83,6 +84,11 @@ const adsSiderbarMobile = {
     },
   ]
 }
+*/
+
+const adsCard = { ads : [] };
+const adsSiderbarMobile = { ads : [] };
+
 
 let itemsCard = [] as any;
 
@@ -105,7 +111,7 @@ items.forEach((item: any, index : number) => {
   <HeadingText title={title} description={description} variant="green" />
   <div class="flex flex-row gap-4">
 
-    <div class={`${adsSiderbarMobile?.ads.length > 0 ? "md:pr-52" : ""} md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
+    <div class={`${ adsSiderbarMobile?.ads.length > 0 ? "md:pr-52" : ""} md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
       { 
         itemsCard.map((item: any) => (
           item.type === "content" ? (

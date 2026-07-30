@@ -28,7 +28,7 @@ interface PropsData {
 const { data } = Astro.props as Props;
 if(!data) return
 const { images, title, description, cta, bgColor = "bg-green-200" } = data as PropsData;
-
+/*
 const ads = [
   {
     title: "Ad 1",
@@ -59,7 +59,8 @@ const ads = [
     ]
   }
 ]
-
+*/
+const ads = [] as any;
 
 ---
 
