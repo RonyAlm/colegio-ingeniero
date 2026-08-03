@@ -851,6 +851,10 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         'blocks.instructional-videos',
         'blocks.featured-content',
         'blocks.ads-banner-overlay',
+        'blocks.ads-card-content',
+        'blocks.ads-banner-sidebar',
+        'blocks.ads-banner-sidebar-mobile',
+        'blocks.ads-slider',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

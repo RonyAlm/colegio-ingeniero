@@ -25,6 +25,58 @@ export interface BlocksAdsBannerOverlay extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksAdsBannerSidebar extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_ads_banner_sidebars';
+  info: {
+    displayName: 'AdsBannerSidebar';
+  };
+  attributes: {
+    ads: Schema.Attribute.Relation<'oneToMany', 'api::ad.ad'>;
+    cta: Schema.Attribute.Component<'shared.link', true>;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+  };
+}
+
+export interface BlocksAdsBannerSidebarMobile extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_ads_banner_sidebar_mobiles';
+  info: {
+    displayName: 'AdsBannerSidebarMobile';
+  };
+  attributes: {
+    ads: Schema.Attribute.Relation<'oneToMany', 'api::ad.ad'>;
+    cta: Schema.Attribute.Component<'shared.link', true>;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+  };
+}
+
+export interface BlocksAdsCardContent extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_ads_card_contents';
+  info: {
+    displayName: 'AdsCardContent';
+  };
+  attributes: {
+    ads: Schema.Attribute.Relation<'oneToMany', 'api::ad.ad'>;
+    cta: Schema.Attribute.Component<'shared.link', true>;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+  };
+}
+
+export interface BlocksAdsSlider extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_ads_sliders';
+  info: {
+    displayName: 'AdsSlider';
+  };
+  attributes: {
+    ads: Schema.Attribute.Relation<'oneToMany', 'api::ad.ad'>;
+    cta: Schema.Attribute.Component<'shared.link', true>;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+  };
+}
+
 export interface BlocksFeaturedArticles extends Struct.ComponentSchema {
   collectionName: 'components_blocks_featured_articles';
   info: {
@@ -319,6 +371,10 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'blocks.ad-overlay': BlocksAdOverlay;
       'blocks.ads-banner-overlay': BlocksAdsBannerOverlay;
+      'blocks.ads-banner-sidebar': BlocksAdsBannerSidebar;
+      'blocks.ads-banner-sidebar-mobile': BlocksAdsBannerSidebarMobile;
+      'blocks.ads-card-content': BlocksAdsCardContent;
+      'blocks.ads-slider': BlocksAdsSlider;
       'blocks.featured-articles': BlocksFeaturedArticles;
       'blocks.featured-authorities': BlocksFeaturedAuthorities;
       'blocks.featured-content': BlocksFeaturedContent;

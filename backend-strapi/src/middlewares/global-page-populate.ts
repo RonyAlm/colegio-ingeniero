@@ -124,6 +124,58 @@ const populate = {
           }
         },
       },
+      "blocks.ads-banner-sidebar": {
+        populate: {
+          ads: {
+            populate: {
+              image: {
+                fields: ["alternativeText", "url"],
+              },
+              cta: true
+            }
+          },
+          cta: true
+        },
+      },
+      "blocks.ads-banner-sidebar-mobile": {
+        populate: {
+          ads: {
+            populate: {
+              image: {
+                fields: ["alternativeText", "url"],
+              },
+              cta: true
+            }
+          },
+          cta: true
+        },
+      },
+      "blocks.ads-card-content": {
+        populate: {
+          ads: {
+            populate: {
+              image: {
+                fields: ["alternativeText", "url"],
+              },
+              cta: true
+            }
+          },
+          cta: true
+        },
+      },
+      "blocks.ads-slider": {
+        populate: {
+          ads: {
+            populate: {
+              image: {
+                fields: ["alternativeText", "url"],
+              },
+              cta: true
+            }
+          },
+          cta: true
+        },
+      },
       "shared.youtube": true,
       "shared.gallery": {
         populate: {

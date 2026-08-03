@@ -32,7 +32,11 @@
         "blocks.ad-overlay",
         "blocks.instructional-videos",
         "blocks.featured-content",
-        "blocks.ads-banner-overlay"
+        "blocks.ads-banner-overlay",
+        "blocks.ads-card-content",
+        "blocks.ads-banner-sidebar",
+        "blocks.ads-banner-sidebar-mobile",
+        "blocks.ads-slider"
       ]
     }
   }
