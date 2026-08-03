@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getHomePage, getPostsPage } from "../lib/strapi";
+import { getHomePage } from "../lib/strapi";
 import { findBlock } from "../utils";
 import Slider from "../components/HeroSlider.astro";
 import FeaturedArticles from "../components/FeaturedArticles.astro";
@@ -26,52 +26,16 @@ const adOverlayData = findBlock(pageBlocks, "ad-overlay");
 const featuredCourses = findBlock(pageBlocks, "featured-courses");
 const instructionalVideos = findBlock(pageBlocks, "instructional-videos");
 const featuredContent = findBlock(pageBlocks, "featured-content");
-// const adsBannerOverlay = findBlock(pageBlocks, "ads-banner-overlay");
-
-/* const adsBannerSiderbar = {
-  ads: [
-    {
-      id: 1,
-      title: "Ad 1",
-      description: "Ad description",
-      image: {
-        url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784813615/ad_vertical_3a67df7b14.jpg"
-      },
-      cta: [
-        {
-          label: "CTA 1",
-          href: "https://google.com/1",
-          isExternal: true
-        },
-      ]
-    },
-    {
-      id: 2,
-      title: "Ad 2",
-      description: "Ad description",
-      image: {
-        url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784813615/ad_vertical_3a67df7b14.jpg"
-      },
-      cta: [
-        {
-          label: "CTA 2",
-          href: "https://google.com/2",
-          isExternal: true
-        },
-      ]
-    },
-  ]
-}; */
-
-const adsBannerSiderbar = { ads: []} as any ;
-
+const adsBannerOverlay = findBlock(pageBlocks, "ads-banner-overlay");
+const adsBannerSidebar = findBlock(pageBlocks, "ads-banner-sidebar");
+const adsSlider = findBlock(pageBlocks, "ads-slider");
 
 ---
 
 <Layout title={title} description={description}>
   
-  <AdOverlay data={adOverlayData} /> 
-  <Slider data={heroSlider} />
+  <AdOverlay data={adOverlayData} ads={adsBannerOverlay?.ads} /> 
+  <Slider data={heroSlider} ads={adsSlider?.ads} />
 
   <main class="bg-gray-200/90 relative">
      
@@ -85,7 +49,7 @@ const adsBannerSiderbar = { ads: []} as any ;
     <SectionInstagram />
     <FeaturedCourses data={featuredCourses} />
 
-    <AdSidebar ads={adsBannerSiderbar?.ads} />
+    <AdSidebar ads={adsBannerSidebar?.ads} />
 
   </main>
 </Layout>

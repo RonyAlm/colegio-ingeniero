@@ -10,85 +10,10 @@ const { data } = Astro.props;
 if(!data) return
 const { title, description, cta, items } = data;
 
-/**
-const adsCard = {
-  heading: "Ad Card ",
-  description: "Ad Card  Description",
-  ads: [
-    {
-      id: 1,
-      title: "Ad 1",
-      description: "Ad description",
-      image: {
-        url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784816443/ad_card_1_09a215bd8b.jpg"
-      },
-      cta: [
-        {
-          label: "CTA 1",
-          href: "https://google.com/1",
-          isExternal: true
-        },
-      ]
-    },
-    {
-      id: 2,
-      title: "Ad 2",
-      description: "Ad description",
-      image: {
-        url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784816443/ad_card_2_ad186aafb7.jpg"
-      },
-      cta: [
-        {
-          label: "CTA 2",
-          href: "https://google.com/2",
-          isExternal: true
-        },
-      ]
-    },
-  ]
-}
+const { blocks } = await getHomePage();
 
-const adsSiderbarMobile = {
-  heading: "Ad Siderbar Mobile",
-  description: "Ad Siderbar Mobile Description",
-  ads: [
-    {
-      id: 1,
-      title: "Ad 1",
-      description: "Ad description",
-      image: {
-        url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784820270/ad_horizontal_8028cdab33.jpg"
-      },
-      cta: [
-        {
-          label: "CTA 1",
-          href: "https://google.com/1",
-          isExternal: true
-        },
-      ]
-    },
-    {
-      id: 2,
-      title: "Ad 2",
-      description: "Ad description",
-      image: {
-        url: "https://res.cloudinary.com/du86bx5o0/image/upload/v1784820270/ad_horizontal_8028cdab33.jpg"
-      },
-      cta: [
-        {
-          label: "CTA 2",
-          href: "https://google.com/2",
-          isExternal: true
-        },
-      ]
-    },
-  ]
-}
-*/
-
-const adsCard = { ads : [] };
-const adsSiderbarMobile = { ads : [] };
-
+const adsCardContent = findBlock(blocks, "ads-card-content");
+const adsSidebarMobile = findBlock(blocks, "ads-banner-sidebar-mobile");
 
 let itemsCard = [] as any;
 
@@ -111,7 +36,7 @@ items.forEach((item: any, index : number) => {
   <HeadingText title={title} description={description} variant="green" />
   <div class="flex flex-row gap-4">
 
-    <div class={`${ adsSiderbarMobile?.ads.length > 0 ? "md:pr-52" : ""} md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
+    <div class={`${ adsSidebarMobile?.ads.length > 0 ? "md:pr-52" : ""} md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
       { 
         itemsCard.map((item: any) => (
           item.type === "content" ? (
@@ -120,12 +45,12 @@ items.forEach((item: any, index : number) => {
             />
           ) : (
             <AdCard
-              ads={adsCard?.ads}
+              ads={adsCardContent?.ads}
             />
           )
         ))
       }
-      <AdCard ads={adsSiderbarMobile?.ads} type="secondary"/>
+      <AdCard ads={adsSidebarMobile?.ads} type="secondary"/>
     </div>
 
   </div>
