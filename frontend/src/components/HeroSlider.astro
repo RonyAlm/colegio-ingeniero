@@ -23,7 +23,7 @@ if(ads?.length > 0) {
       overlay: false,
       text: "",
       cta: initialAd.cta,
-      image: initialAd.image
+      images: initialAd.images
     }
 
      infoHeroWithAd = [ adAdapter, ...infoHero ];
@@ -37,9 +37,24 @@ if(ads?.length > 0) {
       {
         infoHeroWithAd.map((info: any) => (
            <li
-              class={ `splide__slide bg-center h-full md:h-100 bg-no-repeat bg-cover aspect-square bg-green-200/50`}
-              style={ info.image ? `background-image: url('${info.image.url}')` : ''}>
-              <div class={`px-4 py-20 flex h-full items-center justify-center  ${info.overlay ? 'bg-green-700/30 text-white' : ''}`}>
+              class={ `splide__slide relative bg-center h-full md:h-100 bg-no-repeat bg-cover aspect-square ` } >
+              
+              { info.images &&
+                <picture class="absolute inset-0 -z-10">
+                  <source
+                    media="(max-width: 767px)"
+                    srcset={info.images?.[1]?.url}
+                  />
+
+                  <img
+                    src={info.images?.[0]?.url}
+                    alt={info.heading}
+                    class="w-full h-full object-cover"
+                  />
+                </picture>
+              }
+
+              <div class={`relative px-4 py-20 flex h-full items-center justify-center  ${info.overlay ? 'bg-green-700/30 text-white' : ''}`}>
                 <div class="container text-center flex flex-col items-center">
                   
                   { 
@@ -62,16 +77,18 @@ if(ads?.length > 0) {
                     <div class="my-4 mx-6 mx-text-sm text-shadow-neutral-600 md:text-lg max-w-3xl line-clamp-3"
                     set:html={marked.parse(info.text)} />
                   }
-                   {
+                  {  
                      info.cta && 
                      info.cta.map((cta: any) => (
-                      <div class={`flex items-end justify-center mt-6 ${info.heading?.trim() === '' ? 'mt-20' : ''}` }>
+                      <div class={`flex items-end justify-center mt-6 
+                        ${(!info.heading || info.heading?.trim() === '') ?
+                         'absolute bottom-2 md:bottom-8 z-10' : ''}` }>
                         <LinkCta href={cta.href} label={cta.label} type="WITHBORDER">
                          <ArrowRightIcon class="h-6 w-6 ml-2" />
                        </LinkCta>
                       </div>
                      ))
-                   }
+                  }
                 </div>
               </div>
             </li>
@@ -90,8 +107,18 @@ if(ads?.length > 0) {
     type: "loop",
     autoplay: true,
     perPage: 1,
+    breakpoints: {
+      640: {
+        pagination: false,
+      },
+      768: {
+        perPage: 1,
+      },
+      1024: {
+        perPage: 1,
+      },
+    }
     
   }).mount();
-
 
 </script>

@@ -6,11 +6,11 @@ import CardContent from "./CardContent.astro";
 import HeadingText from "./HeadingText.astro";
 import LinkCta from "./LinkCta.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
-const { data } = Astro.props;
+const { data, blocks } = Astro.props;
 if(!data) return
 const { title, description, cta, items } = data;
 
-const { blocks } = await getHomePage();
+// const { blocks } = await getHomePage();
 
 const adsCardContent = findBlock(blocks, "ads-card-content");
 const adsSidebarMobile = findBlock(blocks, "ads-banner-sidebar-mobile");
