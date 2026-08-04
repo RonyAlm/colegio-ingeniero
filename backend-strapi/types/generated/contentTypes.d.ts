@@ -449,7 +449,7 @@ export interface ApiAdAd extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     cta: Schema.Attribute.Component<'shared.link', true>;
     description: Schema.Attribute.Text;
-    image: Schema.Attribute.Media<'images' | 'files'>;
+    images: Schema.Attribute.Media<'images' | 'files', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::ad.ad'> &
       Schema.Attribute.Private;

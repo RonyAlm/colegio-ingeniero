@@ -13,7 +13,7 @@ const populate = {
           Slide: {
             populate: {
               cta: true,
-              image: {
+              images: {
                 fields: ["alternativeText", "url"],
               },
             }
@@ -116,7 +116,7 @@ const populate = {
         populate: {
           ads: {
             populate: {
-              image: {
+              images: {
                 fields: ["alternativeText", "url"],
               },
               cta: true
@@ -128,7 +128,7 @@ const populate = {
         populate: {
           ads: {
             populate: {
-              image: {
+              images: {
                 fields: ["alternativeText", "url"],
               },
               cta: true
@@ -141,7 +141,7 @@ const populate = {
         populate: {
           ads: {
             populate: {
-              image: {
+              images: {
                 fields: ["alternativeText", "url"],
               },
               cta: true
@@ -154,7 +154,7 @@ const populate = {
         populate: {
           ads: {
             populate: {
-              image: {
+              images: {
                 fields: ["alternativeText", "url"],
               },
               cta: true
@@ -167,7 +167,7 @@ const populate = {
         populate: {
           ads: {
             populate: {
-              image: {
+              images: {
                 fields: ["alternativeText", "url"],
               },
               cta: true
