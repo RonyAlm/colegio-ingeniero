@@ -40,6 +40,19 @@ interface GlobalData {
   };
 }
 
+export interface AdLogo {
+  id: number;
+  documentId: string;
+  nombre: string;
+  logo: TImagen & {
+    width?: number;
+    height?: number;
+  };
+  descripcion?: string | null;
+  enlace?: string | null;
+  slug: string;
+}
+
 export const getGlobal = async (): Promise<StrapiResponse<GlobalData>> => {
   const data = await getStrapiData(`api/global`);
   return data;
@@ -282,3 +295,24 @@ export const getEventInfo = async (slug: string) => {
   if (!result) return null;
   return result;
 }
+
+export const getAdLogos = async (): Promise<AdLogo[]> => {
+  const result = await getStrapiData(
+    "api/ad-logos?pagination[pageSize]=100&sort[0]=nombre:asc",
+  );
+  return result.data || [];
+};
+
+export const getAllAdLogoSlugs = async (): Promise<string[]> => {
+  const result = await getStrapiData(
+    "api/ad-logos?fields[0]=slug&pagination[pageSize]=100",
+  );
+  return (result.data || []).map((ally: Pick<AdLogo, "slug">) => ally.slug);
+};
+
+export const getAdLogoInfo = async (slug: string): Promise<AdLogo | null> => {
+  const result = await getStrapiData(
+    `api/ad-logos?filters[slug][$eq]=${encodeURIComponent(slug)}`,
+  );
+  return result.data?.[0] || null;
+};

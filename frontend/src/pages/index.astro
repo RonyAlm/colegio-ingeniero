@@ -34,12 +34,12 @@ const adsSlider = findBlock(pageBlocks, "ads-slider");
 
 <Layout title={title} description={description}>
   
-  <AdOverlay data={adOverlayData} ads={adsBannerOverlay?.ads} /> 
+  <AdOverlay data={adOverlayData} ads={adsBannerOverlay?.ads} />
   <Slider data={heroSlider} ads={adsSlider?.ads} />
 
   <main class="bg-gray-200/90 relative">
      
-    <FeaturedContent data={featuredContent} blocks={pageBlocks} /> 
+    <FeaturedContent data={featuredContent} blocks={pageBlocks} />
     <SectionResolution data={legalDocuments} />
     <InstructionalVideos data={instructionalVideos} />  
     <FeaturedAuthorities data={featuredAuthorities} /> 
@@ -53,4 +53,3 @@ const adsSlider = findBlock(pageBlocks, "ads-slider");
 
   </main>
 </Layout>
-

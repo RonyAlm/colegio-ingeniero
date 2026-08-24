@@ -1,0 +1,48 @@
+---
+import type { AdLogo } from "../lib/strapi";
+import { transformImgUrl } from "../utils";
+import ArrowTop from "./icons/ArrowTop.astro";
+
+interface Props {
+  ally: AdLogo;
+}
+
+const { ally } = Astro.props;
+const logoUrl = transformImgUrl(ally.logo?.url || "");
+---
+
+<article
+  class="group relative h-full overflow-hidden rounded-2xl border-2 border-gray-300 bg-gray-100 transition-colors hover:border-green-600 focus-within:border-green-600"
+>
+  <a
+    href={`/aliados/${ally.slug}`}
+    class="block h-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-700"
+    aria-label={`Ver información de ${ally.nombre}`}
+  >
+    <div class="flex aspect-3/4 w-full items-center justify-center bg-white p-8 md:p-10">
+      <img
+        src={logoUrl}
+        alt={ally.logo?.alternativeText || `Logo de ${ally.nombre}`}
+        width={ally.logo?.width}
+        height={ally.logo?.height}
+        loading="lazy"
+        style="object-fit: contain;"
+        class="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03] group-focus-within:scale-[1.03]"
+      />
+    </div>
+
+    <div
+      class="absolute -bottom-full left-0 flex w-full flex-col bg-green-50 p-4 prose transition-all duration-300 group-hover:bottom-0 group-focus-within:bottom-0"
+    >
+      <h3 class="line-clamp-2 text-2xl font-bold text-green-700">{ally.nombre}</h3>
+      {ally.descripcion && (
+        <p class="line-clamp-3 text-sm text-gray-600">{ally.descripcion}</p>
+      )}
+      <div class="not-prose flex items-center justify-end">
+        <span class="flex rounded-full bg-green-700/60 p-2 text-white transition-colors group-hover:bg-green-600" aria-hidden="true">
+          <ArrowTop class="h-4 w-4" />
+        </span>
+      </div>
+    </div>
+  </a>
+</article>

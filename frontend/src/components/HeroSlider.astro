@@ -4,97 +4,132 @@ import LinkCta from "./LinkCta.astro";
 import IngLogo from "./icons/IngLogo.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
 import { marked } from "marked";
+import { transformImgUrl } from "../utils";
+import type { TImagen } from "../types";
 
-const { data, ads } = Astro.props;
-if(!data) return 
-
-const { Slide: infoHero } = data;
-
-let infoHeroWithAd = infoHero;
-
-if(ads?.length > 0) {
-
-    let randomAd = Math.floor(Math.random() * ads.length);
-    const initialAd = ads[randomAd];
-
-    const adAdapter = {
-      id: `ad-${initialAd.id}`,
-      heading: "",
-      overlay: false,
-      text: "",
-      cta: initialAd.cta,
-      images: initialAd.images
-    }
-
-     infoHeroWithAd = [ adAdapter, ...infoHero ];
+interface SliderItem {
+  id: number | string;
+  images?: TImagen[] | null;
+  image?: TImagen | null;
+  image_movil?: TImagen | null;
+  heading?: string | null;
+  text?: string | null;
+  overlay?: boolean;
+  cta?: Array<{ href: string; label: string }>;
 }
 
+interface SliderData {
+  Slide?: SliderItem[] | null;
+}
+
+const { data, ads } = Astro.props as {
+  data?: SliderData | null;
+  ads?: SliderItem[] | null;
+};
+
+const infoHero = Array.isArray(data?.Slide) ? data.Slide : [];
+let infoHeroWithAd: SliderItem[] = infoHero;
+
+if (Array.isArray(ads) && ads.length > 0) {
+  const initialAd = ads[Math.floor(Math.random() * ads.length)];
+  const adAdapter: SliderItem = {
+    id: `ad-${initialAd.id}`,
+    heading: "",
+    overlay: false,
+    text: "",
+    cta: initialAd.cta,
+    images: initialAd.images,
+  };
+
+  infoHeroWithAd = [adAdapter, ...infoHero];
+}
+
+const parseMarkdown = (value: unknown) =>
+  typeof value === "string" && value.trim() ? marked.parse(value) : "";
 ---
 
-<section class="splide h-fit md:h-100">
+<section class="splide">
   <div class="splide__track">
     <ul class="splide__list">
       {
-        infoHeroWithAd.map((info: any) => (
-           <li
-              class={ `splide__slide relative bg-center h-full md:h-100 bg-no-repeat bg-cover aspect-square ` } >
-              
-              { info.images &&
-                <picture class="absolute inset-0 -z-10">
-                  <source
-                    media="(max-width: 767px)"
-                    srcset={info.images?.[1]?.url}
-                  />
+        infoHeroWithAd.map((info, index) => {
+          const heading = info.heading ?? "";
+          const text = parseMarkdown(info.text);
+          const desktopImage = info.images?.[0] || info.image;
+          const mobileImage = info.image_movil || info.images?.[1];
+          const desktopImageUrl = desktopImage?.url
+            ? transformImgUrl(desktopImage.url)
+            : "";
+          const mobileImageUrl = mobileImage?.url
+            ? transformImgUrl(mobileImage.url)
+            : "";
+          const fallbackImageUrl = desktopImageUrl || mobileImageUrl;
+          const altText =
+            mobileImage?.alternativeText ||
+            desktopImage?.alternativeText ||
+            heading;
 
+          return (
+            <li class="splide__slide relative aspect-square overflow-hidden bg-green-200/50 md:aspect-[16/5]">
+              {fallbackImageUrl && (
+                <picture class="absolute inset-0 block h-full w-full">
+                  {mobileImageUrl && (
+                    <source media="(max-width: 767px)" srcset={mobileImageUrl} />
+                  )}
                   <img
-                    src={info.images?.[0]?.url}
-                    alt={info.heading}
-                    class="w-full h-full object-cover"
+                    src={fallbackImageUrl}
+                    alt={altText}
+                    class="h-full w-full object-cover"
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchpriority={index === 0 ? "high" : "auto"}
                   />
                 </picture>
-              }
+              )}
 
-              <div class={`relative px-4 py-20 flex h-full items-center justify-center  ${info.overlay ? 'bg-green-700/30 text-white' : ''}`}>
-                <div class="container text-center flex flex-col items-center">
-                  
-                  { 
-                    info.heading?.includes("IngeLink") ?
-                     <a 
-                       href="https://intranet.ingenierosformosa.com.ar/intranet/servicios/ingelink/"
-                       class="flex justify-center items-center transition-transform"
-                       target="_blank">
-                       <IngLogo class="h-20 w-20 text-green-600 " />
-                       <span class="text-4xl md:text-6xl text-green-600 text-center text-shadow animate-zoom-in">
-                         { info.heading.split(" ")[0] }
-                         <strong class="text-green-100 font-bold text-shadow">{info.heading.split(" ")[1]}</strong> 
-                       </span> 
-                      </a> : 
-                      <h2 class={`text-2xl md:text-4xl font-bold text-shadow-2xs uppercase
-                        ${!info.overlay ? 'text-green-700' : ''}`}>{info.heading}
+              <div class={`relative z-10 flex h-full items-center justify-center px-4 py-20 ${info.overlay ? "bg-green-700/30 text-white" : ""}`}>
+                <div class="container flex flex-col items-center text-center">
+                  {
+                    heading.includes("IngeLink") ? (
+                      <a
+                        href="https://intranet.ingenierosformosa.com.ar/intranet/servicios/ingelink/"
+                        class="flex items-center justify-center transition-transform"
+                        target="_blank"
+                      >
+                        <IngLogo class="h-20 w-20 text-green-600" />
+                        <span class="animate-zoom-in text-center text-4xl text-green-600 text-shadow md:text-6xl">
+                          {heading.split(" ")[0]}
+                          <strong class="font-bold text-green-100 text-shadow">
+                            {heading.split(" ")[1]}
+                          </strong>
+                        </span>
+                      </a>
+                    ) : (
+                      <h2 class={`text-2xl font-bold uppercase text-shadow-2xs md:text-4xl ${!info.overlay ? "text-green-700" : ""}`}>
+                        {heading}
                       </h2>
+                    )
                   }
-                  { info.text && info.text.trim() !== '' && 
-                    <div class="my-4 mx-6 mx-text-sm text-shadow-neutral-600 md:text-lg max-w-3xl line-clamp-3"
-                    set:html={marked.parse(info.text)} />
-                  }
-                  {  
-                     info.cta && 
-                     info.cta.map((cta: any) => (
-                      <div class={`flex items-end justify-center mt-6 
-                        ${(!info.heading || info.heading?.trim() === '') ?
-                         'absolute bottom-2 md:bottom-8 z-10' : ''}` }>
-                        <LinkCta href={cta.href} label={cta.label} type="WITHBORDER">
-                         <ArrowRightIcon class="h-6 w-6 ml-2" />
-                       </LinkCta>
-                      </div>
-                     ))
-                  }
+
+                  {text && (
+                    <div
+                      class="mx-6 my-4 max-w-3xl line-clamp-3 mx-text-sm text-shadow-neutral-600 md:text-lg"
+                      set:html={text}
+                    />
+                  )}
+
+                  {info.cta?.map((cta) => (
+                    <div class={`mt-6 flex items-end justify-center ${!heading.trim() ? "absolute bottom-2 z-10 md:bottom-8" : ""}`}>
+                      <LinkCta href={cta.href} label={cta.label} type="WITHBORDER">
+                        <ArrowRightIcon class="ml-2 h-6 w-6" />
+                      </LinkCta>
+                    </div>
+                  ))}
                 </div>
               </div>
             </li>
-        ))
+          );
+        })
       }
-     
     </ul>
   </div>
 </section>
@@ -111,14 +146,6 @@ if(ads?.length > 0) {
       640: {
         pagination: false,
       },
-      768: {
-        perPage: 1,
-      },
-      1024: {
-        perPage: 1,
-      },
-    }
-    
+    },
   }).mount();
-
 </script>

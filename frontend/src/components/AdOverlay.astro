@@ -51,12 +51,12 @@ const { images, title, description, cta, bgColor = "bg-green-200" } = data as Pr
     </button>
 
       <div class="flex flex-col items-center justify-center relative w-full">
-      
+
         <div class="flex flex-wrap gap-4 items-center justify-center p-4 w-full h-fit">
 
           { images?.slice(0, 3).map((img) => (
             <div class="h-fit animate-fade-in mt-10 md:mt-0">
-              <a 
+              <a
                 class="h-100 md:h-125 flex items-center justify-center cursor-pointer"
                 target="_blank" href={cta && cta.length > 0 ? cta[0].href : "#" }>
                 <img
@@ -70,23 +70,23 @@ const { images, title, description, cta, bgColor = "bg-green-200" } = data as Pr
                   <a class="flex items-center bg-green-600 uppercase
                   text-white px-6 py-3 rounded-full font-semibold hover:bg-green-700 transition
                     border-4 border-green-300 animate-rubber-band"
-                    href={cta[0].href} target="_blank"> 
+                    href={cta[0].href} target="_blank">
                     <span>{cta[0].label}</span>
                     <ArrowRightIcon class="h-6 w-6 ml-2" />
                    </a>
                 </div>
-              )}               
+              )}
             </div>
-            
+
           ))}
           <div class="h-100 md:h-125 animate-fade-in md:mb-18">
             <AdCard ads={ads} />
           </div>
-                
+
         </div>
-    
+
       </div>
-      
+
   </div>
 
 </div>

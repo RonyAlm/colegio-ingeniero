@@ -9,7 +9,7 @@
  const { title, description, images, cta } = initialAd;
 ---
 
-<section id="ad-vertical" data-ads={JSON.stringify(ads)} 
+<section id="ad-vertical" data-ads={JSON.stringify(ads)}
      class="hidden w-3xs h-170 rounded-2xl fixed right-10 top-6">
     <a id="ad-vertical-link" class="w-full h-full" target="_blank" rel="noopener noreferrer" href={cta[0]?.href}>
         <img id="ad-vertical-image" src={images?.[0]?.url} alt={title}
@@ -24,7 +24,7 @@
         </svg>
       </button>
     </div>
-    
+
 </section>
 
 <script>
@@ -75,5 +75,5 @@
     adVertical.classList.add("hidden");
     isClosed = true;
    })
-   
+
 </script>

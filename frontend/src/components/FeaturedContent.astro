@@ -37,7 +37,7 @@ items.forEach((item: any, index : number) => {
   <div class="flex flex-row gap-4">
 
     <div class={`${ adsSidebarMobile?.ads.length > 0 ? "md:pr-52" : ""} md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
-      { 
+      {
         itemsCard.map((item: any) => (
           item.type === "content" ? (
             <CardContent

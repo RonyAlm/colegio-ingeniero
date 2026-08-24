@@ -5,3 +5,4 @@ prueba
 docker-compose.yml
 node_modules
 plugins
+.agents

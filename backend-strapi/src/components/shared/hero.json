@@ -3,7 +3,6 @@
   "info": {
     "displayName": "Hero"
   },
-  "options": {},
   "attributes": {
     "images": {
       "type": "media",
@@ -27,7 +26,16 @@
       "type": "component",
       "component": "shared.link",
       "repeatable": true
+    },
+    "image_movil": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   },
+  "options": {},
   "config": {}
 }
