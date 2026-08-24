@@ -470,6 +470,47 @@ export interface ApiAdLogoAdLogo extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAdAd extends Struct.CollectionTypeSchema {
+  collectionName: 'ads';
+  info: {
+    displayName: 'Ad';
+    pluralName: 'ads';
+    singularName: 'ad';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    category: Schema.Attribute.Enumeration<
+      ['platinum', 'oro', 'plata', 'bronce']
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Component<'shared.link', true>;
+    description: Schema.Attribute.Text;
+    images: Schema.Attribute.Media<'images' | 'files', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::ad.ad'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    type: Schema.Attribute.Enumeration<
+      [
+        'banner overlay',
+        'banner sidebar',
+        'banner sidebar movil',
+        'carrusel desktop',
+        'carrusel movil',
+        'card',
+      ]
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAreaArea extends Struct.CollectionTypeSchema {
   collectionName: 'areas';
   info: {
@@ -849,6 +890,11 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
         'blocks.ad-overlay',
         'blocks.instructional-videos',
         'blocks.featured-content',
+        'blocks.ads-banner-overlay',
+        'blocks.ads-card-content',
+        'blocks.ads-banner-sidebar',
+        'blocks.ads-banner-sidebar-mobile',
+        'blocks.ads-slider',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -1426,6 +1472,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::ad-logo.ad-logo': ApiAdLogoAdLogo;
+      'api::ad.ad': ApiAdAd;
       'api::area.area': ApiAreaArea;
       'api::article.article': ApiArticleArticle;
       'api::authority.authority': ApiAuthorityAuthority;

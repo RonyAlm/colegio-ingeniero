@@ -16,7 +16,7 @@ const populate = {
           Slide: {
             populate: {
               cta: true,
-              image: {
+              images: {
                 fields: ["alternativeText", "url"],
               },
               image_movil: {

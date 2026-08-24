@@ -1,23 +1,58 @@
 ---
+import { getHomePage } from "../lib/strapi";
+import { findBlock } from "../utils";
+import AdCard from "./AdCard.astro";
 import CardContent from "./CardContent.astro";
 import HeadingText from "./HeadingText.astro";
 import LinkCta from "./LinkCta.astro";
 import ArrowRightIcon from "./icons/ArrowRightIcon.astro";
-const { data } = Astro.props;
+const { data, blocks } = Astro.props;
 if(!data) return
 const { title, description, cta, items } = data;
+
+// const { blocks } = await getHomePage();
+
+const adsCardContent = findBlock(blocks, "ads-card-content");
+const adsSidebarMobile = findBlock(blocks, "ads-banner-sidebar-mobile");
+
+let itemsCard = [] as any;
+
+items.forEach((item: any, index : number) => {
+  itemsCard.push({
+    type: "content",
+    data: item
+  });
+
+  if(index  === 3) {
+    itemsCard.push({
+      type: "ad"
+    })
+  }
+})
+
 ---
 
 <section id="featured-content" class="container mx-auto px-4 py-20">
   <HeadingText title={title} description={description} variant="green" />
-  <div class="md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    {
-      items.map((content: any) => (
-        <CardContent
-          {...content}
-        />
-      ))
-    }
+  <div class="flex flex-row gap-4">
+
+    <div class={`${ adsSidebarMobile?.ads.length > 0 ? "md:pr-52" : ""} md:mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`}>
+      {
+        itemsCard.map((item: any) => (
+          item.type === "content" ? (
+            <CardContent
+              {...item.data}
+            />
+          ) : (
+            <AdCard
+              ads={adsCardContent?.ads}
+            />
+          )
+        ))
+      }
+      <AdCard ads={adsSidebarMobile?.ads} type="secondary"/>
+    </div>
+
   </div>
   {
     cta && (

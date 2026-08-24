@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_blocks_ads_card_contents",
+  "info": {
+    "displayName": "AdsCardContent"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "ads": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ad.ad"
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

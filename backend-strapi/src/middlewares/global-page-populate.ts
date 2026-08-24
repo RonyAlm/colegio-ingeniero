@@ -13,7 +13,7 @@ const populate = {
           Slide: {
             populate: {
               cta: true,
-              image: {
+              images: {
                 fields: ["alternativeText", "url"],
               },
               image_movil: {
@@ -114,6 +114,70 @@ const populate = {
           },
           cta: true
         }
+      },
+      "blocks.ads-banner-overlay": {
+        populate: {
+          ads: {
+            populate: {
+              images: {
+                fields: ["alternativeText", "url"],
+              },
+              cta: true
+            }
+          }
+        },
+      },
+      "blocks.ads-banner-sidebar": {
+        populate: {
+          ads: {
+            populate: {
+              images: {
+                fields: ["alternativeText", "url"],
+              },
+              cta: true
+            }
+          },
+          cta: true
+        },
+      },
+      "blocks.ads-banner-sidebar-mobile": {
+        populate: {
+          ads: {
+            populate: {
+              images: {
+                fields: ["alternativeText", "url"],
+              },
+              cta: true
+            }
+          },
+          cta: true
+        },
+      },
+      "blocks.ads-card-content": {
+        populate: {
+          ads: {
+            populate: {
+              images: {
+                fields: ["alternativeText", "url"],
+              },
+              cta: true
+            }
+          },
+          cta: true
+        },
+      },
+      "blocks.ads-slider": {
+        populate: {
+          ads: {
+            populate: {
+              images: {
+                fields: ["alternativeText", "url"],
+              },
+              cta: true
+            }
+          },
+          cta: true
+        },
       },
       "shared.youtube": true,
       "shared.gallery": {

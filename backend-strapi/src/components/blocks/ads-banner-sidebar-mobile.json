@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_blocks_ads_banner_sidebar_mobiles",
+  "info": {
+    "displayName": "AdsBannerSidebarMobile"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "ads": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ad.ad"
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}
