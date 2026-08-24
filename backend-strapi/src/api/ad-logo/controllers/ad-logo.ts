@@ -21,7 +21,7 @@ export default factories.createCoreController('api::ad-logo.ad-logo', () => ({
             (categoryOrder.get(a.categoria) ?? categoryOrder.size) -
             (categoryOrder.get(b.categoria) ?? categoryOrder.size);
 
-          return categoryDifference || a.nombre.localeCompare(b.nombre, 'es');
+          return categoryDifference || (a.nombre ?? '').localeCompare(b.nombre ?? '', 'es');
         })
       : data;
 
