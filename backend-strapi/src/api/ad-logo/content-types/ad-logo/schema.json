@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ad_logos",
+  "info": {
+    "singularName": "ad-logo",
+    "pluralName": "ad-logos",
+    "displayName": "Logos de Aliados",
+    "description": "Empresas aliadas agrupadas por categoria institucional"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nombre": {
+      "type": "string",
+      "required": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "categoria": {
+      "type": "enumeration",
+      "enum": [
+        "platinum",
+        "oro",
+        "plata",
+        "bronce"
+      ],
+      "required": true
+    },
+    "descripcion": {
+      "type": "text",
+      "maxLength": 500
+    },
+    "enlace": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "nombre",
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,48 @@
+---
+import AdLogoCard from "../components/AdLogoCard.astro";
+import HeaderPage from "../components/HeaderPage.astro";
+import Layout from "../layouts/Layout.astro";
+import {
+  getAdLogos,
+  type AdLogo,
+} from "../lib/strapi";
+
+const allies = await getAdLogos();
+---
+
+<Layout
+  title="Aliados | Colegio Público de Ingenieros de Formosa"
+  description="Empresas e instituciones aliadas del Colegio Público de Ingenieros de Formosa."
+>
+  <HeaderPage
+    title="Aliados"
+    slug="aliados"
+    cover="https://res.cloudinary.com/du86bx5o0/image/upload/v1773192769/Gemini_Generated_Image_kfx8l5kfx8l5kfx8_4f63abf5e8.png"
+  />
+
+  <main class="bg-gray-200 py-8">
+    <section class="container mx-auto px-4 my-10">
+      <div class="flex flex-col items-center">
+        <h2 class="text-4xl font-bold text-green-700 mb-4">Aliados</h2>
+        <p class="mb-10 text-center text-gray-600 prose">
+          Instituciones y empresas que acompañan el desarrollo profesional de la ingeniería en Formosa.
+        </p>
+      </div>
+
+      {
+        allies.length > 0 ? (
+          <div class="grid grid-cols-1 gap-4 py-4 pb-10 md:grid-cols-3">
+            {allies.map((ally: AdLogo) => (
+              <AdLogoCard ally={ally} />
+            ))}
+          </div>
+        ) : (
+          <section class="mx-auto max-w-2xl border-y border-gray-300 py-12 text-center">
+            <h2 class="text-2xl font-semibold text-gray-800">Próximamente</h2>
+            <p class="mt-2 text-gray-600">Estamos incorporando la información de nuestros aliados.</p>
+          </section>
+        )
+      }
+    </section>
+  </main>
+</Layout>
