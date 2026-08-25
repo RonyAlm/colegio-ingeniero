@@ -1,8 +1,23 @@
 ---
+
 interface Logo {
-  src: string;
-  alt: string;
-  href?: string;
+  id: number | string;
+  documentId?: string;
+  nombre: string;
+  descripcion?: string | null;
+  enlace?: string | null;
+  slug: string;
+  createdAt?: string;
+  updatedAt?: string;
+  publishedAt?: string;
+  logo: {
+    id: number | string;
+    documentId?: string;
+    alternativeText?: string | null;
+    url: string;
+    width?: number;
+    height?: number;
+  }
 }
 
 interface Props {
@@ -23,22 +38,22 @@ const { logos, speed = 30 } = Astro.props;
       {
         logos.map((logo) => (
           <div class="flex h-72 w-60 shrink-0 items-center justify-center px-6">
-            {logo.href ? (
-              <a href={logo.href} target="_blank" rel="noopener noreferrer">
+            {logo.enlace ? (
+              <a href={logo.enlace} target="_blank" rel="noopener noreferrer">
                 <img
-                  src={logo.src}
-                  alt={logo.alt}
+                  src={logo.logo.url}
+                  alt={logo.logo.alternativeText || logo.nombre}
                   loading="lazy"
-                  class="max-h-40 max-w-full object-contain grayscale opacity-70
+                  class="max-h-40 max-w-full object-contain md:grayscale md:opacity-70
                    transition-all duration-300 hover:scale-105 hover:grayscale-0 hover:opacity-100"
                 />
               </a>
             ) : (
               <img
-                src={logo.src}
-                alt={logo.alt}
+                src={logo.logo.url}
+                alt={logo.logo.alternativeText || logo.nombre}
                 loading="lazy"
-                class="max-h-40 max-w-full object-contain grayscale opacity-70 transition-all duration-300 hover:scale-105 hover:grayscale-0 hover:opacity-100"
+                class="max-h-40 max-w-full object-contain md:grayscale md:opacity-70 transition-all duration-300 hover:scale-105 hover:grayscale-0 hover:opacity-100"
               />
             )}
           </div>
@@ -55,10 +70,10 @@ const { logos, speed = 30 } = Astro.props;
         logos.map((logo) => (
           <div class="flex h-72 w-60 shrink-0 items-center justify-center px-6">
             <img
-              src={logo.src}
+              src={logo.logo.url}
               alt=""
               loading="lazy"
-              class="max-h-40 max-w-full object-contain grayscale opacity-70 transition-all duration-300 hover:scale-105 hover:grayscale-0 hover:opacity-100"
+              class="max-h-40 max-w-full object-contain md:grayscale md:opacity-70 transition-all duration-300 hover:scale-105 hover:grayscale-0 hover:opacity-100"
             />
           </div>
         ))

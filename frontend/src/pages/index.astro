@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getHomePage } from "../lib/strapi";
+import { getAdLogos, getHomePage } from "../lib/strapi";
 import { findBlock } from "../utils";
 import Slider from "../components/HeroSlider.astro";
 import FeaturedArticles from "../components/FeaturedArticles.astro";
@@ -14,6 +14,7 @@ import FeaturedContent from "../components/FeaturedContent.astro";
 import SectionInstagram from "../components/SectionInstagram.astro";
 import FeaturedEvent from "../components/FeaturedEvent.astro";
 import AdSidebar from "../components/AdSidebar.astro";
+import LogoSlider from "../components/LogoSlider.astro";
 
 const { title, description, blocks: pageBlocks } = await getHomePage();
 
@@ -29,27 +30,34 @@ const featuredContent = findBlock(pageBlocks, "featured-content");
 const adsBannerOverlay = findBlock(pageBlocks, "ads-banner-overlay");
 const adsBannerSidebar = findBlock(pageBlocks, "ads-banner-sidebar");
 const adsSlider = findBlock(pageBlocks, "ads-slider");
+const logosSlider = await getAdLogos();
 
 ---
 
 <Layout title={title} description={description}>
-  
   <AdOverlay data={adOverlayData} ads={adsBannerOverlay?.ads} />
   <Slider data={heroSlider} ads={adsSlider?.ads} />
 
   <main class="bg-gray-200/90 relative">
-     
     <FeaturedContent data={featuredContent} blocks={pageBlocks} />
+    <section class="w-full py-20">
+      <a href="/aliados" class="block cursor-pointer">
+        <h2 class="text-center text-4xl font-bold text-green-700 mb-8">
+          Aliados
+        </h2>
+      </a>
+      <LogoSlider logos={logosSlider} />
+    </section>
     <SectionResolution data={legalDocuments} />
-    <InstructionalVideos data={instructionalVideos} />  
-    <FeaturedAuthorities data={featuredAuthorities} /> 
-    <FeaturedDocuments data={featuredDocuments} /> 
+
+    <InstructionalVideos data={instructionalVideos} />
+    <FeaturedAuthorities data={featuredAuthorities} />
+    <FeaturedDocuments data={featuredDocuments} />
     <FeaturedEvent />
     <FeaturedArticles data={featuredArticles} />
     <SectionInstagram />
     <FeaturedCourses data={featuredCourses} />
 
     <AdSidebar ads={adsBannerSidebar?.ads} />
-
   </main>
 </Layout>
