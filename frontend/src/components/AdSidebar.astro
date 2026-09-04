@@ -71,7 +71,7 @@
    })
 
    const closeAd = document.getElementById("ad-vertical-close") as HTMLElement;
-   closeAd.addEventListener("click", () => {
+   closeAd?.addEventListener("click", () => {
     adVertical.classList.add("hidden");
     isClosed = true;
    })
