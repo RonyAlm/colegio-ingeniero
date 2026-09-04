@@ -51,7 +51,7 @@ fixed top-0 left-0 right-0 z-50 h-20
                       ${ link.href === Astro.url.pathname 
                           || link.submenu.some((s: any) => s.href === Astro.url.pathname) 
                            ? stylesNavItem.active : stylesNavItem.inactive}`}>
-                <button id="submenuBtn" class="flex items-center gap-1 text-base cursor-pointer">
+                <button type="button" data-submenu-trigger aria-expanded="false" class="flex items-center gap-1 text-base cursor-pointer">
                   {link.label}
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transition-transform group-hover:rotate-180" 
                       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -59,7 +59,7 @@ fixed top-0 left-0 right-0 z-50 h-20
                   </svg>
                 </button>
                 {/* Submenú desktop */}
-                <ul id="submenu" class="hidden group-hover:block md:absolute md:top-full md:left-0 md:mt-0
+                <ul class="hidden md:group-hover:block md:absolute md:top-full md:left-0 md:mt-0
                  md:bg-green-50 bg-transparent rounded mt-4 overflow-hidden
                    md:rounded-xl md:shadow-lg md:min-w-48 md:py-0 md:z-50 pl-0">
                   { link.submenu.map((sub: any) => (
@@ -134,8 +134,6 @@ fixed top-0 left-0 right-0 z-50 h-20
     const menuMobile = document.querySelector("#navMenu") as HTMLElement;
     const menuOpen = document.querySelector("#menuOpen") as HTMLElement;
     const menuClose = document.querySelector("#menuClose") as HTMLElement;
-    const openSubmenu = document.querySelector("#submenuBtn") as HTMLElement;
-    const submenu = document.querySelector("#submenu") as HTMLElement;
   
     if (checkbox) {
       checkbox.addEventListener("change", () => {
@@ -151,10 +149,16 @@ fixed top-0 left-0 right-0 z-50 h-20
       });
     }
 
-    openSubmenu.addEventListener("click", (e) => {
-      e.preventDefault();
-      submenu.classList.toggle("hidden");
-    })
+    document.querySelectorAll<HTMLElement>("[data-submenu-trigger]").forEach((trigger) => {
+      const submenu = trigger.nextElementSibling as HTMLElement | null;
+
+      trigger.addEventListener("click", () => {
+        if (window.innerWidth >= 768 || !submenu) return;
+
+        submenu.classList.toggle("hidden");
+        trigger.setAttribute("aria-expanded", String(!submenu.classList.contains("hidden")));
+      });
+    });
 
   })
    
