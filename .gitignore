@@ -6,3 +6,5 @@ docker-compose.yml
 node_modules
 plugins
 .agents
+.codex-design-audit
+design-qa.md
