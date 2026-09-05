@@ -57,7 +57,7 @@ const { images, title, description, cta, bgColor = "bg-green-200" } = data as Pr
           { images?.slice(0, 3).map((img) => (
             <div class="h-fit animate-fade-in mt-10 md:mt-0">
               <a
-                class="h-100 md:h-125 flex items-center justify-center cursor-pointer"
+                class="h-80 md:h-125 flex items-center justify-center cursor-pointer"
                 target="_blank" href={cta && cta.length > 0 ? cta[0].href : "#" }>
                 <img
                   src={img.url}
@@ -79,7 +79,7 @@ const { images, title, description, cta, bgColor = "bg-green-200" } = data as Pr
             </div>
 
           ))}
-          <div class="h-100 md:h-125 animate-fade-in md:mb-18">
+          <div class="h-80 md:h-125 animate-fade-in md:mb-18">
             <AdCard ads={ads} />
           </div>
 
