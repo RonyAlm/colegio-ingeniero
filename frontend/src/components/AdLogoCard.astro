@@ -12,6 +12,7 @@ const logoUrl = transformImgUrl(ally.logo?.url || "");
 ---
 
 <article
+  data-mobile-reveal-card
   class="group relative h-full overflow-hidden rounded-2xl border-2 border-gray-300 bg-gray-100 transition-colors hover:border-green-600 focus-within:border-green-600"
 >
   <a
@@ -32,7 +33,8 @@ const logoUrl = transformImgUrl(ally.logo?.url || "");
     </div>
 
     <div
-      class="absolute -bottom-full left-0 flex w-full flex-col bg-green-50 p-4 prose transition-all duration-300 group-hover:bottom-0 group-focus-within:bottom-0"
+      data-card-details
+      class="absolute -bottom-full left-0 flex w-full flex-col bg-green-50 p-4 prose transition-all duration-300 md:group-hover:bottom-0 md:group-focus-within:bottom-0"
     >
       <h3 class="line-clamp-2 text-2xl font-bold text-green-700">{ally.nombre}</h3>
       {ally.descripcion && (

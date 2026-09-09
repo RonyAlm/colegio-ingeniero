@@ -43,6 +43,12 @@ body {
   @apply bg-green-600 text-white;
 }
 
+@media (max-width: 767px) {
+  [data-card-details].mobile-card-visible {
+    bottom: 0;
+  }
+}
+
 @media (max-width: 480px) {
   .splide__arrow .splide__arrow--prev,
   .splide__arrow .splide__arrow--next {
