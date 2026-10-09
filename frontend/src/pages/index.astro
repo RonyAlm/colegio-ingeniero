@@ -15,6 +15,7 @@ import SectionInstagram from "../components/SectionInstagram.astro";
 import FeaturedEvent from "../components/FeaturedEvent.astro";
 import AdSidebar from "../components/AdSidebar.astro";
 import LogoSlider from "../components/LogoSlider.astro";
+import SectionMetrics from "../components/SectionMetrics.astro";
 
 const { title, description, blocks: pageBlocks } = await getHomePage();
 
@@ -48,6 +49,7 @@ const logosSlider = await getAdLogos();
       </a>
       <LogoSlider logos={logosSlider} />
     </section>
+    <SectionMetrics hasSidebarAd={adsBannerSidebar?.ads?.length > 0} />
     <SectionResolution data={legalDocuments} />
 
     <InstructionalVideos data={instructionalVideos} />
