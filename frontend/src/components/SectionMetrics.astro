@@ -1,0 +1,58 @@
+---
+interface Props {
+  hasSidebarAd?: boolean;
+}
+
+const { hasSidebarAd = false } = Astro.props;
+const metrics = [
+  { value: 800, label: "Ingenieros Matriculados" },
+  { value: 5500, label: "Visitas Mensuales" },
+  { value: 65000, label: "Páginas Vistas Anuales" },
+];
+---
+
+<section id="home-metrics" aria-labelledby="home-metrics-title" class:list={["container mx-auto px-4 py-20 text-center", { "lg:pr-80": hasSidebarAd }]}>
+  <h2 id="home-metrics-title" class="text-3xl md:text-4xl font-bold text-green-700 mb-8">
+    Impulsando la ingeniería en la Provincia de Formosa
+  </h2>
+  <dl class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-green-700/20">
+    {metrics.map(({ value, label }) => (
+      <div class="flex flex-col gap-4 px-4 py-8">
+        <dt class="order-2 text-lg text-green-950/70">{label}</dt>
+        <dd class="text-5xl xl:text-6xl font-bold text-green-700 tabular-nums">
+          <span class="sr-only">{value.toLocaleString("es-AR")}+</span>
+          <span data-counter={value} aria-hidden="true">{value.toLocaleString("es-AR")}+</span>
+        </dd>
+      </div>
+    ))}
+  </dl>
+</section>
+
+<script>
+  const section = document.querySelector<HTMLElement>("#home-metrics");
+  if (section) {
+    const counters = Array.from(section.querySelectorAll<HTMLElement>("[data-counter]"));
+    const formatter = new Intl.NumberFormat("es-AR");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    // Sin JavaScript, los valores finales permanecen disponibles en el HTML.
+    counters.forEach((counter) => { counter.textContent = "0+"; });
+
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      observer.disconnect();
+      const start = performance.now();
+      const animate = (now: number) => {
+        const progress = reducedMotion.matches ? 1 : Math.min((now - start) / 2000, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        counters.forEach((counter) => {
+          counter.textContent = `${formatter.format(Math.round(Number(counter.dataset.counter) * eased))}+`;
+        });
+        if (progress < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    }, { threshold: 0.2 });
+
+    observer.observe(section);
+  }
+</script>
