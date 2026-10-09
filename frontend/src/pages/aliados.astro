@@ -37,7 +37,7 @@ const allies = await getAdLogos();
       {
         allies.length > 0 ? (
           <div
-            class="mx-auto grid max-w-7xl grid-cols-3 gap-2 sm:grid-cols-4 sm:gap-4 lg:grid-cols-5 lg:gap-5"
+            class="mx-auto grid max-w-7xl grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-4 lg:grid-cols-4 lg:gap-5"
           >
             {allies.map((ally: AdLogo) => (
               <AdLogoCard ally={ally} />
